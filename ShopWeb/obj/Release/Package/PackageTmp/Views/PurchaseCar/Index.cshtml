@@ -1,0 +1,214 @@
+﻿@using ShopWeb.Models
+@model MemberPurchaseCarViewModel
+@{
+    ViewBag.Title = "购物车";
+}
+
+
+<div class="dashboard-group">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="user-dt">
+                    <div class="user-img">
+                        <img src="~/Content/image/avatar/img-5.jpg" alt="头像">
+                    </div>
+                    <h4>@Session["mem_name"].ToString()</h4>
+                    <p>@Session["mem_phone"].ToString()</p>
+                    <p>@Session["mem_address"].ToString()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="left-side-tabs">
+                    <div class="dashboard-left-links">
+
+                        <a href="@Url.Content("~/PurchaseList")" class="user-item"><i class="uil uil-box"></i>我的购买记录</a>
+                        <a href="@Url.Content("~/PurchaseCar")" class="user-item active"><i class="uil uil-shopping-cart-alt"></i>我的购物车</a>
+                        <a href="@Url.Content("~/WishList")" class="user-item"><i class="uil uil-heart"></i>我的收藏夹</a>
+                        <a href="@Url.Content("~/MemberInfo")" class="user-item"><i class="uil uil-user"></i>修改信息</a>
+                        <a href="@Url.Content("~/Login/LoginOut")" class="user-item"><i class="uil uil-exit"></i>注销</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="dashboard-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-title-tab">
+                                <h4><i class="uil uil-shopping-cart-alt"></i>我的购物车</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="pdpt-bg">
+                                <div class="wishlist-body-dtt">
+
+                                    @if (Model == null || Model.pcar_list.Count == 0)
+                                    {
+                                        <div class="cart-item dashboard-group" style="background-color:white">
+                                            <div class="cart-text">
+                                                <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model != null && Model.pcar_list.Count > 0)
+                                    {
+                                        using (Html.BeginForm("Index", "Account", FormMethod.Post))
+                                        {
+                                            <div id="pcar_form" style="border:none;border-bottom:1px solid;border-bottom-color:gainsboro;">
+
+                                                @for (var i = 0; i < Model.pcar_list.Count(); ++i)
+                                                {
+                                                    <div class="cart-item">
+
+                                                        <input type="checkbox" class="checkbox" name="selected" onclick="check_select(@i)" style="margin-right:20px;" />
+
+                                                        @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
+
+                                                        <div class="cart-product-img">
+                                                            <a href="@Url.Content("~/BuyGoods/Index/"+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
+                                                                <img src="@Model.pcar_list[i].goods_img_path" alt="">
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="cart-text">
+                                                            <h4>@Model.pcar_list[i].goods_name</h4>
+                                                            <div class="cart-item-price" style="margin-top:10px;"></div>
+                                                            <span>单价：￥</span><span class="u_p">@Model.pcar_list[i].unit_price</span>
+                                                        </div>
+
+                                                        <div class="quantity buttons_added" style="padding-top:10px;">
+                                                            <span>数量：</span>
+                                                            <button type="button" onclick="sub_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">-</button>
+                                                            <input class="input-text qty text q_t" value="@Model.pcar_list[i].goods_num" onchange="change_num(@i)" onfocus="save_oldnum(@i)" />
+                                                            @Html.TextBoxFor(now => now.select_list[i].goods_num, new { @type = "hidden", Value = Model.pcar_list[i].goods_num })
+                                                            <input type="hidden" class="oldnum" value="@Model.pcar_list[i].goods_num" />
+                                                            <button type="button" onclick="add_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">+</button>
+                                                        </div>
+                                                        <div class="cart-text" style="padding-top:10px;padding-left:150px;">
+                                                            <h4><span>总价：￥</span><span class="t_p">@Model.pcar_list[i].total_price</span></h4>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <p style="font-size:22px;margin-left:30px;margin-top:15px;">总价</p>
+                                            <div style="margin-left:50px;"><span style="font-size:22px;margin-left:30px;">￥<span id="select_total_price">0</span></span></div>
+                                            <button onclick="all_select()" class="add-address hover-btn" style="border:none;font-size:15px;margin:0 10px 15px 85%">去结算</button>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function all_select() {
+        var t1 = document.getElementsByName("selected");
+        for (i = 0; i < t1.length; i++) {
+            if (!(t1[i].checked)) {
+                t1[i].checked = true;
+                t1[i].value = "off";
+            }
+        }
+        return true;
+    }
+
+    window.onload = function () {
+        var t1 = document.getElementsByName("selected");
+        for (i = 0; i < t1.length; i++) {
+            t1[i].checked = false;
+        }
+        return true;
+    }
+
+
+    function add_num(i) {
+        var pcar_form = document.getElementById("pcar_form"),
+            cart_item = pcar_form.getElementsByClassName("cart-item")[i],
+            now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
+            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            goods_num = cart_item.getElementsByClassName("q_t")[0],
+            goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
+            goods_sum_price = document.getElementsByClassName("t_p")[i],
+            all_total_price = document.getElementById("select_total_price");
+        goods_num.value++;
+        goods_num_hidden.value++;
+        goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
+        if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price;
+    }
+
+    function sub_num(i) {
+        var pcar_form = document.getElementById("pcar_form"),
+            cart_item = pcar_form.getElementsByClassName("cart-item")[i],
+            now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
+            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            goods_num = cart_item.getElementsByClassName("q_t")[0],
+            goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
+            goods_sum_price = document.getElementsByClassName("t_p")[i],
+            all_total_price = document.getElementById("select_total_price");
+        if (goods_num.value > 0) {
+            goods_num.value--;
+            goods_num_hidden.value--;
+            goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
+            if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) - goods_unit_price;
+        }
+    }
+
+    function check_select(i) {
+        var pcar_form = document.getElementById("pcar_form"),
+            cart_item = pcar_form.getElementsByClassName("cart-item")[i],
+            now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
+            now_goods_num = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
+            now_goods_unit_price = cart_item.getElementsByClassName("u_p")[0],
+            all_total_price = document.getElementById("select_total_price");
+        if (now_checkbox.checked) {
+            all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML);
+        }
+        else {
+            all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) - now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML);
+        }
+    }
+
+    function save_oldnum(i) {
+        var pcar_form = document.getElementById("pcar_form"),
+            cart_item = pcar_form.getElementsByClassName("cart-item")[i],
+            old_num = cart_item.getElementsByClassName("oldnum")[0],
+            now_num = cart_item.getElementsByClassName("q_t")[0];
+        if (now_num.value >= 0) old_num.value = now_num.value;
+    }
+
+    function change_num(i) {
+        var pcar_form = document.getElementById("pcar_form"),
+            cart_item = pcar_form.getElementsByClassName("cart-item")[i],
+            old_num = cart_item.getElementsByClassName("oldnum")[0],
+            now_num = cart_item.getElementsByClassName("q_t")[0],
+            now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
+            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            all_total_price = document.getElementById("select_total_price"),
+            goods_sum_price = document.getElementsByClassName("t_p")[i],
+            goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0];
+
+        if (now_num.value >= 0) {
+            goods_num_hidden.value = now_num.value;
+            goods_sum_price.innerHTML = now_num.value * goods_unit_price;
+            if (now_checkbox.checked) {
+                goods_num_hidden.value = now_num.value;
+                all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price * (now_num.value - old_num.value);
+            }
+        }
+    }
+
+
+
+</script>

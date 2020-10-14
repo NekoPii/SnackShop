@@ -1,0 +1,21 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+
+    string[] lController = new string[] { "login", "signup" };
+    string[] lAccount = new string[] { "account" };
+    string[] aAccount = new string[] { "pay2048" };
+
+    if (lController.Contains(controller))
+    {
+        Layout = "~/Views/Shared/_SignLayout.cshtml";
+    }
+    else if(lAccount.Contains(controller)&&aAccount.Contains(action)) { Layout = "~/Views/Shared/_pay2048Layout.cshtml"; }
+    else if(lAccount.Contains(controller))
+    { Layout = "~/Views/Shared/_Layout.cshtml"; }
+    else
+    {
+        Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    }
+
+}

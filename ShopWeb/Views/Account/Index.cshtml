@@ -1,0 +1,359 @@
+﻿@using ShopWeb.Models
+@model AccountModels
+@{
+    ViewBag.Title = "商品结算";
+}
+
+<div id="add_address_modal" class="header-cate-model main-gambo-model modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner" style="margin-top:150px;">
+            <div class="category-model-content modal-content">
+                <div class="cate-header">
+                    <h4>添加地址</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <fieldset>
+                                    @using (Ajax.BeginForm("Add", "Account", new AjaxOptions { UpdateTargetId = "select_ad_list", OnSuccess = "add_success",OnFailure="add_fail" }))
+                                    {
+                                        <div class="form-group">
+                                            <div class="product-radio">
+                                                <ul class="product-now">
+                                                    <li>
+                                                        <input type="radio" id="ad11" class="add_select_address_tag" name="address1" checked onclick="add_select_tag()">
+                                                        <label for="ad11" class="add_label_address_tag">家</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad12" class="add_select_address_tag" name="address1" onclick="add_select_tag()">
+                                                        <label for="ad12" class="add_label_address_tag">办公场所</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad13" class="add_select_address_tag" name="address1" onclick="add_select_tag()">
+                                                        <label for="ad13" class="add_label_address_tag">学校</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad14" class="add_select_address_tag" name="address1" onclick="add_select_tag()">
+                                                        <label for="ad14" class="add_label_address_tag">其他</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            @Html.TextBoxFor(now => now.address_tag, new { @type = "hidden", Value = "家", @id = "add_address_tag_input" })
+                                        </div>
+                                        <div class="address-fieldset">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">详细地址:</label>
+                                                        @Html.TextBoxFor(now => now.address, new { @class = "form-control input-md", @placeholder = "地址",@id= "add_address_input" })
+                                                    </div>
+                                                    <span id="add_error_info" class="help-block">
+                                                        @Html.ValidationMessageFor(now => now.address, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <div class="address-btns">
+                                                            <button class="save-btn14 hover-btn" type="submit">确定添加</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <div class="address-btns">
+                                                            <button class="save-btn14 hover-btn" type="button" onclick="add_success()">返回</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modify_address_modal" class="header-cate-model main-gambo-model modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner" style="margin-top:150px;">
+            <div class="category-model-content modal-content">
+                <div class="cate-header">
+                    <h4>修改地址</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <fieldset>
+                                    @using (Ajax.BeginForm("Modify", "Account", new AjaxOptions { UpdateTargetId = "select_ad_list", OnSuccess = "modify_success",OnFailure="modify_fail" }))
+                                    {
+                                        @Html.TextBoxFor(now => now.old_address, new { @type = "hidden", Value = "", @id = "old_ad" })
+                                        @Html.TextBoxFor(now => now.old_address_tag, new { @type = "hidden", Value = "", @id = "old_ad_tag" })
+                                        <div class="form-group">
+                                            <div class="product-radio">
+                                                <ul class="product-now">
+                                                    <li>
+                                                        <input type="radio" id="ad21" class="modify_select_address_tag" name="address2" checked onclick="modify_select_tag()">
+                                                        <label for="ad21" class="modify_label_address_tag">家</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad22" class="modify_select_address_tag" name="address2" onclick="modify_select_tag()">
+                                                        <label for="ad22" class="modify_label_address_tag">办公场所</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad23" class="modify_select_address_tag" name="address2" onclick="modify_select_tag()">
+                                                        <label for="ad23" class="modify_label_address_tag">学校</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="radio" id="ad24" class="modify_select_address_tag" name="address2" onclick="modify_select_tag()">
+                                                        <label for="ad24" class="modify_label_address_tag">其他</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            @Html.TextBoxFor(now => now.new_address_tag, new { @type = "hidden", Value = "家", @id = "modify_address_tag_input" })
+                                        </div>
+                                        <div class="address-fieldset">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">详细地址:</label>
+                                                        @Html.TextBoxFor(now => now.new_address, new { @class = "form-control input-md", @placeholder = "地址",@id= "modify_address_input" })
+                                                    </div>
+                                                    <span id="modify_error_info" class="help-block">
+                                                        @Html.ValidationMessageFor(now => now.new_address, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <div class="address-btns">
+                                                            <button class="save-btn14 hover-btn" type="submit">确定修改</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <div class="address-btns">
+                                                            <button class="save-btn14 hover-btn" type="button" onclick="modify_success()">返回</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bill-dt-bg">
+    <div class="container">
+        @if (Model == null || Model.accountModeList.Count == 0 || Model.all_price == 0)
+        {
+            <div class="cart-item dashboard-group" style="background-color:white">
+                <div class="cart-text">
+                    <h1 style="height:440px;text-align:center;padding-top:220px;">这里空空如也什么也没有~</h1>
+                    <a href="@Url.Content("~/PurchaseCar")" class="add-address hover-btn" style="border:none;color:white;font-size:20px;float:right;margin-right:50px;">返回购物车</a>
+                </div>
+            </div>
+        }
+        @if (Model != null && Model.accountModeList.Count > 0)
+        {
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bill-detail">
+                        <div class="bill-dt-step" style="padding-bottom:0px;">
+                            <div class="bill-title">
+                                <h4 style="margin:0">订单明细</h4>
+                                <div class="bill-descp">
+                                    <div class="cart-total-dil">
+                                        <h4 class="col-md-5">商品名称</h4>
+                                        <h4 class="col-md-2 text-center">商品单价</h4>
+                                        <h4 class="col-md-2 text-center">商品数量</h4>
+                                        <h4 class="col-md-3 text-center">商品总价</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bill-descp">
+                                @foreach (var info in Model.accountModeList)
+                                {
+                                    <div class="cart-total-dil" style="margin-top:5px;margin-bottom:5px;">
+                                        <span class="col-md-5">@info.goods_name</span>
+                                        <span class="col-md-2 text-center">￥@info.unit_price</span>
+                                        <span class="col-md-2 text-center">@info.goods_num</span>
+                                        <span class="col-md-3 text-center">￥@info.total_price</span>
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        </div>
+                        <div class="bill-dt-step">
+                            <div class="bill-title">
+                                <h4>配送地址</h4>
+                            </div>
+                            <div id="select_ad_list">
+                                @{
+                                    Html.RenderPartial("AccountPart1", Model);
+                                }
+                            </div>
+                            <div style="margin-left:59%">
+                                <button class="add-address hover-btn" data-backdrop="static" onclick="open_add_modal()" style="border:none;margin-bottom:0;">添加新地址</button>
+                                <button class="add-address hover-btn" data-backdrop="static" onclick="account_update_old_ad()" style="border: none;margin-bottom:0;">修改当前地址</button>
+                            </div>
+                        </div>
+
+                        <div class="bill-dt-step">
+                            <div class="bill-title">
+                                <h4>支付详情</h4>
+                            </div>
+                            <div class="bill-descp">
+                                <div class="total-checkout-group p-0 border-top-0">
+                                    <div class="cart-total-dil">
+                                        <h4>商品合计</h4>
+                                        <span style="color:#f55d2c;font-weight:bold;font-size:19px;">￥@Model.all_price</span>
+                                    </div>
+                                    <div class="cart-total-dil pt-3">
+                                        <h4>配送费用</h4>
+                                        <span style="color:#f55d2c">￥@(Model.all_price/100)</span>
+                                    </div>
+                                </div>
+                                <div class="main-total-cart pl-0 pr-0 pb-0 border-bottom-0">
+                                    <h2>总计</h2>
+                                    <span style="font-size:24px;">￥@(Model.all_price*1.01)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill-dt-step">
+                            <div class="bill-bottom ">
+                                @using (Html.BeginForm("pay2048", "Account", FormMethod.Post, new { @style = "margin-left:85%;" }))
+                                {
+                                    for (var i = 0; i < Model.accountModeList.Count; ++i)
+                                    {
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_id, new { @type = "hidden", Value = Model.accountModeList[i].goods_id })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_name, new { @type = "hidden", Value = Model.accountModeList[i].goods_name })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].unit_price, new { @type = "hidden", Value = Model.accountModeList[i].unit_price })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].total_price, new { @type = "hidden", Value = Model.accountModeList[i].total_price })
+                                    }
+                                    if (Model.addresses.Count >= 1)
+                                    {
+                                        @Html.TextBoxFor(now => now.address_text, new { @type = "hidden", Value = "【" + Model.addresses[0].address_tag + "】" + Model.addresses[0].address, @id = "now_select_ad_text" })
+                                    }
+                                    if (Model.addresses.Count == 0)
+                                    {
+                                        @Html.TextBoxFor(now => now.address_text, new { @type = "hidden", Value = "", @id = "now_select_ad_text" })
+                                    }
+                                    <button class="print-btn hover-btn" type="submit">立即支付</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    var add_address_tag_list = $(".add_select_address_tag"),
+        add_label_address_tag_list = $(".add_label_address_tag"),
+        add_address_tag_text = $("#add_address_tag_input"),
+        modify_address_tag_list = $(".modify_select_address_tag"),
+        modify_label_address_tag_list = $(".modify_label_address_tag"),
+        modify_address_tag_text = $("#modify_address_tag_input");
+
+    function add_success() {
+        $("#add_address_modal").modal("hide");
+        if ($("#add_address_modal").hasClass("show")) {
+            $("#add_address_modal").removeClass("show");
+        }/*
+        $(".modal-backdrop").remove();*/
+    }
+
+    function add_fail() {
+        $("#add_address_input").val("");
+        alert("已存在该地址, 添加失败!");
+    }
+
+    function modify_fail() {
+        $("#modify_address_input").val("");
+        alert("已存在该地址,修改失败!");
+    }
+
+    function modify_success() {
+        $("#modify_address_modal").modal("hide");
+        if ($("#modify_address_modal").hasClass("show")) {
+            $("#modify_address_modal").removeClass("show");
+        }/*
+        $(".modal-backdrop").remove();*/
+    }
+
+    function add_select_tag() {
+        for (var i = 0; i < add_address_tag_list.length; ++i) {
+            var now = add_address_tag_list[i];
+            if (now.checked) {
+                add_address_tag_text.val(add_label_address_tag_list[i].textContent);
+            }
+        }
+    }
+
+    function modify_select_tag() {
+        for (var i = 0; i < modify_address_tag_list.length; ++i) {
+            var now = modify_address_tag_list[i];
+            if (now.checked) {
+                modify_address_tag_text.val(modify_label_address_tag_list[i].textContent);
+            }
+        }
+    }
+
+    function update_select() {
+        $("#now_select_ad_text").val($("#ad_select_list").val());
+    }
+
+    function open_add_modal() {
+        $("#add_address_input").val("");
+        $("#add_address_modal").addClass("show");
+        $("#add_address_modal").modal({ backdrop: "static", keyboard: false });
+        $("#add_address_modal").modal("show");
+
+    }
+
+    function account_update_old_ad() {
+        $("#modify_address_input").val("");
+        $("#modify_address_modal").addClass("show");
+        $("#modify_address_modal").modal({ backdrop: "static", keyboard: false });
+        $("#modify_address_modal").modal("show");
+
+        var now_ad = $("#ad_select_list").val(),
+            now_ad_text = "",
+            now_ad_tag_text = "",
+            i;
+        for (i = 0; i < now_ad.length; ++i) {
+            if (now_ad[i] == '】') {
+                i++;
+                break;
+            }
+            if (now_ad[i] == '【') continue;
+            now_ad_tag_text += now_ad[i];
+        }
+        for (; i < now_ad.length; ++i) {
+            now_ad_text += now_ad[i];
+        }
+
+        $("#old_ad").val(now_ad_text);
+        $("#old_ad_tag").val(now_ad_tag_text);
+    }
+
+</script>

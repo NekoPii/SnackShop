@@ -1,0 +1,86 @@
+﻿@using ShopWeb.Models
+@model MemberWishListViewModel
+@{
+    ViewBag.Title = "收藏夹";
+}
+
+<div class="dashboard-group">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="user-dt">
+                    <div class="user-img">
+                        <img src="~/Content/image/avatar/img-5.jpg" alt="头像">
+                    </div>
+                    <h4>@Session["mem_name"].ToString()</h4>
+                    <p>@Session["mem_phone"].ToString()</p>
+                    <p>@Session["mem_address"].ToString()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="left-side-tabs">
+                    <div class="dashboard-left-links">
+                        <a href="@Url.Content("~/PurchaseList")" class="user-item"><i class="uil uil-box"></i>我的购买记录</a>
+                        <a href="@Url.Content("~/PurchaseCar")" class="user-item "><i class="uil uil-shopping-cart-alt"></i>我的购物车</a>
+                        <a href="@Url.Content("~/WishList")" class="user-item active"><i class="uil uil-heart"></i>我的收藏夹</a>
+                        <a href="@Url.Content("~/MemberInfo")" class="user-item"><i class="uil uil-user"></i>修改信息</a>
+                        <a href="@Url.Content("~/Login/LoginOut")" class="user-item"><i class="uil uil-exit"></i>注销</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="dashboard-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-title-tab">
+                                <h4><i class="uil uil-heart"></i>我的收藏夹</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="pdpt-bg">
+                                <div class="wishlist-body-dtt">
+                                    @if (Model.wish_lists.Count == 0)
+                                    {
+                                        <div class="cart-item dashboard-group" style="background-color:white">
+                                            <div class="cart-text">
+                                                <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.wish_lists.Count > 0)
+                                    {
+                                        foreach (var i in Model.wish_lists)
+                                        {
+                                        <div class="cart-item">
+                                            <div class="cart-product-img">
+                                                <a href="@Url.Content("~/BuyGoods/Index/"+i.goods_id)" class="product-img">
+                                                    <img src="@i.goods_img_path" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="cart-text">
+                                                <h4>@i.goods_name</h4>
+                                                <div class="cart-item-price">￥@i.goods_unit_price</div>
+                                                @using (Html.BeginForm("Index", "WishList", FormMethod.Post))
+                                                {
+                                                    <input type="hidden" value=@i.goods_id name="DeleteWishId" />
+                                                    <button type="submit" class="cart-close-btn"><i class="uil uil-trash-alt"></i></button>
+                                                }
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

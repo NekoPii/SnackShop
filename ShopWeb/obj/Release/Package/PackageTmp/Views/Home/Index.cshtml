@@ -1,0 +1,302 @@
+﻿@using ShopWeb.Models
+@model PurchaseHomeTotalInfo
+@{
+    ViewBag.Title = "云龙县特色农产品";
+}
+
+<!-- Offers Start -->
+
+<div id="init_page"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 95;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0></h0>
+</div>
+
+<div id="alert_message_cart"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+
+    ">
+    <h0>添加该商品到购物车成功</h0>
+</div>
+
+<div id="alert_message_wish"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0>心愿单已更新</h0>
+</div>
+
+<div id="alert_message_log_err"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0>请先登录</h0>
+</div>
+
+<div class="main-banner-slider">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="owl-carousel offers-banner owl-theme" id="bar_01">
+                @for (var i = 0; i < Model.total_goods_list.Count; ++i)
+                {
+                    <div class="item">
+
+                        <div class="offer-item">
+                            <div class="offer-item-img">
+                                <div class="gambo-overlay"></div>
+                                <img src="@Model.total_goods_list[i].goods_small_img_path" alt="">
+                            </div>
+                            <div class="offer-text-dt">
+                                <div class="offer-top-text-banner">
+                                    <div class="top-text-1">@Model.total_goods_list[i].goods_name</div>
+                                </div>
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="Offer-shop-btn hover-btn">现在选购</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offers End -->
+<!-- Featured Products Start -->
+<div class="section145">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title-tt">
+                    <div class="main-title-left">
+                        <span>为你挑选 </span>
+                        <h2>精选产品</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="owl-carousel featured-slider owl-theme" id="bar_02">
+                    @for (var i = 0; i < Model.total_goods_list.Count / 2; ++i)
+                    {
+                        <div class="item">
+                            <div class="product-item" style="padding-top:5px;">
+                                <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
+                                </div>
+
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="product-img">
+                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="">
+                                </a>
+                                @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
+                                {
+                                    @Html.TextBoxFor(now => now.wish_goods_id, new { @type = "hidden", Value = Model.total_goods_list[i].goods_id })
+                                    if (Session["has_login"] == null)
+                                    {
+                                        <span class="log_err">
+                                            <button type="reset" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px;"></button>
+                                        </span>
+                                    }
+                                    if (Session["has_login"] != null)
+                                    {
+                                        <span class="add_wish">
+                                            <button type="submit" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px;"></button>
+                                        </span>
+                                    }
+                                }
+                                <div class="product-text-dt">
+                                    @using (Ajax.BeginForm("AddCart", "PurchaseCar", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+                                        <h4>@Model.total_goods_list[i].goods_name</h4>
+                                        <input type="hidden" value=@Model.total_goods_list[i].goods_id name="goods_id_to_cart" />
+                                        <div class="product-price">￥@Model.total_goods_list[i].unit_price</div>
+                                        <div class="qty-cart">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus minus-btn">
+                                                @Html.TextBoxFor(now => now.pcar_goods_num, new { @class = "input-text qty text", @step = "1", @name = "quantity", @placeholder = "0" })
+                                                <input type="button" value="+" class="plus plus-btn">
+                                            </div>
+                                            @if (Session["has_login"] == null)
+                                            {
+                                                <span class="cart-icon log_err">
+                                                    <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                            @if (Session["has_login"] != null)
+                                            {
+                                                <span class="cart-icon add_cart">
+                                                    <button type="submit" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products End -->
+<!-- Best Values Offers Start -->
+<div class="section145">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title-tt">
+                    <div class="main-title-left">
+                        <span>特别推荐</span>
+                        <h2>正在热销</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item">
+                    <img src="~/content/image/HomePage/leftImg.png" alt="">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item">
+                    <img src="~/content/image/HomePage/midImg.png" alt="">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item offr-none">
+                    <img src="~/content/image/HomePage/rightImg.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a href="#" class="code-offer-item">
+                    <img src="~/content/image/HomePage/maxlenImg.jpg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Best Values Offers End -->
+<!-- Featured Products Start -->
+
+<div class="section145">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title-tt">
+                    <div class="main-title-left">
+                        <span>为你挑选 </span>
+                        <h2>精选产品</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="owl-carousel featured-slider owl-theme" id="bar_03">
+                    @for (
+                        var i = Model.total_goods_list.Count/2; i < Model.total_goods_list.Count; ++i)
+                    {
+                        <div class="item">
+                            <div class="product-item" style="padding-top:5px;">
+                                <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
+                                </div>
+
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="product-img">
+                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="">
+                                </a>
+                                @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
+                                {
+                                    @Html.TextBoxFor(now => now.wish_goods_id, new { @type = "hidden", Value = Model.total_goods_list[i].goods_id })
+                                    if (Session["has_login"] == null)
+                                    {
+                                        <span class="log_err">
+                                            <button type="reset" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px;"></button>
+                                        </span>
+                                    }
+                                    if (Session["has_login"] != null)
+                                    {
+                                        <span class="add_wish">
+                                            <button type="submit" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px;"></button>
+                                        </span>
+                                    }
+                                }
+                                <div class="product-text-dt">
+                                    @using (Ajax.BeginForm("AddCart", "PurchaseCar", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+                                        <h4>@Model.total_goods_list[i].goods_name</h4>
+                                        <input type="hidden" value=@Model.total_goods_list[i].goods_id name="goods_id_to_cart" />
+                                        <div class="product-price">￥@Model.total_goods_list[i].unit_price</div>
+                                        <div class="qty-cart">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus minus-btn">
+                                                @Html.TextBoxFor(now => now.pcar_goods_num, new { @class = "input-text qty text", @step = "1", @name = "quantity", @placeholder = "0" })
+                                                <input type="button" value="+" class="plus plus-btn">
+                                            </div>
+                                            @if (Session["has_login"] == null)
+                                            {
+                                                <span class="cart-icon log_err">
+                                                    <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                            @if (Session["has_login"] != null)
+                                            {
+                                                <span class="cart-icon add_cart">
+                                                    <button type="submit" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products End -->

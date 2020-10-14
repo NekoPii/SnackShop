@@ -1,0 +1,97 @@
+﻿@using ShopWeb.Models
+@model MemberSignViewModel
+@{
+    ViewBag.Title = "注册";
+}
+
+
+
+<div class="form-dt">
+    <div class="form-inpts checout-address-step">
+        <div class="form-title"><h6>注册</h6></div>
+        @using (Html.BeginForm("Index", "SignUp", FormMethod.Post))
+        {
+            <div style="height:80px">
+                <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                    @Html.TextBoxFor(now => now.mem_phone, new { @class = "form-control lgn_input", @placeholder = "请输入您的手机号码", @name = "phone", @id = "input_phone" })
+                    <i class="uil uil-mobile-android-alt lgn_icon"></i>
+                </div>
+                <span id="help-block1" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_phone, "", new { @class = "text-danger" })
+                    @if (ViewBag.SignUpErrorMessage != null)
+                    {
+                        <span class="text-danger" id="phone_error_info">
+                            @ViewBag.SignUpErrorMessage
+                        </span>
+                    }
+                </span>
+            </div>
+
+            <div style="height:80px">
+                <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                    @Html.TextBoxFor(now => now.mem_name, new { @class = "form-control lgn_input ", @placeholder = "请输入您的用户名", @name = "name", @type = "text", @id = "name" })
+                    <i class="uil uil-user-square lgn_icon"></i>
+                </div>
+                <span id="help-block2" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_name, "", new { @class = "text-danger" })
+                </span>
+            </div>
+
+            <div style="height:80px">
+                <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                    @Html.TextBoxFor(now => now.mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入您的密码", @name = "password", @type = "password", @id = "input_pwd" })
+                    <i class="uil uil-padlock lgn_icon"></i>
+                </div>
+                <span id="help-block3" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_pwd, "", new { @class = "text-danger" })
+                </span>
+            </div>
+
+            <div style="height:80px">
+                <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                    @Html.TextBoxFor(now => now.mem_re_pwd, new { @class = "form-control lgn_input", @placeholder = "请再次输入密码", @name = "re_password", @type = "password", @id = "re_input_pwd" })
+                    <i class="uil uil-padlock lgn_icon"></i>
+                </div>
+                <span id="help-block4" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_re_pwd, "", new { @class = "text-danger" })
+                </span>
+            </div>
+
+            <div style="height:80px">
+                <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                    @Html.TextBoxFor(now => now.mem_address, new { @class = "form-control lgn_input", @placeholder = "请输入居住(配送)地址", @name = "address",@type="text" , @id = "address" })
+                    <i class="uil uil-home lgn_icon"></i>
+                </div>
+                <span id="help-block5" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_address, "", new { @class = "text-danger" })
+                </span>
+            </div>
+
+            <input class="login-btn hover-btn" type="submit" value="注册" />
+
+            <div class="signup-link">
+                <p>已有账户？ - @Html.ActionLink("登录", "Index", "Login")</p>
+            </div>
+        }
+
+    </div>
+        </div>
+    @*
+        <div class="col-md-8 col-md-offset-2">
+            <form action="~/SignUp/SignUp" method="post">
+                <div class="form-group has-feedback">
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1">手机号</span>
+                        <input type="text" class="form-control" placeholder="Phone" aria-describedby="sizing-addon1" name="phone">
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1">密码</span>
+                        <input type="password" class="form-control" placeholder="PassWord" aria-describedby="sizing-addon1" name="password">
+                    </div>
+                </div>
+                <div><input class="btn btn-primary" type="submit" value="SignUp" /></div>
+            </form>
+        </div>
+    *@

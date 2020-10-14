@@ -1,0 +1,102 @@
+﻿@using ShopWeb.Models
+@model AccountModels
+@{
+    ViewBag.Title = "商品结算";
+}
+
+<div class="bill-dt-bg">
+    <div class="container">
+        @if (Model == null || Model.accountModeList.Count == 0||Model.all_price==0)
+        {
+            <div class="cart-item dashboard-group" style="background-color:white">
+                <div class="cart-text">
+                    <h1 style="height:440px;text-align:center;padding-top:220px;">这里空空如也什么也没有~</h1>
+                    <a href="@Url.Content("~/PurchaseCar")" class="add-address hover-btn" style="border:none;color:white;font-size:20px;float:right;margin-right:50px;">返回购物车</a>
+                </div>
+            </div>
+        }
+        @if (Model != null && Model.accountModeList.Count > 0)
+        {
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bill-detail">
+                        <div class="bill-dt-step" style="padding-bottom:0px;">
+                            <div class="bill-title" >
+                                <h4 style="margin:0">订单明细</h4>
+                                <div class="bill-descp">
+                                    <div class="cart-total-dil">
+                                        <h4 class="col-md-5">商品名称</h4>
+                                        <h4 class="col-md-2 text-center">商品单价</h4>
+                                        <h4 class="col-md-2 text-center">商品数量</h4>
+                                        <h4 class="col-md-3 text-center">商品总价</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bill-descp">
+                                @foreach (var info in Model.accountModeList)
+                                {
+                                <div class="cart-total-dil" style="margin-top:5px;margin-bottom:5px;">
+                                    <span class="col-md-5">@info.goods_name</span>
+                                    <span class="col-md-2 text-center">￥@info.unit_price</span>
+                                    <span class="col-md-2 text-center">@info.goods_num</span>
+                                    <span class="col-md-3 text-center">￥@info.total_price</span>
+                                </div>
+
+                                }
+
+
+                            </div>
+                        </div>
+                        <div class="bill-dt-step">
+                            <div class="bill-title">
+                                <h4>配送地址</h4>
+                            </div>
+                            <div class="bill-descp">
+                                <div class="itm-ttl">@Session["mem_address"]</div>
+                                <p class="bill-address"></p>
+                            </div>
+                        </div>
+                        <div class="bill-dt-step">
+                            <div class="bill-title">
+                                <h4>支付详情</h4>
+                            </div>
+                            <div class="bill-descp">
+                                <div class="total-checkout-group p-0 border-top-0">
+                                    <div class="cart-total-dil">
+                                        <h4>商品合计</h4>
+                                        <span style="color:#f55d2c;font-weight:bold;font-size:19px;">￥@Model.all_price</span>
+                                    </div>
+                                    <div class="cart-total-dil pt-3">
+                                        <h4>配送费用</h4>
+                                        <span style="color:#f55d2c">￥@(Model.all_price/100)</span>
+                                    </div>
+                                </div>
+                                <div class="main-total-cart pl-0 pr-0 pb-0 border-bottom-0">
+                                    <h2>总计</h2>
+                                    <span style="font-size:24px;">￥@(Model.all_price*1.01)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill-dt-step">
+                            <div class="bill-bottom ">
+                                @using (Html.BeginForm("pay2048", "Account", FormMethod.Post, new { @style = "margin-left:85%;" }))
+                                {
+                                    for (var i = 0; i < Model.accountModeList.Count; ++i)
+                                    {
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_id, new { @type = "hidden", Value = Model.accountModeList[i].goods_id })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_name, new { @type = "hidden", Value = Model.accountModeList[i].goods_name })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].unit_price, new { @type = "hidden", Value = Model.accountModeList[i].unit_price })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].total_price, new { @type = "hidden", Value = Model.accountModeList[i].total_price })
+                                    }
+                                    <button class="print-btn hover-btn" type="submit">立即支付</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

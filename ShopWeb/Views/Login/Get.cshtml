@@ -1,0 +1,29 @@
+﻿@using ShopWeb.Models;
+@model MemberLoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width" />
+    <title>Get</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <h2>@Model.mem_pwd</h2>
+        <h2>@Model.mem_name</h2>
+        <h2>@Model.mem_phone</h2>
+        <h1>这是测试！！！</h1>
+        <button type="button" class="btn btn-default">测试</button>
+        <buton type="button" class="btn btn-primary">@Html.ActionLink("返回", "Index", "Login")</buton>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

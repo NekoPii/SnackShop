@@ -1,0 +1,292 @@
+﻿@using ShopWeb.Models
+@model PurchaseHomeTotalInfo
+@{
+    ViewBag.Title = "商品详情";
+}
+
+
+<div id="init_page"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 95;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0></h0>
+</div>
+
+<div id="alert_message_cart"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+
+    ">
+    <h0>添加该商品到购物车成功</h0>
+</div>
+
+<div id="alert_message_wish"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0>心愿单已更新</h0>
+</div>
+
+<div id="alert_message_log_err"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0>请先登录</h0>
+</div>
+
+<div class="all-product-grid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-dt-view">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <div id="sync1" class="owl-carousel owl-theme">
+                                @for(var i=0;i<Model.now_img_lists.Count;++i)
+                                {
+                                <div class="item">
+                                    <img src="@Model.now_img_lists[i].img_path" alt="">
+                                </div>
+                                }
+                            </div>
+                            <div id="sync2" class="owl-carousel owl-theme">
+                                @for (var i = 0; i < Model.now_img_lists.Count; ++i)
+                                {
+                                    <div class="item">
+                                        <img src="@Model.now_img_lists[i].img_path" alt="">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8">
+                            <div class="product-dt-right">
+                                <h2>@Model.now_goods_name</h2>
+                                <div class="no-stock">
+                                    <p class="pd-no">产品编号<span>@Model.now_goods_id</span></p>
+                                </div>
+                                <div style="padding-left:95%;">
+                                    @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+                                        @Html.TextBoxFor(now => now.wish_goods_id, new { @type = "hidden", Value = Model.now_goods_id })
+                                        if (Session["has_login"] == null)
+                                        {
+                                            <span class="log_err">
+                                                <button type="reset" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white"></button>
+                                            </span>
+                                        }
+                                        if (Session["has_login"] != null)
+                                        {
+                                            <span class="add_wish">
+                                                <button type="submit" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white"></button>
+                                            </span>
+                                        }
+
+                                    }
+                                </div>
+                                    <p class="pp-descp">@Model.now_goods_detail</p>
+                                    @using (Ajax.BeginForm("AddCart", "PurchaseCar", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+                                        <input type="hidden" value=@Model.now_goods_id name="goods_id_to_cart" />
+
+                                        <div class="product-group-dt">
+                                            <ul>
+                                                <li><h2>￥@Model.now_goods_unit_price</h2></li>
+                                            </ul>
+                                            <ul class="gty-wish-share">
+                                                <li>
+                                                    <div class="qty-product">
+                                                        <div class="quantity buttons_added">
+                                                            <input type="button" value="-" class="minus minus-btn">
+                                                            @Html.TextBoxFor(now => now.pcar_goods_num, new { @class = "input-text qty text", @step = "1", @name = "quantity", @placeholder = "0" })
+                                                            <input type="button" value="+" class="plus plus-btn">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul class="ordr-crt-share">
+
+                                                @if (Session["has_login"] == null)
+                                                {
+                                                    <li><button type="reset" class="add-cart-btn hover-btn log_err"><i class="uil uil-shopping-cart-alt"></i>加入购物车</button></li>
+                                                }
+                                                @if (Session["has_login"] != null)
+                                                {
+                                                    <li><button type="submit" class="add-cart-btn hover-btn add_cart"><i class="uil uil-shopping-cart-alt"></i>加入购物车</button></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                    <div class="pdp-details">
+                                        <ul>
+                                            <li>
+                                                <div class="pdp-group-dt">
+                                                    <div class="pdp-icon"><i class="uil uil-usd-circle"></i></div>
+                                                    <div class="pdp-text-dt">
+                                                        <span>保证最低价格</span>
+                                                        <p>如果别的地方更便宜，可以退还差价</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="pdp-group-dt">
+                                                    <div class="pdp-icon"><i class="uil uil-cloud-redo"></i></div>
+                                                    <div class="pdp-text-dt">
+                                                        <span>轻松退换货物</span>
+                                                        <p>支持上门退货，几秒钟内退款</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+                <div class="pdpt-bg">
+                    <div class="pdpt-title">
+                        <h4>产品细节</h4>
+                    </div>
+                    <div class="pdpt-body scrollstyle_4">
+                        <div class="pdct-dts-1">
+                            <div class="pdct-dt-step">
+                                <h4>产品介绍</h4>
+                                <p>@Model.now_goods_detail</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Products Start -->
+<div class="section145">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title-tt">
+                    <div class="main-title-left">
+                        <span>为您挑选</span>
+                        <h2>其他商品</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="owl-carousel featured-slider owl-theme" id="bar_02">
+                    @for (var i = 0; i < Model.total_goods_list.Count; ++i)
+                    {
+                        <div class="item">
+                            <div class="product-item" style="padding-top:5px;">
+                                <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
+                                </div>
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="product-img">
+                                    <img src=@Model.total_goods_list[i].goods_img_path alt="">
+                                </a>
+                                    @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+                                        @Html.TextBoxFor(now => now.wish_goods_id, new { @type = "hidden", Value = Model.total_goods_list[i].goods_id })
+                                        if (Session["has_login"] == null)
+                                        {
+                                            <span class="log_err">
+                                                <button type="reset" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px"></button>
+                                            </span>
+                                        }
+                                        if (Session["has_login"] != null)
+                                        {
+                                            <span class="add_wish">
+                                                <button type="submit" class="uil-heart has_not_liked" style="opacity:1;font-size:28px;border:none;background-color:white;margin-top:20px"></button>
+                                            </span>
+                                        }
+
+                                    }
+                                
+
+
+                                <div class="product-text-dt">
+                                    @using (Ajax.BeginForm("AddCart", "PurchaseCar", new AjaxOptions { HttpMethod = "Post" }))
+                                    {
+
+                                        <h4>@Model.total_goods_list[i].goods_name</h4>
+                                        <input type="hidden" value=@Model.total_goods_list[i].goods_id name="goods_id_to_cart" />
+                                        <div class="product-price">￥@Model.total_goods_list[i].unit_price</div>
+                                        <div class="qty-cart">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus minus-btn">
+                                                @Html.TextBoxFor(now => now.pcar_goods_num, new { @class = "input-text qty text", @step = "1", @name = "quantity", @placeholder = "0" })
+                                                <input type="button" value="+" class="plus plus-btn">
+                                            </div>
+
+                                            @if (Session["has_login"] == null)
+                                            {
+                                                <span class="cart-icon log_err">
+                                                    <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                            @if (Session["has_login"] != null)
+                                            {
+                                                <span class="cart-icon add_cart">
+                                                    <button type="submit" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products End -->

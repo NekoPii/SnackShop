@@ -1,0 +1,10 @@
+﻿@using ShopWeb.Models
+@model AccountModels
+
+
+<select class="form-control" id="ad_select_list" onfocus="update_select()" onchange="update_select()" onclick="update_select()">
+    @for (var i = 0; i < Model.addresses.Count; ++i)
+    {
+        <option>【@Model.addresses[i].address_tag】@Model.addresses[i].address</option>
+    }
+</select>

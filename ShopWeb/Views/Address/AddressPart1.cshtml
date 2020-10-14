@@ -1,0 +1,26 @@
+﻿@using ShopWeb.Models
+@model MemberAddress
+
+@for (int i = 0; i < Model.addresses.Count; ++i)
+{
+    var now_ad_text = "ad_" + i + "_text";
+    var now_ad_tag_text = "ad_" + i + "_tag_text";
+    <div class="address-item">
+        <div class="address-icon1">
+            <i class="uil uil-home-alt"></i>
+        </div>
+        <div class="address-dt-all" style="width:100%;">
+            <h4 id="@now_ad_tag_text">@Model.addresses[i].address_tag</h4>
+            <p id="@now_ad_text">@Model.addresses[i].address</p>
+            <ul class="action-btns">
+                <li style="float:left;"><a class="action-btn" data-backdrop="static" onclick="update_old_ad(@i)"><i class="uil uil-edit"></i></a></li>
+                @using (Ajax.BeginForm("Delete", "Address", new AjaxOptions {UpdateTargetId= "show_address_list" }))
+                {
+                    @Html.TextBoxFor(now => now.address, new { @type = "hidden", Value = Model.addresses[i].address })
+                    @Html.TextBoxFor(now => now.address_tag, new { @type = "hidden", Value = Model.addresses[i].address_tag })
+                    <li style="float:left;"><button type="submit" class="action-btn" style="background:white;border:none;"><i class="uil uil-trash-alt"></i></button></li>
+                }
+            </ul>
+        </div>
+    </div>
+}

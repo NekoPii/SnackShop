@@ -1,0 +1,88 @@
+﻿@using ShopWeb.Models
+@model MemberPurchaseListViewModel
+@{
+    ViewBag.Title = "购买记录";
+}
+
+<div class="dashboard-group">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="user-dt">
+                    <div class="user-img">
+                        <img src="~/Content/image/avatar/img-5.jpg" alt="头像">
+                    </div>
+                    <h4>@Session["mem_name"].ToString()</h4>
+                    <p>@Session["mem_phone"].ToString()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+
+                <div class="left-side-tabs">
+                    <div class="pdpt-bg-left mt-0">
+                        <div class="blog-search-widget" style="padding:0;">
+                            @using (Ajax.BeginForm("Search", "PurchaseList", new AjaxOptions { UpdateTargetId = "plist_part_view" }))
+                            {
+                                <div class="form-group blog-from mb-0">
+                                    @Html.TextBoxFor(now => now.search_id, new { @name = "search", @type = "text", @placeholder = "输入订单号查找", @class = "form-control input-md" })
+                                    <button type="submit" class="blog-search-btn">
+                                        <i class="uil uil-search"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="dashboard-left-links">
+                        <a href="@Url.Content("~/PurchaseList")" class="user-item active"><i class="uil uil-box"></i>我的购买记录</a>
+                        <a href="@Url.Content("~/PurchaseCar")" class="user-item "><i class="uil uil-shopping-cart-alt"></i>我的购物车</a>
+                        <a href="@Url.Content("~/WishList")" class="user-item"><i class="uil uil-heart"></i>我的收藏夹</a>
+                        <a href="@Url.Content("~/MemberInfo")" class="user-item"><i class="uil uil-user"></i>修改信息</a>
+                        <a href="@Url.Content("~/Address")" class="user-item"><i class="uil uil-location-point"></i>我的地址</a>
+                        <a href="@Url.Content("~/Login/LoginOut")" class="user-item"><i class="uil uil-exit"></i>注销</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="dashboard-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-title-tab">
+                                <h4><i class="uil uil-box"></i>我的购买记录</h4>
+                            </div>
+                        </div>
+                        @*<div class="col-md-7">
+                            <div class="pdpt-bg-left mt-0">
+                                <div class="blog-search-widget" style="padding:0;">
+                                    @using (Ajax.BeginForm("Search","PurchaseList",new AjaxOptions {UpdateTargetId= "plist_part_view" }))
+                                    {
+                                        <div class="form-group blog-from mb-0">
+                                            @Html.TextBoxFor(now=>now.search_id,new { @name = "search", @type = "text", @placeholder = "输入订单号查找", @class="form-control input-md" } )
+                                            <button type="submit" class="blog-search-btn">
+                                                <i class="uil uil-search"></i>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="col-lg-12 col-md-12">
+                            <div class="pdpt-bg">
+                                    <div id="plist_part_view" class="wishlist-body-dtt">
+                                        @{
+                                            Html.RenderPartial("PlistPart1", Model);
+                                        }
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

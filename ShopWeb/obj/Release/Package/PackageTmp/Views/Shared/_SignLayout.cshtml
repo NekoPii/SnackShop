@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css/css")
+    @Styles.Render("~/Content/vender/css")
+    @Scripts.Render("~/Content/js/js")
+    @Scripts.Render("~/Content/vender/js")
+    <link rel="icon" type="image/png" href="~/content/fav.png">
+</head>
+<header class="header clearfix">
+    <div class="top-header-group">
+        <div class="top-header">
+            <a href="@Url.Content("~/Home")">
+                <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
+                    <span>主页</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</header>
+<body>
+    <div class="sign-inup">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="sign-form">
+                        <div class="sign-inner">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $("#pwd_error_info,#phone_error_info").show();
+                setTimeout(function () {
+                    $("#pwd_error_info,#phone_error_info").hide();
+                }, 2000);
+            }, 0);
+        });
+    </script>
+</body>
+</html>

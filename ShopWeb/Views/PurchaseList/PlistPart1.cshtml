@@ -1,0 +1,54 @@
+﻿@using ShopWeb.Models
+@model MemberPurchaseListViewModel
+
+
+
+@if (Model == null || Model.purchase_lists.Count == 0)
+{
+    <div class="cart-item dashboard-group" style="background-color:white">
+        <div class="cart-text">
+            <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+        </div>
+    </div>
+}
+@if (Model != null && Model.purchase_lists.Count > 0)
+{
+    <div style="width: 100%;border-bottom: 1px solid #efefef;">
+        <h3 class="text-center" style="margin: 10px 0 10px 0;padding-top:10px;color:#f55d2c">共有记录:&nbsp;@Model.purchase_lists.Count &nbsp;条</h3>
+    </div>
+    foreach (var i in Model.purchase_lists)
+    {
+        <div class="cart-item">
+            <div class="cart-product-img">
+                <a href="@Url.Content("~/BuyGoods/Index/" + i.goods_id)" class="product-img">
+                    <img src="@i.goods_img_path" alt="">
+                </a>
+            </div>
+            <div class="cart-text">
+                <h2 style="margin-bottom:20px;">@i.goods_name</h2>
+                <h3 style="margin-bottom:20px;">订单号:&nbsp;@i.plist_id</h3>
+                <div class="col-md-12" style="margin:10px 0;padding:0">
+                    <div class="col-md-4" style="padding: 0">
+                        <div class="col-md-4" style="padding:0">单价</div>
+                        <div class="cart-item-price col-md-8" style="padding: 0">￥@i.unit_price</div>
+                    </div>
+                    <div class="col-md-4" style="padding: 0">
+                        <div class="col-md-4" style="padding:0">数量</div>
+                        <div class="cart-item-price col-md-8" style="padding: 0">@i.goods_num</div>
+                    </div>
+                    <div class="col-md-4" style="padding: 0">
+                        <div class="col-md-4" style="padding:0">总价</div>
+                        <div class="cart-item-price col-md-8" style="font-size:28px;padding:0">￥@i.total_price</div>
+                    </div>
+                </div>
+
+                <div class="col-md-8" style="margin:10px 0;padding:0">
+                    <div class="col-md-4" style="color:burlywood;padding:0">购买日期</div>
+                    <div class=" col-md-4" style="color:burlywood;padding:0">@i.date</div>
+                </div>
+
+            </div>
+        </div>
+    }
+}
+

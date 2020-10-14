@@ -1,0 +1,65 @@
+﻿@using ShopWeb.Models
+@model MemberLoginViewModel
+@{
+    ViewBag.Title = "登录";
+}
+
+
+<div class="form-dt" style="margin-top:80px;">
+    <div class="form-inpts checout-address-step">
+
+        <div class="form-title"><h6>登录</h6></div>
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        {
+            <div style="height:80px">
+                <div class="form-group pos_rel" style="margin-bottom:0px">
+
+                    @Html.TextBoxFor(now => now.mem_phone, new { @class = "form-control lgn_input", @placeholder = "请输入您的手机号", @name = "phone", @id = "input_phone" })
+                    <i class="uil uil-mobile-android-alt lgn_icon"></i>
+
+                </div>
+                <span id="help-block1" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_phone, "", new { @class = "text-danger" })
+                </span>
+            </div>
+
+            @*</div>*@
+            @*<div class="form-group has-feedback">*@
+            <div style="height:80px">
+                <div class="form-group pos_rel" style="margin-bottom:0px">
+
+                    @Html.TextBoxFor(now => now.mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码", @name = "password", @type = "password", @id = "input_pwd" })
+                    <i class="uil uil-padlock lgn_icon"></i>
+
+                    @*<input type="password" class="form-control" placeholder="PassWord" aria-describedby="sizing-addon1" name="password">*@
+                </div>
+                <span id="help-block2" class="help-block">
+                    @Html.ValidationMessageFor(now => now.mem_pwd, "", new { @class = "text-danger" })
+                    @if (ViewBag.LoginErrorMessage != null)
+                    {
+                        <span class="text-danger" id="pwd_error_info">
+                            @ViewBag.LoginErrorMessage
+                        </span>
+                    }
+                </span>
+            </div>
+            @*</div>*@
+            <input class="login-btn hover-btn" type="submit" value="登录" />
+
+        }
+        <div class="signup-link">
+            <p>没有账户? - @Html.ActionLink("注册", "Index", "SignUp")</p>
+
+        </div>
+        @*</form>*@
+    </div>
+</div>
+
+
+
+
+<!--  (这里加at)foreach (var i in Model.memberList)-->
+<!--    <li>Get示例 (这里加at)Html.ActionLink((string)i.id, "Get", new { id = i.id })</li>-->
+<!--******new里的前一个参数必须为id！！！！！！*******-->
+<!--        <li>ShowInfo示例 (这里加at)Html.ActionLink((string)i.id, "ShowInfo", new { id = i.id })</li>-->
+<!--例如，(这里加at)Html.ActionLink("detail", "Detail", new{ id = 1 })会生成<a href="Products/Detail/1">detail</a>-->

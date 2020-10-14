@@ -1,0 +1,29 @@
+﻿@using ShopWeb.Models;
+@model MemberListViewModel
+@{
+    ViewBag.Title = "管理员查看全部信息";
+}
+
+<h2>管理员查看全部信息</h2>
+<p>@Html.ActionLink("回到主页","Index","Home")</p>
+
+<table class="table table-hover table-condensed table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>Phone</td>
+            <td>Name</td>
+            <td>PassWord</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var info in Model.mem_list)//这里的Model代指上面的model及后面
+        {
+            <tr>
+                <td>@info.mem_phone</td>
+                <td>@info.mem_name</td>
+                <td>@info.mem_pwd</td>
+                
+            </tr>
+        }
+        </tbody>
+</table>

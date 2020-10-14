@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Styles.Render("~/Content/css/css")
+    @Styles.Render("~/Content/vender/css")
+
+    @Scripts.Render("~/Content/js/js")
+    @Scripts.Render("~/Content/vender/js")
+    <link rel="icon" type="image/png" href="~/content/fav.png">
+    <style>
+        .uil-heart.has_liked
+        {
+            color:orangered;
+        }
+        uil-heart.has_not_liked
+        {
+            color:gray;
+        }
+    </style>
+</head>
+<!-- Header Start -->
+<header class="header clearfix">
+    <div class="top-header-group">
+        <div class="top-header">
+            <a href=@Url.Content("~/Home")>
+                <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
+                    <span>主页</span>
+                </div>
+            </a>
+            <a href=@Url.Content("~/PurchaseCar")>
+                <div class="cart__btn hover-btn uil-shopping-cart-alt" style="height:60px;padding:20px 30px;">
+                    <span>购物车</span>
+                </div>
+            </a>
+            @*     <div class="center-block " margin-left:500px>
+            @Html.ActionLink("心愿单", "Index", "WishList")
+        </div>
+            *@
+            <div class="header_right">
+                <ul>
+                    <li>
+                        <a href="@Url.Content("~/WishList")" class="option_links" title="Wishlist"><i class='uil uil-heart icon_wishlist'></i></a>
+                    </li>
+                    @if (Session["has_login"] == null)
+                    {
+                        @Html.ActionLink("登入", "Index", "Login", new { }, new { @style = "color:#f55d2c;margin:0 5px;" })
+                        @Html.ActionLink("注册", "Index", "SignUp", new { }, new { @style = "color:#f55d2c;margin:0 5px;" })
+                    }
+                    @if (Session["has_login"] != null)
+                    {
+                        <li height="60px" class="ui dropdown " id="user_li">
+                            <a href=@Url.Content("~/MemberInfo")>
+                                <div class="opts_account" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    <img src="~/Content/image/avatar/img-5.jpg" alt="">
+                                                  <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;"> @Session["mem_name"].ToString()</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="menu dropdown_account user_div" id="user_btn">
+                                <div class="item channel_item"><i class="uil uil-apps icon__1"></i>@Html.ActionLink("我的信息", "Index", "MemberInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-box icon__1"></i>@Html.ActionLink("我的订单", "Index", "PurchaseList", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-heart icon__1"></i>@Html.ActionLink("我的心愿单", "Index", "WishList", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-lock-alt icon__1"></i>@Html.ActionLink("注销", "LoginOut", "Login", new { }, new { @style = "color:black" })</div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+<body>
+    <div class="wrapper" style="padding-top:60px;">
+        @RenderBody()
+    </div>
+    @*
+    <div class="copyright-text text-center mt-3">
+        <i class="uil uil-copyright"></i>Copyright 2020 <b>MJX</b> . All rights <a href="" title="">researved</a>
+    </div>*@
+
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $("#pwd_error_info,#phone_error_info").show();
+                setTimeout(function () {
+                    $("#pwd_error_info,#phone_error_info").hide();
+                }, 2000);
+            }, 0);
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#bar_01').owlCarousel(
+                {
+                    loop: true,
+                    autoPlay: false,
+                    navigation: true,
+                    navigationText: ["上一个", "下一个"]
+                });
+            $('#bar_02').owlCarousel({
+
+            });
+            $('#bar_03').owlCarousel({
+
+            });
+        })
+    </script>
+
+    <script>
+        $(function () {
+            $(".add_cart").click(function () {
+                $("#alert_message_cart").fadeIn("fast");
+                setTimeout(function () { $("#alert_message_cart").fadeOut("slow"); }, 400)
+            });
+
+        });
+        $(function () {
+            $(".log_err").click(function () {
+                $("#alert_message_log_err").fadeIn("fast");
+                setTimeout(function () { $("#alert_message_log_err").fadeOut("slow"); }, 400)
+            });
+
+        });
+        $(function () {
+            $(".add_wish").click(function () {
+                $("#alert_message_wish").fadeIn("fast");
+                setTimeout(function () { $("#alert_message_wish").fadeOut("slow"); }, 400)
+            });
+
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#alert_message_cart").hide();
+            }, 0)
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#alert_message_wish").hide();
+            }, 0)
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#alert_message_log_err").hide();
+            }, 0)
+        });
+
+        $(function () {
+            setTimeout(function () {
+                $("#init_page").hide();
+            }, 0)
+        });
+
+        $(document).ready(function () {
+
+            $("#user_li").hover(function () {
+                let user_li = document.getElementById('user_li');
+                let user_btn = document.getElementById('user_btn');
+                user_li.classList.add("active")
+                user_li.classList.add("visible")
+                user_btn.classList.add("left")
+                user_btn.classList.add("transition")
+                user_btn.classList.add("visible")
+                user_btn.classList.add("hidden")
+                user_btn.classList.remove("hidden")
+                user_btn.style.display = "display: block !important"
+
+
+            },
+                function () {
+                });
+        });
+
+        $(document).ready(function () {
+
+            $(".top-header-group").hover(function () {
+            },
+                function () {
+
+                    let user_li = document.getElementById('user_li');
+                    let user_btn = document.getElementById('user_btn');
+                    user_li.classList.add("active")
+                    user_li.classList.add("visible")
+                    user_btn.classList.add("left")
+                    user_btn.classList.add("transition")
+                    user_btn.classList.add("visible")
+                    user_btn.classList.add("hidden")
+                    user_btn.classList.remove("visible")
+                    user_li.classList.remove("active")
+                    user_li.classList.remove("visible")
+
+
+                });
+        });
+        $(document).ready(function () {
+
+            var sync1 = $("#sync1");
+            var sync2 = $("#sync2");
+            var slidesPerPage = 4; //globaly define number of elements per page
+            var syncedSecondary = true;
+
+            sync1.owlCarousel({
+                items: 1,
+                slideSpeed: 2000,
+                nav: true,
+                autoplay: false,
+                dots: false,
+                loop: true,
+                responsiveRefreshRate: 200,
+                navText: ["<i class='uil uil-angle-left'></i>", "<i class='uil uil-angle-right'></i>"],
+            }).on('changed.owl.carousel', syncPosition);
+
+            sync2
+                .on('initialized.owl.carousel', function () {
+                    sync2.find(".owl-item").eq(0).addClass("current");
+                })
+                .owlCarousel({
+                    items: slidesPerPage,
+                    dots: true,
+                    smartSpeed: 200,
+                    slideSpeed: 500,
+                    slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+                    responsiveRefreshRate: 100,
+                }).on('changed.owl.carousel', syncPosition2);
+
+            function syncPosition(el) {
+                //if you set loop to false, you have to restore this next line
+                //var current = el.item.index;
+
+                //if you disable loop you have to comment this block
+                var count = el.item.count - 1;
+                var current = Math.round(el.item.index - (el.item.count / 2) - .5);
+
+                if (current < 0) {
+                    current = count;
+                }
+                if (current > count) {
+                    current = 0;
+                }
+
+                //end block
+
+                sync2
+                    .find(".owl-item")
+                    .removeClass("current")
+                    .eq(current)
+                    .addClass("current");
+                var onscreen = sync2.find('.owl-item.active').length - 1;
+                var start = sync2.find('.owl-item.active').first().index();
+                var end = sync2.find('.owl-item.active').last().index();
+
+                if (current > end) {
+                    sync2.data('owl.carousel').to(current, 100, true);
+                }
+                if (current < start) {
+                    sync2.data('owl.carousel').to(current - onscreen, 100, true);
+                }
+            }
+
+            function syncPosition2(el) {
+                if (syncedSecondary) {
+                    var number = el.item.index;
+                    sync1.data('owl.carousel').to(number, 100, true);
+                }
+            }
+
+            sync2.on("click", ".owl-item", function (e) {
+                e.preventDefault();
+                var number = $(this).index();
+                sync1.data('owl.carousel').to(number, 300, true);
+            });
+        });
+    </script>
+</body>
+
+</html>

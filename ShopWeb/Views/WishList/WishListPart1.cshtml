@@ -1,0 +1,33 @@
+﻿@using ShopWeb.Models
+@model MemberWishListViewModel
+
+@if (Model.wish_lists.Count == 0)
+{
+    <div class="cart-item dashboard-group" style="background-color:white">
+        <div class="cart-text">
+            <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+        </div>
+    </div>
+}
+@if (Model.wish_lists.Count > 0)
+{
+    foreach (var i in Model.wish_lists)
+    {
+        <div class="cart-item">
+            <div class="cart-product-img">
+                <a href="@Url.Content("~/BuyGoods/Index/"+i.goods_id)" class="product-img">
+                    <img src="@i.goods_img_path" alt="">
+                </a>
+            </div>
+            <div class="cart-text">
+                <h4>@i.goods_name</h4>
+                <div class="cart-item-price">￥@i.goods_unit_price</div>
+                @using (Ajax.BeginForm("Index", "WishList", new AjaxOptions {UpdateTargetId="ajax_wish_list" }))
+                {
+                    <input type="hidden" value=@i.goods_id name="DeleteWishId" />
+                    <button type="submit" class="cart-close-btn"><i class="uil uil-trash-alt"></i></button>
+                }
+            </div>
+        </div>
+    }
+}

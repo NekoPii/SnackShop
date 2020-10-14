@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "交易成功";
+}
+
+
+<div class="all-product-grid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="order-placed-dt">
+                    <i class="uil uil-check-circle icon-circle"></i>
+                    <h2>支付成功！</h2>
+                    <p>感谢您的支持！</p>
+                    <div class="delivery-address-bg">
+                        <div class="title585">
+                            <div class="pln-icon"><i class="uil uil-telegram-alt"></i></div>
+                            <h4>送货地址为</h4>
+                        </div>
+                        <ul class="address-placed-dt1">
+                            <li><p><i class="uil uil-user"></i>收件人 :<span>@Session["mem_name"]</span></p></li>
+                            <li><p><i class="uil uil-map-marker-alt"></i>地址详情 :<span>@Session["mem_address"]</span></p></li>
+                            <li><p><i class="uil uil-phone-alt"></i>手机号 :<span>@Session["mem_phone"]</span></p></li>
+                        </ul>
+
+                        <div class="placed-bottom-dt">
+                            订单将在货物送达后完成结算。
+                        </div>
+                        <a href="@Url.Content("~/PurchaseList")" class="print-btn hover-btn" style="margin-left:38%;margin-bottom:15px">返回订单页查看</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
