@@ -8,7 +8,7 @@ namespace ShopModel
 {
     public class GoodsImg
     {
-        public string goods_id { set; get; }
+        public int goods_id { set; get; }
         public string img_path { set; get; }
     }
 }

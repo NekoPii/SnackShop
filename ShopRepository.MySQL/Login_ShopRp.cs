@@ -32,6 +32,7 @@ namespace ShopRepository.MySQL
                             mem_phone = reader.GetString("mem_phone"),
                             mem_pwd = reader.GetString("mem_pwd"),
                             mem_name = reader.GetString("mem_name"),
+                            mem_type=reader.GetInt32("mem_type"),
                         };
                     }
                     reader.Close();
@@ -47,14 +48,16 @@ namespace ShopRepository.MySQL
 
         public bool SignUp_Member(string phone,string pwd,string name)
         {
+            int mem_type = 1;
             bool flag = true;
-            string queryString = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name ";
+            string queryString = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name ,mem_type=@type";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd = new MySqlCommand(queryString, conn);
                 cmd.Parameters.Add(new MySqlParameter("@phone", phone));
                 cmd.Parameters.Add(new MySqlParameter("@pwd", pwd));
                 cmd.Parameters.Add(new MySqlParameter("@name", name));
+                cmd.Parameters.Add(new MySqlParameter("@type", mem_type));
                 try
                 {
                     conn.Open();
@@ -70,6 +73,78 @@ namespace ShopRepository.MySQL
             }
             return flag;
         }
+
+        //在注册成为用户的同时也直接注册成为卖家
+        public bool SignUp_Seller_Direct(string phone, string pwd, string name,string seller_address,string seller_count)
+        {
+            int mem_type = 2;
+            bool flag = true;
+            string queryString1 = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name ,mem_type=@mem_type ";
+            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_count=@seller_count";
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
+                MySqlCommand cmd2 = new MySqlCommand(queryString2, conn);
+                cmd1.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd1.Parameters.Add(new MySqlParameter("@pwd", pwd));
+                cmd1.Parameters.Add(new MySqlParameter("@name", name));
+                cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
+                cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_address", seller_address));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_count", seller_count));
+                try
+                {
+                    conn.Open();
+                    cmd1.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
+                }
+                catch
+                {
+                    flag = false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return flag;
+        }
+
+        //注册成为用户后再注册为卖家
+        public bool SignUp_Seller(string phone,string seller_address, string seller_count)
+        {
+            int mem_type = 2;
+            bool flag = true;
+            string queryString1 = "update members set mem_type=@type where mem_phone=@phone";
+            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_count=@seller_count";
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
+                MySqlCommand cmd2 = new MySqlCommand(queryString2, conn);
+                cmd1.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
+                cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_address", seller_address));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_count", seller_count));
+                try
+                {
+                    conn.Open();
+                    cmd1.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
+                }
+                catch
+                {
+                    flag = false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return flag;
+        }
+
+
 
         public List<Address> Show_MemberAddress(string phone)
         {

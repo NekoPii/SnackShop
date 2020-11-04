@@ -8,14 +8,18 @@ namespace ShopWeb.Models
     public class PurchaseHomeTotalInfo
     {
         public string mem_phone { set; get; }
-        public string pcar_goods_id { set; get; }
+        public int pcar_goods_id { set; get; }
         public int pcar_goods_num { set; get; }
-        public string wish_goods_id { set; get; }
+        public int wish_goods_id { set; get; }
 
-        public string now_goods_id { set; get; }
+        public int now_goods_id { set; get; }
         public string now_goods_name { set; get; }
         public float now_goods_unit_price { set; get; }
         public string now_goods_detail { set; get; }
+
+        public int now_stock { set; get; }
+        public int now_volume { set; get; }
+        public string now_seller_phone { set; get; }
 
         public List<MemberWishListViewModel> wish_lists { set; get; }
         public List<MemberPurchaseCarViewModel> pcar_list { set; get; }

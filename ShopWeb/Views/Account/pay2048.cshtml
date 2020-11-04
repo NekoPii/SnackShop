@@ -75,10 +75,11 @@
                 {
                     @Html.TextBoxFor(now => now.accountModeList[i].goods_id, new { @type = "hidden", Value = Model.accountModeList[i].goods_id })
                     @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
+                    @Html.TextBoxFor(now => now.accountModeList[i].seller_phone, new { @type = "hidden", Value = Model.accountModeList[i].seller_phone })
                 }
                 @Html.TextBoxFor(now => now.all_price, new { @type = "hidden", Value = Model.all_price })
                 @Html.TextBoxFor(now => now.score, new { @type = "hidden", Value = 0, id = "score_num" })
-                @Html.TextBoxFor(now=>now.address_text,new {@type="hidden",Value=Model.address_text })
+                @Html.TextBoxFor(now => now.address_text, new { @type = "hidden", Value = Model.address_text })
                 <button type="submit" id="score_submit" style="visibility:hidden;" value="@Model.all_price"></button>
             }
         </div>

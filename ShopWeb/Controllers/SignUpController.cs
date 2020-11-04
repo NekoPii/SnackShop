@@ -15,8 +15,23 @@ namespace ShopWeb.Controllers
             return View();
         }
 
+        public ActionResult Member()
+        {
+            return View();
+        }
+
+        public ActionResult Seller()
+        {
+            return View();
+        }
+
+        public ActionResult SellerDir()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult Index(MemberSignViewModel memberSignViewModel)
+        public ActionResult Member(MemberSignViewModel memberSignViewModel)
         {
             ViewBag.SignUpErrorMessage = null;
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
@@ -28,13 +43,14 @@ namespace ShopWeb.Controllers
             string userRePwd = memberSignViewModel.mem_re_pwd;
             if(ModelState.IsValid)
             {
-                if(loginMember.SignUpMemberByPhone(userPhone, userPwd,userName))
+                if(loginMember.SignUpMemberByPhone(userPhone,userPwd,userName))
                 {
                     Session["mem_name"] = loginMember.GetMemberByPhone(userPhone).mem_name;
                     Session["mem_phone"] = loginMember.GetMemberByPhone(userPhone).mem_phone;
                     Session["mem_pwd"] = loginMember.GetMemberByPhone(userPhone).mem_pwd;
+                    Session["mem_type"] = 1;
                     Session["has_login"] = "true";
-                    Session.Timeout = 10;
+                    Session.Timeout = 30;
                     return Redirect("/Home");
                 }
                 else
@@ -42,6 +58,73 @@ namespace ShopWeb.Controllers
                     ViewBag.SignUpErrorMessage = "该手机号已注册";
                     return View();
                 }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SellerDir(SellerDirSignViewModel sellerDirSignViewModel)
+        {
+            ViewBag.SignUpErrorMessage = null;
+            ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
+            //string userPhone = Request.Params["phone"];
+            //string userPwd = Request.Params["password"];
+            string userPhone = sellerDirSignViewModel.mem_phone;
+            string userName = sellerDirSignViewModel.mem_name;
+            string userPwd = sellerDirSignViewModel.mem_pwd;
+            string userRePwd = sellerDirSignViewModel.mem_re_pwd;
+            string sellCount = sellerDirSignViewModel.sell_count;
+            string sellAddress = sellerDirSignViewModel.sell_address;
+            if (ModelState.IsValid)
+            {
+                if (loginMember.SignUpSellerDir(userPhone, userPwd, userName,sellAddress,sellCount))
+                {
+                    Session["mem_name"] = userName;
+                    Session["mem_phone"] = userPhone;
+                    Session["mem_pwd"] = userPwd;
+                    Session["sell_count"] = sellCount;
+                    Session["sell_address"] = sellAddress;
+                    Session["mem_type"] = 2;
+                    Session["has_login"] = "true";
+                    Session.Timeout = 30;
+                    return Redirect("/Home");
+                }
+                else
+                {
+                    ViewBag.SignUpErrorMessage = "该手机号已注册";
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Seller(SellerSignViewModel sellerSignViewModel)
+        {
+            ViewBag.SignUpErrorMessage = null;
+            ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
+            //string userPhone = Request.Params["phone"];
+            //string userPwd = Request.Params["password"];
+            if (Session["mem_phone"] == null) return Redirect("/Home");
+            string phone = Session["mem_phone"].ToString();
+            string sellCount = sellerSignViewModel.sell_count;
+            string sellAddress = sellerSignViewModel.sell_address;
+            if (ModelState.IsValid)
+            {
+                if (loginMember.SignUpSeller(phone, sellAddress, sellCount))
+                {
+                    Session.Clear();
+                    Session["mem_phone"] = phone;
+                    Session["mem_name"] = loginMember.GetMemberByPhone(phone).mem_name;
+                    Session["mem_pwd"] = loginMember.GetMemberByPhone(phone).mem_pwd;
+                    Session["sell_count"] = sellCount;
+                    Session["sell_address"] = sellAddress;
+                    Session["mem_type"] = loginMember.GetMemberByPhone(phone).mem_type;
+                    Session["has_login"] = "true";
+                    Session.Timeout = 30;
+                    return Redirect("/Home");
+                }
+                else return View();
             }
             return View();
         }

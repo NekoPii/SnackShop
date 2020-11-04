@@ -12,5 +12,6 @@ namespace ShopModel
         public string mem_pwd { set; get; }//用于登入，作为密码
         public string mem_name { set; get; }
         public string mem_address { set; get; }
+        public int mem_type { set; get; }//用户类型
     }
 }

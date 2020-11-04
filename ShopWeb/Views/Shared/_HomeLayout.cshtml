@@ -30,16 +30,56 @@
 <header class="header clearfix">
     <div class="top-header-group">
         <div class="top-header">
-            <a href=@Url.Content("~/Home")>
-                <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
-                    <span>主页</span>
-                </div>
-            </a>
-            <a href=@Url.Content("~/PurchaseCar")>
-                <div class="cart__btn hover-btn uil-shopping-cart-alt" style="height:60px;padding:20px 30px;">
-                    <span>购物车</span>
-                </div>
-            </a>
+            @if (Session["has_login"] == null)
+            {
+                <a href=@Url.Content("~/Home")>
+                    <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
+                        <span>主页</span>
+                    </div>
+                </a>
+                <a href=@Url.Content("~/PurchaseCar")>
+                    <div class="cart__btn hover-btn uil-shopping-cart-alt" style="height:60px;padding:20px 30px;">
+                        <span>购物车</span>
+                    </div>
+                </a>
+                <a href=@Url.Content("~/SignUp/SellerDir")>
+                    <div class="seller_btn seller_hover_btn uil-store-alt" style="height:60px; padding: 20px 30px;">
+                        <span>去开店</span>
+                    </div>
+                </a>
+            }
+            @if (Session["has_login"] != null && Convert.ToInt32(Session["mem_type"]) == 1)
+            {
+                <a href=@Url.Content("~/Home")>
+                    <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
+                        <span>主页</span>
+                    </div>
+                </a>
+                <a href=@Url.Content("~/PurchaseCar")>
+                    <div class="cart__btn hover-btn uil-shopping-cart-alt" style="height:60px;padding:20px 30px;">
+                        <span>购物车</span>
+                    </div>
+                </a>
+                <a href=@Url.Content("~/SignUp/Seller")>
+                    <div class="seller_btn seller_hover_btn uil-store-alt" style="height:60px; padding: 20px 30px;">
+                        <span>去开店</span>
+                    </div>
+                </a>
+            }
+            @if (Session["has_login"] != null && Convert.ToInt32(Session["mem_type"]) == 2)
+            {
+                <a href=@Url.Content("~/Home")>
+                    <div class="cart__btn hover-btn uil-home-alt" style="height:60px;padding:20px 30px">
+                        <span>主页</span>
+                    </div>
+                </a>
+                <a href=@Url.Content("~/SellHome")>
+                    <div class="seller_btn seller_hover_btn uil-store" style="height:60px; padding: 20px 30px;">
+                        <span>我的店铺</span>
+                    </div>
+                </a>
+            }
+
             @*     <div class="center-block " margin-left:500px>
             @Html.ActionLink("心愿单", "Index", "WishList")
         </div>
@@ -60,7 +100,7 @@
                             <a href=@Url.Content("~/MemberInfo")>
                                 <div class="opts_account" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                     <img src="~/Content/image/avatar/img-5.jpg" alt="">
-                                                  <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;"> @Session["mem_name"].ToString()</span>
+                                    <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;"> @Session["mem_name"].ToString()</span>
                                     <i class="uil uil-angle-down"></i>
                                 </div>
                             </a>
@@ -128,23 +168,36 @@
             });
 
         });
+
+        $(function () {
+            $(".no_stock").click(function () {
+                $("#alert_no_stock").fadeIn("fast");
+                setTimeout(function () { $("#alert_no_stock").fadeOut("slow"); }, 400)
+            });
+        });
+
         $(function () {
             $(".log_err").click(function () {
                 $("#alert_message_log_err").fadeIn("fast");
                 setTimeout(function () { $("#alert_message_log_err").fadeOut("slow"); }, 400)
             });
-
         });
+
         $(function () {
             $(".add_wish").click(function () {
                 $("#alert_message_wish").fadeIn("fast");
                 setTimeout(function () { $("#alert_message_wish").fadeOut("slow"); }, 400)
             });
-
         });
+
         $(function () {
             setTimeout(function () {
                 $("#alert_message_cart").hide();
+            }, 0)
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#alert_no_stock").hide();
             }, 0)
         });
         $(function () {

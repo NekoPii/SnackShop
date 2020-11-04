@@ -103,7 +103,7 @@ namespace ShopWeb.Controllers
             foreach(var goods in goods_items)
             {
                 var plist_id = now_time.ToString("yyyyMMddHHmmssfff") + mem_phone;
-                memberPurchase.addPurchaseLists(plist_id,mem_phone, goods.goods_id, goods.goods_num,now_time);
+                memberPurchase.addPurchaseLists(plist_id,mem_phone, goods.goods_id, goods.goods_num,now_time,goods.seller_phone);
                 memberPurchase.deletePurchaseCar(mem_phone, goods.goods_id);
             }
             return Json("购买商品成功");

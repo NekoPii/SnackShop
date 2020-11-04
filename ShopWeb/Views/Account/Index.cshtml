@@ -193,10 +193,7 @@
                                         <span class="col-md-2 text-center">@info.goods_num</span>
                                         <span class="col-md-3 text-center">￥@info.total_price</span>
                                     </div>
-
                                 }
-
-
                             </div>
                         </div>
                         <div class="bill-dt-step">
@@ -246,6 +243,7 @@
                                         @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
                                         @Html.TextBoxFor(now => now.accountModeList[i].unit_price, new { @type = "hidden", Value = Model.accountModeList[i].unit_price })
                                         @Html.TextBoxFor(now => now.accountModeList[i].total_price, new { @type = "hidden", Value = Model.accountModeList[i].total_price })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].seller_phone, new { @type = "hidden", Value = Model.accountModeList[i].seller_phone })
                                     }
                                     if (Model.addresses.Count >= 1)
                                     {

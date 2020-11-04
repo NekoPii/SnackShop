@@ -30,6 +30,7 @@ namespace ShopWeb.Controllers
                     goods_img_path=memberPurchase.getGoods(pcar_info.goods_id).goods_img_path,
                     unit_price = memberPurchase.getGoods(pcar_info.goods_id).goods_price,
                     total_price = memberPurchase.getGoods(pcar_info.goods_id).goods_price * pcar_info.goods_num,
+                    sell_stock=memberPurchase.getGoods(pcar_info.goods_id).goods_stock,
                 }).ToList();
                 var resView = new MemberPurchaseCarViewModel()
                 {
@@ -42,12 +43,12 @@ namespace ShopWeb.Controllers
 
         //用于从购物车页删除商品
         [HttpPost]
-        public ActionResult  Index(string DeletePcarId)
+        public ActionResult Index(int DeletePcarId)
         {
             Session.Remove("ReturnToPurchaseCar");
             string mem_phone = Session["mem_phone"].ToString();
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
-            memberPurchase.deletePurchaseCar(mem_phone, DeletePcarId);
+            memberPurchase.deletePurchaseCar(mem_phone,DeletePcarId);
             var pcar_list = memberPurchase.getPurchaseCarList(Session["mem_phone"].ToString()).Select(pcar_info => new MemberPurchaseCarViewModel()
             {
                 goods_id = pcar_info.goods_id,
@@ -62,7 +63,7 @@ namespace ShopWeb.Controllers
                 mem_phone = Session["mem_phone"].ToString(),
                 pcar_list = pcar_list,
             };
-            return View(resView);
+            return PartialView("PCarPart1",resView);
         }
 
         //用于从主页添加至购物车
@@ -71,7 +72,7 @@ namespace ShopWeb.Controllers
         {
             Session.Remove("ReturnToPurchaseCar");
             string mem_phone = Session["mem_phone"].ToString();
-            string goods_id = Request.Params["goods_id_to_cart"];
+            int goods_id =Convert.ToInt32(Request.Params["goods_id_to_cart"]);
             int goods_num = purchaseHomeTotalInfo.pcar_goods_num;
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
             if (memberPurchase.addPurchaseCar(mem_phone, goods_id, goods_num)) { }

@@ -73,6 +73,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -81,6 +84,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -155,6 +164,9 @@
     <Compile Include="Controllers\MemberInfoController.cs" />
     <Compile Include="Controllers\PurchaseCarController.cs" />
     <Compile Include="Controllers\PurchaseListController.cs" />
+    <Compile Include="Controllers\SellGoodsController.cs" />
+    <Compile Include="Controllers\SellHomeController.cs" />
+    <Compile Include="Controllers\SellInfoController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,6 +174,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\GoodsImgView.cs" />
+    <Compile Include="Models\GoodsTag.cs" />
     <Compile Include="Models\MemberAddress.cs" />
     <Compile Include="Models\MemberLoginViewModel.cs" />
     <Compile Include="Models\MemberModifyInfo.cs" />
@@ -170,6 +183,10 @@
     <Compile Include="Models\MemberSignViewModel.cs" />
     <Compile Include="Models\MemberWishListViewModel.cs" />
     <Compile Include="Models\PurchaseHomeTotalInfo.cs" />
+    <Compile Include="Models\SellerDirSignViewModel.cs" />
+    <Compile Include="Models\SellerInfoViewModel.cs" />
+    <Compile Include="Models\SellerSignViewModel.cs" />
+    <Compile Include="Models\SellGoodsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +233,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Get.cshtml" />
     <Content Include="Views\ManagerAllInfo\Index.cshtml" />
-    <Content Include="Views\SignUp\Index.cshtml" />
+    <Content Include="Views\SignUp\Member.cshtml" />
     <Content Include="Views\Shared\_SignLayout.cshtml" />
     <Content Include="Views\PurchaseCar\Index.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
@@ -234,6 +251,16 @@
     <Content Include="Views\PurchaseList\PlistPart1.cshtml" />
     <Content Include="Views\Address\AddressPart1.cshtml" />
     <Content Include="Views\WishList\WishListPart1.cshtml" />
+    <Content Include="Views\Shared\_SellerHomeLayout.cshtml" />
+    <Content Include="Views\SellHome\Index.cshtml" />
+    <Content Include="Views\SignUp\Index.cshtml" />
+    <Content Include="Views\SignUp\Seller.cshtml" />
+    <Content Include="Views\SignUp\SellerDir.cshtml" />
+    <Content Include="Views\SellHome\SellHomePart1.cshtml" />
+    <Content Include="Views\SellGoods\Index.cshtml" />
+    <Content Include="Views\SellInfo\Index.cshtml" />
+    <Content Include="Views\SellInfo\SellList.cshtml" />
+    <Content Include="Views\SellInfo\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -261,6 +288,9 @@
       <Project>{17f6a0a9-80b5-45bd-9f37-96f5cfc3c954}</Project>
       <Name>ShopRepository.MySQL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

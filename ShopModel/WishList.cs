@@ -8,6 +8,6 @@ namespace ShopModel
 {
     public class WishList
     {
-        public string goods_id { set; get; }
+        public int goods_id { set; get; }
     }
 }

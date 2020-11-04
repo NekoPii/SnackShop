@@ -8,7 +8,7 @@ namespace ShopModel
 {
     public class PurchaseCar
     {
-        public string goods_id { set; get; }
+        public int goods_id { set; get; }
         public int goods_num { set; get; }
     }
 }

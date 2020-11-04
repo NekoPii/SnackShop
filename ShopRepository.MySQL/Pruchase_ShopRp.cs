@@ -29,7 +29,7 @@ namespace ShopRepository.MySQL
                     {
                         result.Add(new PurchaseCar()
                         {
-                            goods_id = reader.GetString("pcar_goods_id"),
+                            goods_id = reader.GetInt32("pcar_goods_id"),
                             goods_num = reader.GetInt32("pcar_goods_num"),
                         });
                     }
@@ -44,7 +44,7 @@ namespace ShopRepository.MySQL
             return result;
         }
 
-        public PurchaseCar GetPurchaseCarItem(string mem_phone,string goods_id)
+        public PurchaseCar GetPurchaseCarItem(string mem_phone,int goods_id)
         {
             string sql = "select pcar_goods_num from purchasecars where pcar_mem_phone=@mem_phone and pcar_goods_id=@goods_id";
             var result = new PurchaseCar();
@@ -76,6 +76,35 @@ namespace ShopRepository.MySQL
             return result;
         }
 
+        public List<GoodsTag> GetAllTags()
+        {
+            string sql = "select * from goods_tag";
+            var result = new List<GoodsTag>();
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                try
+                {
+                    conn.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        result.Add(new GoodsTag()
+                        {
+                            tag=reader.GetString("tag"),
+                        });
+                    }
+                    reader.Close();
+                }
+                catch { }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return result;
+        }
+
         public List<WishList> GetWishLists(string mem_phone)
         {
             string sql = "select wish_goods_id from wishlists where wish_mem_phone=@mem_phone";
@@ -92,7 +121,7 @@ namespace ShopRepository.MySQL
                     {
                         result.Add(new WishList()
                         {
-                            goods_id=reader.GetString("wish_goods_id"),
+                            goods_id=reader.GetInt32("wish_goods_id"),
                         });
                     }
                     reader.Close();
@@ -106,7 +135,7 @@ namespace ShopRepository.MySQL
             return result;
         }
 
-        public List<GoodsImg> GetGoodsImgPath(string goods_id)
+        public List<GoodsImg> GetGoodsImgPath(int goods_id)
         {
             string sql = "select img_path from goods_img where goods_id=@goods_id";
             var result = new List<GoodsImg>();
@@ -154,7 +183,7 @@ namespace ShopRepository.MySQL
                         result.Add(new PurchaseList()
                         {
                             plist_id=reader.GetString("plist_id"),
-                            goods_id=reader.GetString("plist_goods_id"),
+                            goods_id=reader.GetInt32("plist_goods_id"),
                             goods_name=reader.GetString("plist_goods_name"),
                             goods_num=reader.GetInt32("plist_goods_num"),
                             date=reader.GetDateTime("plist_date"),
@@ -191,7 +220,7 @@ namespace ShopRepository.MySQL
                         result.Add(new PurchaseList()
                         {
                             plist_id=search_id,
-                            goods_id = reader.GetString("plist_goods_id"),
+                            goods_id = reader.GetInt32("plist_goods_id"),
                             goods_name = reader.GetString("plist_goods_name"),
                             goods_num = reader.GetInt32("plist_goods_num"),
                             date = reader.GetDateTime("plist_date"),
@@ -212,7 +241,7 @@ namespace ShopRepository.MySQL
 
         public List<Goods> GetGoodsList()
         {
-            string sql = "select goods_id,goods_name,goods_price,goods_detail,goods_img_path,goods_small_img_path from goods";
+            string sql = "select * from goods join sell_goods where goods_id=sell_goods_id";
             var result = new List<Goods>();
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
@@ -225,12 +254,15 @@ namespace ShopRepository.MySQL
                     {
                         result.Add(new Goods()
                         {
-                            goods_id = reader.GetString("goods_id"),
+                            goods_id = reader.GetInt32("goods_id"),
                             goods_name = reader.GetString("goods_name"),
                             goods_price = reader.GetFloat("goods_price"),
                             goods_details = reader.GetString("goods_detail"),
                             goods_img_path = reader.GetString("goods_img_path"),
-                            goods_small_img_path=reader.GetString("goods_small_img_path"),
+                            goods_stock = reader.GetInt32("sell_stock"),
+                            goods_volume = reader.GetInt32("sell_volume"),
+                            seller_phone = reader.GetString("seller_phone"),
+                            goods_tag=reader.GetString("goods_tag"),
                         });
                     }
                     reader.Close();
@@ -244,9 +276,9 @@ namespace ShopRepository.MySQL
             return result;
         }
 
-        public Goods GetGoods (string goods_id)
+        public Goods GetGoods (int goods_id)
         {
-            string sql = "select goods_name,goods_price,goods_detail,goods_img_path,goods_small_img_path from goods where goods_id=@goods_id";
+            string sql = "select * from goods join sell_goods where goods_id=@goods_id and goods_id=sell_goods_id";
             var result = new Goods();
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
@@ -265,7 +297,10 @@ namespace ShopRepository.MySQL
                             goods_price=reader.GetFloat("goods_price"),
                             goods_details=reader.GetString("goods_detail"),
                             goods_img_path=reader.GetString("goods_img_path"),
-                            goods_small_img_path=reader.GetString("goods_small_img_path"),
+                            goods_stock=reader.GetInt32("sell_stock"),
+                            goods_volume=reader.GetInt32("sell_volume"),
+                            seller_phone=reader.GetString("seller_phone"),
+                            goods_tag = reader.GetString("goods_tag"),
                         };
                     }
                     reader.Close();
@@ -279,7 +314,7 @@ namespace ShopRepository.MySQL
             return result;
         }
 
-        public bool AddWishList(string mem_phone,string goods_id)
+        public bool AddWishList(string mem_phone,int goods_id)
         {
             bool flag = true;
             string sql = "insert into wishlists set wish_mem_phone=@mem_phone , wish_goods_id=@goods_id ";
@@ -305,10 +340,10 @@ namespace ShopRepository.MySQL
             return flag;
         }
 
-        public bool AddPurchaseLists(string plist_id,string mem_phone,string goods_id,int num,DateTime date_time)
+        public bool AddPurchaseLists(string plist_id,string mem_phone,int goods_id,int num,DateTime date_time,string seller_phone)
         {
             bool flag = true;
-            string sql = "insert into purchaselists set plist_id=@plist_id , plist_mem_phone=@mem_phone , plist_goods_id=@goods_id ,plist_goods_name=@goods_name , plist_date=@date_time,plist_goods_num=@num,plist_goods_unit_price=@unit_price,plist_goods_total_price=@total_price";
+            string sql = "insert into purchaselists set plist_id=@plist_id , plist_mem_phone=@mem_phone , plist_goods_id=@goods_id ,plist_goods_name=@goods_name , plist_date=@date_time,plist_goods_num=@num,plist_goods_unit_price=@unit_price,plist_goods_total_price=@total_price,plist_seller_phone=@seller_phone";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -320,6 +355,7 @@ namespace ShopRepository.MySQL
                 cmd.Parameters.Add(new MySqlParameter("@num", num));
                 cmd.Parameters.Add(new MySqlParameter("@unit_price", GetGoods(goods_id).goods_price));
                 cmd.Parameters.Add(new MySqlParameter("@total_price", GetGoods(goods_id).goods_price * num));
+                cmd.Parameters.Add(new MySqlParameter("@seller_phone", seller_phone));
                 try
                 {
                     conn.Open();
@@ -337,7 +373,7 @@ namespace ShopRepository.MySQL
             return flag;
         }
 
-        public bool AddPurchaseCar(string mem_phone,string goods_id,int num)
+        public bool AddPurchaseCar(string mem_phone,int goods_id,int num)
         {
             bool flag = true;
             string sql = "insert into purchasecars set pcar_mem_phone=@mem_phone , pcar_goods_id=@goods_id ,pcar_goods_num=@num";
@@ -364,7 +400,7 @@ namespace ShopRepository.MySQL
             return flag;
         }
 
-        public void UpdatePurchaseCar(string mem_phone,string goods_id,int num)
+        public void UpdatePurchaseCar(string mem_phone,int goods_id,int num)
         {
             string sql = "update purchasecars set pcar_goods_num=@num where pcar_mem_phone=@mem_phone and pcar_goods_id=@goods_id";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
@@ -386,7 +422,7 @@ namespace ShopRepository.MySQL
             }
         }
 
-        public void DeletePurchaseCar(string mem_phone,string goods_id)
+        public void DeletePurchaseCar(string mem_phone,int goods_id)
         {
             string sql = "delete from purchasecars where pcar_mem_phone=@mem_phone and pcar_goods_id=@goods_id";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
@@ -407,7 +443,7 @@ namespace ShopRepository.MySQL
             }
         }
 
-        public void DeleteWishList(string mem_phone, string goods_id)
+        public void DeleteWishList(string mem_phone, int goods_id)
         {
             string sql = "delete from wishlists where wish_mem_phone=@mem_phone and wish_goods_id=@goods_id";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))

@@ -40,7 +40,25 @@
         padding-top:70px;
 
     ">
-    <h0>添加该商品到购物车成功</h0>
+    <h0>添加该商品到购物车成功！</h0>
+</div>
+
+<div id="alert_no_stock"
+     class=" Offer-shop-btn hover-btn"
+     style=" width: 300px;
+        height: 150px;
+        position: fixed;
+        z-index: 90;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top:70px;
+    ">
+    <h0>库存不足！请重新选择</h0>
 </div>
 
 <div id="alert_message_wish"
@@ -58,7 +76,7 @@
         font-size: 18px;
         padding-top:70px;
     ">
-    <h0>心愿单已更新</h0>
+    <h0>心愿单已更新！</h0>
 </div>
 
 <div id="alert_message_log_err"
@@ -76,32 +94,39 @@
         font-size: 18px;
         padding-top:70px;
     ">
-    <h0>请先登录</h0>
+    <h0>请先登录！</h0>
 </div>
+
 
 <div class="main-banner-slider">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="owl-carousel offers-banner owl-theme" id="bar_01">
-                @for (var i = 0; i < Model.total_goods_list.Count; ++i)
-                {
-                    <div class="item">
-
-                        <div class="offer-item">
-                            <div class="offer-item-img">
-                                <div class="gambo-overlay"></div>
-                                <img src="@Model.total_goods_list[i].goods_small_img_path" alt="">
-                            </div>
-                            <div class="offer-text-dt">
-                                <div class="offer-top-text-banner">
-                                    <div class="top-text-1">@Model.total_goods_list[i].goods_name</div>
+                    @for (var i = 0; i < Model.total_goods_list.Count; ++i)
+                    {
+                        <div class="item">
+                            <div class="offer-item">
+                                <div class="offer-item-img">
+                                    <div class="gambo-overlay"></div>
+                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="暂时无法显示" height="220">
                                 </div>
-                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="Offer-shop-btn hover-btn">现在选购</a>
+                                <div class="offer-text-dt">
+                                    <div class="offer-top-text-banner">
+                                        <div class="top-text-1">@Model.total_goods_list[i].goods_name</div>
+                                    </div>
+                                    @if (Model.total_goods_list[i].sell_stock > 0)
+                                    {
+                                        <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="Offer-shop-btn hover-btn">现在选购</a>
+                                    }
+                                    @if (Model.total_goods_list[i].sell_stock <= 0)
+                                    {
+                                        <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="Offer-shop-btn hover-btn disabled">已售罄</a>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
                 </div>
             </div>
         </div>
@@ -129,8 +154,8 @@
                                 <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
                                 </div>
 
-                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="product-img">
-                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="">
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
+                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="" style="height:25vw;width:100%;">
                                 </a>
                                 @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
                                 {
@@ -154,6 +179,16 @@
                                         <h4>@Model.total_goods_list[i].goods_name</h4>
                                         <input type="hidden" value=@Model.total_goods_list[i].goods_id name="goods_id_to_cart" />
                                         <div class="product-price">￥@Model.total_goods_list[i].unit_price</div>
+                                        <div style="margin:10px 0;">
+                                            <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
+                                                <span style="color:#f55d2c">销量:</span>
+                                                <span style="color:#f55d2c">@Model.total_goods_list[i].sell_volume</span>
+                                            </div>
+                                            <div style="font-weight:bold;font-size:13px;padding-left:30px;display:inline-block;">
+                                                <span style="color:#00C9FF">库存:</span>
+                                                <span style="color:#00C9FF">@Model.total_goods_list[i].sell_stock</span>
+                                            </div>
+                                        </div>
                                         <div class="qty-cart">
                                             <div class="quantity buttons_added">
                                                 <input type="button" value="-" class="minus minus-btn">
@@ -166,7 +201,13 @@
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
                                                 </span>
                                             }
-                                            @if (Session["has_login"] != null)
+                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock <= 0)
+                                            {
+                                                <span class="cart-icon no_stock">
+                                                    <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock > 0)
                                             {
                                                 <span class="cart-icon add_cart">
                                                     <button type="submit" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
@@ -198,17 +239,17 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id.ToString())" class="best-offer-item">
                     <img src="~/content/image/HomePage/leftImg.png" alt="">
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id.ToString())" class="best-offer-item">
                     <img src="~/content/image/HomePage/midImg.png" alt="">
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id)" class="best-offer-item offr-none">
+                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[0].goods_id.ToString())" class="best-offer-item offr-none">
                     <img src="~/content/image/HomePage/rightImg.png" alt="">
                 </a>
             </div>
@@ -237,15 +278,15 @@
             <div class="col-md-12">
                 <div class="owl-carousel featured-slider owl-theme" id="bar_03">
                     @for (
-                        var i = Model.total_goods_list.Count/2; i < Model.total_goods_list.Count; ++i)
+                        var i = Model.total_goods_list.Count / 2; i < Model.total_goods_list.Count; ++i)
                     {
                         <div class="item">
                             <div class="product-item" style="padding-top:5px;">
                                 <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
                                 </div>
 
-                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id)" class="product-img">
-                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="">
+                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
+                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="" style="height:25vw;width:100%;">
                                 </a>
                                 @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
                                 {
@@ -269,6 +310,16 @@
                                         <h4>@Model.total_goods_list[i].goods_name</h4>
                                         <input type="hidden" value=@Model.total_goods_list[i].goods_id name="goods_id_to_cart" />
                                         <div class="product-price">￥@Model.total_goods_list[i].unit_price</div>
+                                        <div style="margin:10px 0;">
+                                            <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
+                                                <span style="color:#f55d2c">销量:</span>
+                                                <span style="color:#f55d2c">@Model.total_goods_list[i].sell_volume</span>
+                                            </div>
+                                            <div style="font-weight:bold;font-size:13px;padding-left:30px;display:inline-block;">
+                                                <span style="color:#00C9FF">库存:</span>
+                                                <span style="color:#00C9FF">@Model.total_goods_list[i].sell_stock</span>
+                                            </div>
+                                        </div>
                                         <div class="qty-cart">
                                             <div class="quantity buttons_added">
                                                 <input type="button" value="-" class="minus minus-btn">
@@ -281,7 +332,13 @@
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
                                                 </span>
                                             }
-                                            @if (Session["has_login"] != null)
+                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock <= 0)
+                                            {
+                                                <span class="cart-icon no_stock">
+                                                    <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
+                                                </span>
+                                            }
+                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock > 0)
                                             {
                                                 <span class="cart-icon add_cart">
                                                     <button type="submit" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>

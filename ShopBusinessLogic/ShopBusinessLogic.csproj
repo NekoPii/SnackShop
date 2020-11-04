@@ -73,6 +73,7 @@
     <Compile Include="Manager.cs" />
     <Compile Include="MemberPurchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SellerSell.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShopModel\ShopModel.csproj">

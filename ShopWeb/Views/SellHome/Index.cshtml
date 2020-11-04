@@ -1,0 +1,293 @@
+﻿@using ShopWeb.Models
+@model SellGoodsViewModel
+@{
+    ViewBag.Title = "我的店铺";
+}
+
+<style>
+    .a-upload {
+        padding: 4px 10px;
+        line-height: 25px;
+        position: relative;
+        cursor: pointer;
+        color: #888;
+        background: #fafafa;
+        border: none;
+        border-radius: 4px;
+        overflow: hidden;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1
+    }
+
+        .a-upload input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            cursor: pointer
+        }
+
+        .a-upload:hover {
+            color: #444;
+            background: #eee;
+            text-decoration: none
+        }
+
+        .a-upload:focus {
+            border: none;
+        }
+
+        .a-upload:checked {
+            border: none;
+        }
+
+    .form-control:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border: 1px solid #00C9FF !important;
+    }
+
+        .form-control:focus + .lgn_icon {
+            color: #00C9FF;
+        }
+
+    ul.code-alrt-inputs input:focus {
+        box-shadow: none;
+        border: 1px solid #00C9FF;
+    }
+
+    .ui.input > input:focus {
+        border: 1px solid #00C9FF !important;
+    }
+
+    .scrollstyle_4::-webkit-scrollbar {
+        width: 4px;
+        background-color: #f1f1f1;
+    }
+
+    .scrollstyle_4::-webkit-scrollbar-thumb {
+        background-color: #e5e5e5;
+    }
+
+    .scrollstyle_4::-webkit-scrollbar-track {
+        background-color: #F5F5F5;
+    }
+    
+</style>
+
+<div id="add_goods_modal" class="header-cate-model main-gambo-model modal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="background-image:none;">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner" style="margin-top:20px;">
+            <div class="category-model-content modal-content">
+                <div class="cate-header">
+                    <h4>上架商品</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @using (Html.BeginForm("Index", "SellHome", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="control-label">商品分类</label>
+                                            <select class="form-control" id="tag_select_list" onfocus="update_select()" onchange="update_select()" onclick="update_select()">
+                                                <option selected="selected">@Model.total_goods_tags[0].goods_tag</option>
+                                                @for (var i = 1; i < Model.total_goods_tags.Count; ++i)
+                                                {
+                                                    <option>@Model.total_goods_tags[i].goods_tag</option>
+                                                }
+                                            </select>
+                                            @Html.TextBoxFor(now => now.goods_tag, new { @type = "hidden", Value = Model.total_goods_tags[0].goods_tag, @id = "now_select_tag" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 address-fieldset">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group" style="margin:0">
+                                                    <label class="control-label">商品名称:</label>
+                                                    @Html.TextBoxFor(now => now.goods_name, new { @class = "form-control input-md", @placeholder = "名称", @id = "name_input" })
+                                                </div>
+                                                <span id="help-block1" class="help-block">
+                                                    @Html.ValidationMessageFor(now => now.goods_name, "", new { @class = "text-danger" })
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group" style="margin:0">
+                                                    <label class="control-label">商品价格:</label>
+                                                    @Html.TextBoxFor(now => now.goods_price, new { @class = "form-control input-md", @placeholder = "价格", @id = "price_input" })
+                                                </div>
+                                                <span id="help-block2" class="help-block">
+                                                    @Html.ValidationMessageFor(now => now.goods_price, "", new { @class = "text-danger" })
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group" style="margin:0">
+                                                    <label class="control-label">商品库存:</label>
+                                                    @Html.TextBoxFor(now => now.sell_stock, new { @class = "form-control input-md", @placeholder = "库存", @id = "stock_input" })
+                                                </div>
+                                                <span id="help-block3" class="help-block">
+                                                    @Html.ValidationMessageFor(now => now.sell_stock, "", new { @class = "text-danger" })
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group" style="margin:0">
+                                                    <label class="control-label">商品简介:</label>
+                                                    @Html.TextAreaFor(now => now.goods_detail, new { @class = "form-control input-md", @placeholder = "简介", @id = "detail_input" })
+                                                </div>
+                                                <span id="help-block3" class="help-block">
+                                                    @Html.ValidationMessageFor(now => now.goods_detail, "", new { @class = "text-danger" })
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12" style="margin:0">
+                                                <div class="form-group" style="margin-bottom:20px;">
+                                                    <label class="control-label" style="width:100%;"><i class="uil uil-image-upload"></i>上传图片:<span style="color:#00C9FF;font-size:12px;margin-left:40%">上传图片大小不能超过4MB</span></label>
+                                                    <input type="file" name="image" class="a-upload" style="border:none;outline:none;width:100%" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-4">
+                                                <div class="form-group mb-0">
+                                                    <div class="address-btns">
+                                                        <button class="sell-save-btn14 seller_hover_btn" type="submit">确定添加</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-4">
+                                                <div class="form-group mb-0">
+                                                    <div class="address-btns">
+                                                        <button class="sell-save-btn14 seller_hover_btn" type="button" onclick="add_success()">返回</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete_goods_modal" class="header-cate-model main-gambo-model modal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="background-image:none">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner" style="margin-top:150px;">
+            <div class="category-model-content modal-content">
+                <div class="cate-header">
+                    <h4>警告</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @using (Ajax.BeginForm("DeleteGoods", "SellHome", new AjaxOptions { UpdateTargetId = "all_sell_goods", OnSuccess = "delete_success", OnFailure = "delete_fail" }))
+                                {
+                                    <div class="address-fieldset">
+                                        <div class="row">
+                                            <h3 style="margin:20px 0 30px 0;padding-left:30px;">请再次确认下架操作!下架以后不可以恢复!</h3>
+                                            <input type="hidden" id="deleteGoodsId" name="deleteGoodsId" value="" />
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group mb-0">
+                                                    <div class="address-btns" style="padding:0 67.5px;">
+                                                        <button class="sell-save-btn14 seller_hover_btn" type="submit">确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group mb-0">
+                                                    <div class="address-btns" style="padding:0 67.5px;">
+                                                        <button class="sell-save-btn14 seller_hover_btn" type="button" onclick="delete_success()">取消</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products Start -->
+
+<div class="section145" style="padding-top:20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <div class="main-title-tt">
+                        <div class="main-title-left">
+                            <span>我的店铺</span>
+                            <h2>在售商品</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button class="sell-save-btn14 seller_hover_btn" data-backdrop="static" onclick="open_add_modal()" style="border:#00C9FF 2px solid;float:right;width:200px;height:60px;font-size:20px;">上架商品</button>
+                </div>
+            </div>
+            <div class="col-md-12 goods_list" id="all_sell_goods">
+                @{
+                    Html.RenderPartial("SellHomePart1", Model);
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products End -->
+
+<script>
+    function update_select() {
+        $("#now_select_tag").val($("#tag_select_list").val());
+    }
+
+    function open_add_modal() {
+        $("#name_input").val("");
+        $("#price_input").val("");
+        $("#stock_input").val("");
+        $("#detail_input").val("");
+        $("#add_goods_modal").addClass("show");
+        $("#add_goods_modal").modal({ backdrop: "static", keyboard: false });
+        $("#add_goods_modal").modal("show");
+
+    }
+
+    function add_success() {
+        $("#add_goods_modal").modal("hide");
+        if ($("#add_goods_modal").hasClass("show")) {
+            $("#add_goods_modal").removeClass("show");
+        }
+    }
+
+    function add_fail() {
+        alert("商品上架失败,请检查图片大小不能超过2MB!");
+    }
+
+    function delete_success() {
+        $("#delete_goods_modal").modal("hide");
+        if ($("#delete_goods_modal").hasClass("show")) {
+            $("#delete_goods_modal").removeClass("show");
+        }/*
+        $(".modal-backdrop").remove();*/
+    }
+
+    function delete_fail() {
+        alert("下架失败!");
+    }
+
+    function open_delete_modal(goods_id) {
+        $("#deleteGoodsId").val(goods_id);
+        $("#delete_goods_modal").addClass("show");
+        $("#delete_goods_modal").modal({ backdrop: "static", keyboard: false });
+        $("#delete_goods_modal").modal("show");
+    }
+
+</script>

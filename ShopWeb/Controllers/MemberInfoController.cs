@@ -21,11 +21,7 @@ namespace ShopWeb.Controllers
             else
             {
                 Session.Remove("ReturnToMemberInfo");
-                var resView = new MemberModifyInfo()
-                {
-                    old_true_pwd = Session["mem_pwd"].ToString(),
-                };
-                return View(resView);
+                return View();
             }
         }
 
@@ -48,6 +44,16 @@ namespace ShopWeb.Controllers
                 Session["mem_name"] = new_name;
             }
             return Redirect("MemberInfo");
+        }
+
+        [HttpGet]
+        public ActionResult Validate(string old_mem_pwd)
+        {
+            string phone = Session["mem_phone"].ToString();
+            ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
+            string true_pwd = loginMember.GetMemberByPhone(phone).mem_pwd;
+            return Json(old_mem_pwd == true_pwd, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

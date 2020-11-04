@@ -8,13 +8,15 @@ namespace ShopWeb.Models
     public class MemberPurchaseCarViewModel
     {
         public string mem_phone { set; get; }
-        public string goods_id { set; get; }
+        public string seller_phone { set; get; }
+        public int goods_id { set; get; }
         public string goods_name { set; get; }
         public string goods_img_path { set; get; }
-        public string goods_small_img_path { set; get; }
         public float unit_price { set; get; }
         public float total_price { set; get; }
         public int goods_num { set; get; }
+        public int sell_stock { set; get; }
+        public int sell_volume { set; get; }
         public List<MemberPurchaseCarViewModel> pcar_list { set; get; }
         public List<MemberPurchaseCarViewModel> select_list { set; get; }
     }

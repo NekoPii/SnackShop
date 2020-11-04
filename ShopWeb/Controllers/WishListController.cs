@@ -44,7 +44,7 @@ namespace ShopWeb.Controllers
         {
             Session.Remove("ReturnToWishList");
             string mem_phone = Session["mem_phone"].ToString();
-            string goods_id = purchaseHomeTotalInfo.wish_goods_id;
+            int goods_id = purchaseHomeTotalInfo.wish_goods_id;
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
             if (memberPurchase.addWishList(mem_phone, goods_id)) { }
             else
@@ -57,11 +57,11 @@ namespace ShopWeb.Controllers
 
         //更新心愿单，主要是在心愿单页删除心愿商品
         [HttpPost]
-        public ActionResult Index(string DeleteWishId)
+        public ActionResult Index(int DeleteWishId)
         {
             Session.Remove("ReturnToWishList");
             string mem_phone = Session["mem_phone"].ToString();
-            string goods_id = DeleteWishId;
+            int goods_id = DeleteWishId;
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
             memberPurchase.deleteWishList(mem_phone, goods_id);
             var wish_list = memberPurchase.getWishLists(Session["mem_phone"].ToString()).Select(wish_info => new MemberWishListViewModel()

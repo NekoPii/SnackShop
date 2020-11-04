@@ -9,8 +9,10 @@ namespace ShopWeb.Models
     public class AccountModels
     {
         public string mem_phone { set; get; }
-        public string goods_id { set; get; }
+        public int goods_id { set; get; }
         public string goods_name { set; get; }
+
+        public string seller_phone { set; get; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "地址不能为空")]
         public string address { set; get; }

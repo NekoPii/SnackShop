@@ -46,14 +46,18 @@ namespace ShopWeb.Controllers
             {
                 Session.Remove("has_pay");
                 ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
+                ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
                 var account_list = accountModels.accountModeList;
                 string mem_phone = Session["mem_phone"].ToString();
                 DateTime now_time = DateTime.Now;
                 for (int i = 0; i < account_list.Count; ++i)
                 {
                     var now_plist_id = now_time.ToString("yyyyMMddHHmmssfff") + mem_phone;
-                    memberPurchase.addPurchaseLists(now_plist_id,mem_phone, account_list[i].goods_id, account_list[i].goods_num, now_time);
+                    //string now_seller_phone = memberPurchase.getGoods(account_list[i].goods_id).seller_phone;
+                    memberPurchase.addPurchaseLists(now_plist_id,mem_phone, account_list[i].goods_id, account_list[i].goods_num, now_time,account_list[i].seller_phone);
                     memberPurchase.deletePurchaseCar(mem_phone, account_list[i].goods_id);
+                    sellerSell.reduceStock(account_list[i].goods_id, account_list[i].goods_num);
+                    sellerSell.addVolume(account_list[i].goods_id, account_list[i].goods_num);
                 }
                 return View(accountModels);
             }
@@ -77,13 +81,15 @@ namespace ShopWeb.Controllers
             {
                 if (selected[i] != null && selected[i] == "on")
                 {
+                    var now_item = memberPurchase.getGoods(submit_list[i].goods_id);
                     var item = new AccountModels()
                     {
                         goods_id = submit_list[i].goods_id,
-                        goods_name = memberPurchase.getGoods(submit_list[i].goods_id).goods_name,
+                        goods_name = now_item.goods_name,
                         goods_num = submit_list[i].goods_num,
-                        unit_price = memberPurchase.getGoods(submit_list[i].goods_id).goods_price,
-                        total_price = memberPurchase.getGoods(submit_list[i].goods_id).goods_price * submit_list[i].goods_num,
+                        unit_price = now_item.goods_price,
+                        total_price = now_item.goods_price * submit_list[i].goods_num,
+                        seller_phone=now_item.seller_phone,
                     };
                     if (item.goods_num > 0)
                     {

@@ -17,8 +17,10 @@ namespace ShopWeb.Controllers
                 goods_id = goods_info.goods_id,
                 goods_name = goods_info.goods_name,
                 goods_img_path = goods_info.goods_img_path,
-                goods_small_img_path=goods_info.goods_small_img_path,
                 unit_price = goods_info.goods_price,
+                sell_stock=goods_info.goods_stock,
+                sell_volume=goods_info.goods_volume,
+                seller_phone=goods_info.seller_phone,
             }).ToList();
             var resView = new PurchaseHomeTotalInfo()
             {

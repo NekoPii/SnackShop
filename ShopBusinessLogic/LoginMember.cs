@@ -21,6 +21,16 @@ namespace ShopBusinessLogic
             return rp.SignUp_Member(phone, pwd, name);
         }
 
+        public bool SignUpSellerDir(string phone,string pwd,string name,string sell_address,string sell_count)
+        {
+            return rp.SignUp_Seller_Direct(phone, pwd, name, sell_address, sell_count);
+        }
+
+        public bool SignUpSeller(string phone,string sell_address,string sell_count)
+        {
+            return rp.SignUp_Seller(phone, sell_address, sell_count);
+        }
+
         public List<Address> ShowMemberAddress(string phone)
         {
             return rp.Show_MemberAddress(phone);

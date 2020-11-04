@@ -60,7 +60,6 @@
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
                                                         <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_1 => now_1.old_true_pwd, new { @type = "hidden", Value = Session["mem_pwd"] })
                                                         @Html.TextBoxFor(now_1 => now_1.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password"})
                                                     </div>
                                                     <span id="help-block1" class="help-block">
@@ -98,8 +97,7 @@
                                             {
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_2 => now_2.old_true_pwd, new { @type = "hidden", Value = Session["mem_pwd"] })
+                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>                                                   
                                                         @Html.TextBoxFor(now_2 => now_2.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                     </div>
                                                     <span id="help-block1" class="help-block text-danger">
@@ -169,9 +167,9 @@
                                             }
 
                                         </div>
-                                    *@
                                     </div>
                                 </div>
+                                    *@
                             </div>
                         </div>
                     </div>

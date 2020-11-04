@@ -17,6 +17,8 @@ namespace ShopWeb.Models
         public string mem_pwd { set; get; }
 
         public string mem_name { set; get; }
+
+        public int mem_type { set; get; }
     }
 
     public class MemberListViewModel

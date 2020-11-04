@@ -57,7 +57,6 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="pdpt-bg">
                                 <div class="wishlist-body-dtt">
-
                                     @if (Model == null || Model.pcar_list.Count == 0)
                                     {
                                         <div class="cart-item dashboard-group" style="background-color:white">
@@ -75,36 +74,46 @@
 
                                                 @for (var i = 0; i < Model.pcar_list.Count(); ++i)
                                                 {
-                                                    <div class="cart-item">
+                                                    if (Model.pcar_list[i].sell_stock < Model.pcar_list[i].goods_num)
+                                                    {
+                                                        Model.pcar_list[i].goods_num = Model.pcar_list[i].sell_stock;
+                                                        Model.pcar_list[i].total_price = Model.pcar_list[i].goods_num * Model.pcar_list[i].unit_price;
+                                                    }
+                                                <div class="cart-item">
 
-                                                        <input type="checkbox" class="checkbox" name="selected" onclick="check_select(@i)" style="margin-right:20px;" />
+                                                    <input type="checkbox" class="checkbox" name="selected" onclick="check_select(@i)" style="margin-right:20px;" />
 
-                                                        @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
-
-                                                        <div class="cart-product-img">
-                                                            <a href="@Url.Content("~/BuyGoods/Index/"+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
-                                                                <img src="@Model.pcar_list[i].goods_img_path" alt="">
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="cart-text">
-                                                            <h4>@Model.pcar_list[i].goods_name</h4>
-                                                            <div class="cart-item-price" style="margin-top:10px;"></div>
-                                                            <span>单价：￥</span><span class="u_p">@Model.pcar_list[i].unit_price</span>
-                                                        </div>
-
-                                                        <div class="quantity buttons_added" style="padding-top:10px;">
-                                                            <span>数量：</span>
-                                                            <button type="button" onclick="sub_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">-</button>
-                                                            <input class="input-text qty text q_t" value="@Model.pcar_list[i].goods_num" onchange="change_num(@i)" onfocus="save_oldnum(@i)" />
-                                                            @Html.TextBoxFor(now => now.select_list[i].goods_num, new { @type = "hidden", Value = Model.pcar_list[i].goods_num })
-                                                            <input type="hidden" class="oldnum" value="@Model.pcar_list[i].goods_num" />
-                                                            <button type="button" onclick="add_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">+</button>
-                                                        </div>
-                                                        <div class="cart-text" style="padding-top:10px;padding-left:150px;">
-                                                            <h4><span>总价：￥</span><span class="t_p">@Model.pcar_list[i].total_price</span></h4>
-                                                        </div>
+                                                    @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
+                                                    @Html.TextBoxFor(now => now.select_list[i].seller_phone, new { @type = "hidden", Value = Model.pcar_list[i].seller_phone })
+                                                    <div class="cart-product-img">
+                                                        <a href="@Url.Content("~/BuyGoods/Index/"+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
+                                                            <img src="@Model.pcar_list[i].goods_img_path" alt="">
+                                                        </a>
                                                     </div>
+
+                                                    <div class="cart-text">
+                                                        <h4>@Model.pcar_list[i].goods_name</h4>
+                                                        <div class="cart-item-price" style="margin-top:10px;"></div>
+                                                        <span>单价：￥</span><span class="u_p">@Model.pcar_list[i].unit_price</span>
+                                                    </div>
+
+                                                    <div class="quantity buttons_added" style="padding-top:10px;">
+                                                        <span>数量：</span>
+                                                        <button type="button" onclick="sub_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">-</button>
+                                                        <input class="input-text qty text q_t" value="@Model.pcar_list[i].goods_num" onchange="change_num(@i)" onfocus="save_oldnum(@i)" />
+                                                        @Html.TextBoxFor(now => now.select_list[i].goods_num, new { @type = "hidden", Value = Model.pcar_list[i].goods_num })
+                                                        <input type="hidden" class="oldnum" value="@Model.pcar_list[i].goods_num" />
+                                                        <button type="button" onclick="add_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">+</button>
+                                                    </div>
+                                                    <div class="cart-text" style="font-weight:bold;font-size:16px;padding:15px 0;display:inline-block;width:60%;">
+                                                        <span style="color:#00C9FF">(库存:</span>
+                                                        <span class="s_t" style="color:#00C9FF">@Model.pcar_list[i].sell_stock</span>
+                                                        <span style="color:#00C9FF">)</span>
+                                                    </div>
+                                                    <div class="cart-text" style="padding-top:10px;width:50%;">
+                                                        <h4><span>总价：￥</span><span class="t_p">@Model.pcar_list[i].total_price</span></h4>
+                                                    </div>
+                                                </div>
                                                 }
                                             </div>
                                             <p style="font-size:22px;margin-left:30px;margin-top:15px;">总价</p>
@@ -161,11 +170,14 @@
             goods_num = cart_item.getElementsByClassName("q_t")[0],
             goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
             goods_sum_price = document.getElementsByClassName("t_p")[i],
+            goods_stock = document.getElementsByClassName("s_t")[i],
             all_total_price = document.getElementById("select_total_price");
-        goods_num.value++;
-        goods_num_hidden.value++;
-        goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
-        if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price;
+        if (parseInt(goods_stock.innerHTML) > parseInt(goods_num.value)) {
+            goods_num.value++;
+            goods_num_hidden.value++;
+            goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
+            if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price;
+        }
     }
 
     function sub_num(i) {
@@ -217,8 +229,11 @@
             goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
             all_total_price = document.getElementById("select_total_price"),
             goods_sum_price = document.getElementsByClassName("t_p")[i],
+            goods_stock = document.getElementsByClassName("s_t")[i],
             goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0];
 
+        if (parseInt(now_num.value) > parseInt(goods_stock.innerHTML)) now_num.value = goods_stock.innerHTML;
+        if (parseInt(now_num.value) < 0) now_num.value = "0";
         if (now_num.value >= 0) {
             goods_num_hidden.value = now_num.value;
             goods_sum_price.innerHTML = now_num.value * goods_unit_price;

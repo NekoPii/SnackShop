@@ -1,0 +1,52 @@
+﻿@using ShopWeb.Models
+@model SellGoodsViewModel
+
+<div class="history-body scrollstyle_4" style="height:50vw;">
+    @if (Model.total_sell_goods.Count == 0)
+    {
+        <div class="cart-item dashboard-group" style="background-color:white">
+            <div class="cart-text">
+                <h1 style="height:440px;text-align:center;padding-top:220px;">这里空空如也什么也没有~</h1>
+            </div>
+        </div>
+    }
+    <ul class="history-list">
+        @for (var i = 0; i < (Model.total_sell_goods.Count / 3) + 1; ++i)
+        {
+            <li>
+                @for (var j = i * 3; j < Model.total_sell_goods.Count && j < (i + 1) * 3; ++j)
+                {
+                    <div class="item col-sm-6 col-md-5 col-lg-4" style="margin:10px 0;">
+                        <div class="product-item" style="padding-top:20px;">
+                            <a href="@Url.Content("~/SellGoods/Index/" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
+                                <img src="@Model.total_sell_goods[j].goods_img_path" alt="暂时无法显示" style="height:20vw;width:100%;">
+                            </a>
+
+                            <div class="product-text-dt col-md-12" style="margin-top:20px;padding:0;">
+                                <h4 class="col-md-12" style="padding:0;">@Model.total_sell_goods[j].goods_name</h4>
+                                <input type="hidden" value=@Model.total_sell_goods[j].goods_id name="goods_id_to_cart" />
+                                <div class="product-price col-md-12" style="color:red;padding:0;">￥@Model.total_sell_goods[j].goods_price</div>
+                            </div>
+                            <div class="col-md-6" style="font-weight:bold;font-size:16px;padding:0px;">
+                                <span style="color:#f55d2c">销量:</span>
+                                <span style="color:#f55d2c">@Model.total_sell_goods[j].sell_volume</span>
+                            </div>
+                            <div class="col-md-6" style="font-weight:bold;font-size:16px;padding:0px;">
+                                <span style="color:#00C9FF">库存:</span>
+                                <span style="color:#00C9FF">@Model.total_sell_goods[j].sell_stock</span>
+                            </div>
+                            <div style="padding-top:120px;">
+                                @{
+                                    var now_gid = j;
+                                    var id_str = "btn_" + now_gid.ToString();
+                                }
+                                <button class="Sign_sell_btn seller_hover_btn" data-backdrop="static" onclick="open_delete_modal(@Model.total_sell_goods[j].goods_id)" style="border:none;width:100px;height:30px;font-size:14px;padding:8px 0 10px 0">下架</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </li>
+        }
+    </ul>
+</div>
+

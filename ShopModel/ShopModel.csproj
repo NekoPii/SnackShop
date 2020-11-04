@@ -73,10 +73,12 @@
     <Compile Include="Address.cs" />
     <Compile Include="Goods.cs" />
     <Compile Include="GoodsImg.cs" />
+    <Compile Include="GoodsTag.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseCar.cs" />
     <Compile Include="PurchaseList.cs" />
+    <Compile Include="Seller.cs" />
     <Compile Include="WishList.cs" />
   </ItemGroup>
   <ItemGroup>

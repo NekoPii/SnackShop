@@ -1219,3 +1219,12 @@ E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\obj\Debug\ShopWeb.csproj.CoreCompileInpu
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\obj\Debug\ShopWeb.csproj.CopyComplete
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\obj\Debug\ShopWeb.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\obj\Debug\ShopWeb.pdb
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Net.Http.Formatting.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Web.Http.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Web.Http.WebHost.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Net.Http.Formatting.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Web.Http.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\System.Web.Http.WebHost.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\zh-Hans\System.Web.Http.resources.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\zh-Hans\System.Web.Http.WebHost.resources.dll

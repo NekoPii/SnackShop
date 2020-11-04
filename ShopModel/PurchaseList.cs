@@ -10,8 +10,9 @@ namespace ShopModel
     {
         //public string mem_phone { set; get; }
         public string plist_id { set; get; }
-        public string goods_id { set; get; }
+        public int goods_id { set; get; }
         public string goods_name { set; get; }
+        public string seller_phone { set; get; }
         public DateTime date { set; get; }
         public int goods_num { set; get; }
         public float unit_price { set; get; }
