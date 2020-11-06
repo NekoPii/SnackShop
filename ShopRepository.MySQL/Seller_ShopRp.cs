@@ -293,7 +293,7 @@ namespace ShopRepository.MySQL
         public List<PurchaseList> GetSellList(string seller_phone)
         {
             var res = new List<PurchaseList>();
-            string sql1 = "select * from sell_goods join purchaselists where sell_goods_id=plist_goods_id and plist_seller_phone=seller_phone and seller_phone=@phone order by plist_date desc";
+            string sql1 = "select * from purchaselists where plist_seller_phone=@phone order by plist_date desc";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(sql1, conn);
@@ -307,13 +307,14 @@ namespace ShopRepository.MySQL
                 {
                     res.Add(new PurchaseList
                     {
-                        goods_id=reader.GetInt32("sell_goods_id"),
+                        mem_phone=reader.GetString("plist_mem_phone"),
+                        goods_id=reader.GetInt32("plist_goods_id"),
                         goods_name=reader.GetString("plist_goods_name"),
                         goods_num=reader.GetInt32("plist_goods_num"),
                         date=reader.GetDateTime("plist_date"),
                         unit_price=reader.GetFloat("plist_goods_unit_price"),
                         total_price=reader.GetFloat("plist_goods_total_price"),
-                        seller_phone=reader.GetString("plist_seller_phone"),
+                        seller_phone=seller_phone,
                         plist_id=reader.GetString("plist_id"),
                     });
                 }
@@ -326,7 +327,7 @@ namespace ShopRepository.MySQL
         public List<PurchaseList> GetSellListPerGoods(string seller_phone,int sell_goods_id)
         {
             var res = new List<PurchaseList>();
-            string sql1 = "select * from sell_goods join purchaselists where seller_phone=@phone and plist_goods_id=@sell_goods_id and sell_goods_id=plist_goods_id order by plist_date desc";
+            string sql1 = "select * from purchaselists where plist_seller_phone=@phone and plist_goods_id=@sell_goods_id order by plist_date desc";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(sql1, conn);
@@ -341,13 +342,14 @@ namespace ShopRepository.MySQL
                 {
                     res.Add(new PurchaseList
                     {
-                        goods_id = reader.GetInt32("sell_goods_id"),
+                        mem_phone = reader.GetString("plist_mem_phone"),
+                        goods_id = sell_goods_id,
                         goods_name = reader.GetString("plist_goods_name"),
                         goods_num = reader.GetInt32("plist_goods_num"),
                         date = reader.GetDateTime("plist_date"),
                         unit_price = reader.GetFloat("plist_goods_unit_price"),
                         total_price = reader.GetFloat("plist_goods_total_price"),
-                        seller_phone = reader.GetString("plist_seller_phone"),
+                        seller_phone = seller_phone,
                         plist_id = reader.GetString("plist_id"),
                     });
                 }
@@ -360,7 +362,7 @@ namespace ShopRepository.MySQL
         public float GetAllIncome(string seller_phone)
         {
             float res = 0;
-            string sql1 = "select sum(plist_goods_total_price) as total_sum from purchaselists where seller_phone=@phone";
+            string sql1 = "select sum(plist_goods_total_price) as sum from purchaselists where plist_seller_phone=@phone";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(sql1, conn);
@@ -372,7 +374,7 @@ namespace ShopRepository.MySQL
                 MySqlDataReader reader = cmd1.ExecuteReader();
                 while (reader.Read())
                 {
-                    res = reader.GetFloat("total_sum");
+                    res = reader.GetFloat("sum");
                 }
 
                 conn.Close();
@@ -383,7 +385,7 @@ namespace ShopRepository.MySQL
         public float GetIncomeByMonth(string seller_phone,DateTime now)
         {
             float res = 0;
-            string sql1 = "select sum(plist_goods_total_price) as from purchaselists where seller_phone=@phone group by date_format(@now,'%Y-%m')";
+            string sql1 = "select sum(plist_goods_total_price) as sum from purchaselists where plist_seller_phone=@phone and date_format(plist_date,'%Y%m')=date_format(@now,'%Y%m')";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(sql1, conn);
@@ -396,7 +398,7 @@ namespace ShopRepository.MySQL
                 MySqlDataReader reader = cmd1.ExecuteReader();
                 while (reader.Read())
                 {
-                    res = reader.GetFloat("plist_goods_total_price");
+                    res = reader.GetFloat("sum");
                 }
 
                 conn.Close();

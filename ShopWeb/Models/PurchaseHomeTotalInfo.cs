@@ -20,6 +20,7 @@ namespace ShopWeb.Models
         public int now_stock { set; get; }
         public int now_volume { set; get; }
         public string now_seller_phone { set; get; }
+        public string now_seller_name { set; get; }
 
         public List<MemberWishListViewModel> wish_lists { set; get; }
         public List<MemberPurchaseCarViewModel> pcar_list { set; get; }

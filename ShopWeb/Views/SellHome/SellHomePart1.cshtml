@@ -19,7 +19,7 @@
                     <div class="item col-sm-6 col-md-5 col-lg-4" style="margin:10px 0;">
                         <div class="product-item" style="padding-top:20px;">
                             <a href="@Url.Content("~/SellGoods/Index/" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
-                                <img src="@Model.total_sell_goods[j].goods_img_path" alt="暂时无法显示" style="height:20vw;width:100%;">
+                                <div class="zoomImage11" style="background-image:url(@Model.total_sell_goods[j].goods_img_path)"></div>
                             </a>
 
                             <div class="product-text-dt col-md-12" style="margin-top:20px;padding:0;">

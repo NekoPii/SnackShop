@@ -16,6 +16,11 @@ namespace ShopBusinessLogic
             return rp.Login_GetMemberByPhone(phone);
         }
 
+        public Seller getSeller(string phone)
+        {
+            return rp.GetSeller(phone);
+        }
+
         public bool SignUpMemberByPhone(string phone,string pwd,string name)
         {
             return rp.SignUp_Member(phone, pwd, name);
@@ -60,6 +65,16 @@ namespace ShopBusinessLogic
         public void ModifyMemberPwd(string phone,string new_pwd)
         {
             rp.Modify_MemberPwd(phone, new_pwd);
+        }
+
+        public void ModifySellerAddress(string phone,string address)
+        {
+            rp.Modify_SellerAddress(phone, address);
+        }
+
+        public void ModifySellerCount(string phone,string count)
+        {
+            rp.Modify_SellerCount(phone, count);
         }
     }
 }

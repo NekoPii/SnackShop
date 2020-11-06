@@ -46,6 +46,37 @@ namespace ShopRepository.MySQL
             return result;
         }
 
+        public Seller GetSeller(string phone)
+        {
+            string queryString = "select * from seller where seller_phone=@phone";
+            var result = new Seller();
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd = new MySqlCommand(queryString, conn);
+                cmd.Parameters.Add(new MySqlParameter("@phone", phone));
+                try
+                {
+                    conn.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        result = new Seller()
+                        {
+                            seller_address=reader.GetString("seller_address"),
+                            seller_count=reader.GetString("seller_count"),
+                        };
+                    }
+                    reader.Close();
+                }
+                catch { }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return result;
+        }
+
         public bool SignUp_Member(string phone,string pwd,string name)
         {
             int mem_type = 1;
@@ -143,8 +174,6 @@ namespace ShopRepository.MySQL
             }
             return flag;
         }
-
-
 
         public List<Address> Show_MemberAddress(string phone)
         {
@@ -289,6 +318,48 @@ namespace ShopRepository.MySQL
                     cmd.ExecuteNonQuery();
                 }
                 catch{}
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public void Modify_SellerCount(string phone, string new_count)
+        {
+            string queryString = "update seller set seller_count=@new_count where seller_phone=@phone ";
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd = new MySqlCommand(queryString, conn);
+                cmd.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd.Parameters.Add(new MySqlParameter("@new_count", new_count));
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch { }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public void Modify_SellerAddress(string phone, string new_address)
+        {
+            string queryString = "update seller set seller_address=@new_address where seller_phone=@phone ";
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd = new MySqlCommand(queryString, conn);
+                cmd.Parameters.Add(new MySqlParameter("@phone", phone));
+                cmd.Parameters.Add(new MySqlParameter("@new_address", new_address));
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch { }
                 finally
                 {
                     conn.Close();

@@ -16,6 +16,16 @@ namespace ShopBusinessLogic
             return rp.Get_AllSellGoods(phone);
         }
 
+        public List<PurchaseList> getAllSellList(string phone)
+        {
+            return rp.GetSellList(phone);
+        }
+
+        public List<PurchaseList> getPerGoodsSellList(string phone,int goods_id)
+        {
+            return rp.GetSellListPerGoods(phone, goods_id);
+        }
+
         public Goods getSellGoods(string phone,int goods_id)
         {
             return rp.Get_SellGoods(phone, goods_id);

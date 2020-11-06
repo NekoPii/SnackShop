@@ -109,7 +109,7 @@
                             <div class="offer-item">
                                 <div class="offer-item-img">
                                     <div class="gambo-overlay"></div>
-                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="暂时无法显示" height="220">
+                                    <div class="zoomImage53" style="background-image:url(@Model.total_goods_list[i].goods_img_path)"></div>
                                 </div>
                                 <div class="offer-text-dt">
                                     <div class="offer-top-text-banner">
@@ -155,7 +155,7 @@
                                 </div>
 
                                 <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
-                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="" style="height:25vw;width:100%;">
+                                    <div class="zoomImage11" style="background-image:url(@Model.total_goods_list[i].goods_img_path)"></div>
                                 </a>
                                 @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
                                 {
@@ -201,7 +201,7 @@
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
                                                 </span>
                                             }
-                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock <= 0)
+                                            @if (Model.total_goods_list[i].sell_stock <= 0)
                                             {
                                                 <span class="cart-icon no_stock">
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
@@ -286,7 +286,7 @@
                                 </div>
 
                                 <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
-                                    <img src="@Model.total_goods_list[i].goods_img_path" alt="" style="height:25vw;width:100%;">
+                                    <div class="zoomImage11" style="background-image:url(@Model.total_goods_list[i].goods_img_path)"></div>
                                 </a>
                                 @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
                                 {
@@ -332,7 +332,7 @@
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
                                                 </span>
                                             }
-                                            @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock <= 0)
+                                            @if (Model.total_goods_list[i].sell_stock <= 0)
                                             {
                                                 <span class="cart-icon no_stock">
                                                     <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>

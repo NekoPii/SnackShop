@@ -106,7 +106,7 @@
                                 @for(var i=0;i<Model.now_img_lists.Count;++i)
                                 {
                                 <div class="item">
-                                    <img src="@Model.now_img_lists[i].img_path" alt="" style="height:25vw;width:100%;">
+                                    <div class="zoomImage11" style="background-image:url(@Model.now_img_lists[i].img_path)"></div>
                                 </div>
                                 }
                             </div>
@@ -114,7 +114,7 @@
                                 @for (var i = 0; i < Model.now_img_lists.Count; ++i)
                                 {
                                     <div class="item">
-                                        <img src="@Model.now_img_lists[i].img_path" alt="">
+                                        <img src="@Model.now_img_lists[i].img_path">
                                     </div>
                                 }
                             </div>
@@ -124,8 +124,14 @@
                                 <h2 style="max-width:60%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;">@Model.now_goods_name</h2>
                                 <div class="opts_account" style="max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display:inline-block;">
                                     <span>卖家:</span>
-                                    <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;">@Model.now_seller_phone</span>
-                                    <a href="" title="@Model.now_seller_phone"><img src="~/Content/image/avatar/img-5.jpg" alt=""></a>
+                                    <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;">@Model.now_seller_name</span>
+                                    <a href="" title="@Model.now_seller_name">
+                                        @{
+                                            var str = (Convert.ToInt64(Model.now_seller_phone) % 6).ToString();
+                                            str = "/content/image/avatar/img-" + str + ".jpg";
+                                        }
+                                        <img src=@str alt="头像">
+                                    </a>
                                 </div>
                                 <div class="no-stock">
                                     <p class="pd-no">产品编号<span>@Model.now_goods_id</span></p>
@@ -180,9 +186,9 @@
                                             {
                                                 <li><button type="reset" class="add-cart-btn hover-btn log_err"><i class="uil uil-shopping-cart-alt"></i>加入购物车</button></li>
                                             }
-                                            @if (Session["has_login"] != null && Model.now_stock <= 0)
+                                            @if (Model.now_stock <= 0)
                                             {
-                                                <li><button type="reset" class="add-cart-btn hover-btn no-stock" disabled><i class="uil uil-shopping-cart-alt"></i>已售罄</button></li>
+                                                <li><button type="reset" class="add-cart-btn hover-btn no_stock"><i class="uil uil-shopping-cart-alt"></i>已售罄</button></li>
                                             }
                                             @if (Session["has_login"] != null && Model.now_stock > 0)
                                             {
@@ -261,7 +267,7 @@
                                 <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
                                 </div>
                                 <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
-                                    <img src=@Model.total_goods_list[i].goods_img_path alt="" style="height:25vw;width:100%;">
+                                    <div class="zoomImage11" style="background-image:url(@Model.total_goods_list[i].goods_img_path)"></div>
                                 </a>
                                     @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
                                     {
@@ -313,7 +319,7 @@
                                                 <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>
                                             </span>
                                         }
-                                        @if (Session["has_login"] != null && Model.total_goods_list[i].sell_stock <= 0)
+                                        @if (Model.total_goods_list[i].sell_stock <= 0)
                                         {
                                             <span class="cart-icon no_stock">
                                                 <button type="reset" style="border:none;background-color:white"><i class="uil uil-shopping-cart-alt "></i></button>

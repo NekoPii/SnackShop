@@ -14,6 +14,17 @@
     @Scripts.Render("~/Content/js/js")
     @Scripts.Render("~/Content/vender/js")
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <!-- Latest compiled and minified Locales -->
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+
+
     <link rel="icon" type="image/png" href="~/content/fav.png">
 
     <style>
@@ -35,6 +46,51 @@
         .ui.input > input:focus {
             border: 1px solid #00C9FF !important;
         }
+
+        .scrollstyle_4::-webkit-scrollbar {
+            width: 4px;
+            background-color: #f1f1f1;
+        }
+
+        .scrollstyle_4::-webkit-scrollbar-thumb {
+            background-color: #e5e5e5;
+        }
+
+        .scrollstyle_4::-webkit-scrollbar-track {
+            background-color: #F5F5F5;
+        }
+
+        .zoomImage11 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+        .zoomImage53 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+            .zoomImage11:hover, .zoomImage53:hover {
+                transition: all 0.6s;
+                -webkit-transform: scale(1.1);
+                -moz-transform: scale(1.1);
+                -ms-transform: scale(1.1);
+                transform: scale(1.1);
+            }
     </style>
 
 </head>
@@ -47,7 +103,7 @@
                     <span>主页</span>
                 </div>
             </a>
-            <a href=@Url.Content("~/PurchaseCar")>
+            <a href=@Url.Content("~/SellHome")>
                 <div class="seller_btn seller_hover_btn uil-store" style="height:60px;padding:20px 30px;">
                     <span>我的店铺</span>
                 </div>
@@ -59,20 +115,27 @@
                         @Html.ActionLink("登入", "Index", "Login", new { }, new { @style = "color:#00C9FF;margin:0 5px;" })
                         @Html.ActionLink("注册", "Index", "SignUp", new { }, new { @style = "color:#00C9FF;margin:0 5px;" })
                     }
-                    @if (Session["has_login"] != null&&Convert.ToInt32(Session["mem_type"])==2)
+                    @if (Session["has_login"] != null && Convert.ToInt32(Session["mem_type"]) == 2)
                     {
+                        <li>
+                            <a href="@Url.Content("~/SellInfo")" class="option_links" title="我的收入"><i class='uil uil-wallet icon_wishlist'></i></a>
+                        </li>
                         <li height="60px" class="ui dropdown " id="user_li">
                             <a href=@Url.Content("~/SellInfo")>
                                 <div class="opts_account" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                    <img src="~/Content/image/avatar/img-5.jpg" alt="">
+                                    @{
+                                        var str = (Convert.ToInt64(Session["mem_phone"]) % 6).ToString();
+                                        str = "/content/image/avatar/img-" + str + ".jpg";
+                                    }
+                                    <img src=@str alt="头像">
                                     <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;"> @Session["mem_name"].ToString()</span>
                                     <i class="uil uil-angle-down"></i>
                                 </div>
                             </a>
                             <div class="menu dropdown_account user_div" id="user_btn">
-                                <div class="item channel_item"><i class="uil uil-apps icon__1"></i>@Html.ActionLink("我的信息", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
-                                <div class="item channel_item"><i class="uil uil-box icon__1"></i>@Html.ActionLink("我的订单", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
-                                <div class="item channel_item"><i class="uil uil-heart icon__1"></i>@Html.ActionLink("我的心愿单", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-apps icon__1"></i>@Html.ActionLink("我的店铺信息", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-copyright icon__1"></i>@Html.ActionLink("修改信息", "Modify", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-heart icon__1"></i>@Html.ActionLink("订单列表", "SellList", "SellInfo", new { }, new { @style = "color:black" })</div>
                                 <div class="item channel_item"><i class="uil uil-lock-alt icon__1"></i>@Html.ActionLink("注销", "LoginOut", "Login", new { }, new { @style = "color:black" })</div>
                             </div>
                         </li>
@@ -138,7 +201,12 @@
                 $("#alert_message_log_err").fadeIn("fast");
                 setTimeout(function () { $("#alert_message_log_err").fadeOut("slow"); }, 400)
             });
-
+        });
+        $(function () {
+            $(".no_stock").click(function () {
+                $("#alert_no_stock").fadeIn("fast");
+                setTimeout(function () { $("#alert_no_stock").fadeOut("slow"); }, 400)
+            });
         });
         $(function () {
             $(".add_wish").click(function () {
@@ -150,6 +218,11 @@
         $(function () {
             setTimeout(function () {
                 $("#alert_message_cart").hide();
+            }, 0)
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#alert_no_stock").hide();
             }, 0)
         });
         $(function () {

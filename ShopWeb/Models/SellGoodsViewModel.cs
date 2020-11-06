@@ -31,6 +31,8 @@ namespace ShopWeb.Models
 
         public int sell_volume { set; get; }
 
+        public List<MemberPurchaseListViewModel> perGoodsSellList { set; get; }
+
         public List<SellGoodsViewModel> total_sell_goods { set; get; }
 
         public List<GoodsTag> total_goods_tags { set; get; }

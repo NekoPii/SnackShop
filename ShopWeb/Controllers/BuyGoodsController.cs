@@ -12,6 +12,7 @@ namespace ShopWeb.Controllers
         // GET: BuyGoods
         public ActionResult Index()
         {
+            ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
             if (ControllerContext.RouteData.GetRequiredString("id")==null) return Redirect("/Home");
             if (!sellerSell.isInGoodsList(Convert.ToInt32(ControllerContext.RouteData.GetRequiredString("id")))) return HttpNotFound();
@@ -44,6 +45,7 @@ namespace ShopWeb.Controllers
                     now_stock= now_goods.goods_stock,
                     now_volume=now_goods.goods_volume,
                     now_seller_phone=now_goods.seller_phone,
+                    now_seller_name=loginMember.GetMemberByPhone(now_goods.seller_phone).mem_name,
                     total_goods_list = goods_list,
                     now_img_lists = now_img_list,
                 };

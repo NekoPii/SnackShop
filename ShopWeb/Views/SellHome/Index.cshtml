@@ -61,21 +61,7 @@
 
     .ui.input > input:focus {
         border: 1px solid #00C9FF !important;
-    }
-
-    .scrollstyle_4::-webkit-scrollbar {
-        width: 4px;
-        background-color: #f1f1f1;
-    }
-
-    .scrollstyle_4::-webkit-scrollbar-thumb {
-        background-color: #e5e5e5;
-    }
-
-    .scrollstyle_4::-webkit-scrollbar-track {
-        background-color: #F5F5F5;
-    }
-    
+    }  
 </style>
 
 <div id="add_goods_modal" class="header-cate-model main-gambo-model modal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="background-image:none;">
@@ -117,7 +103,7 @@
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group" style="margin:0">
-                                                    <label class="control-label">商品价格:</label>
+                                                    <label class="control-label">商品价格:￥</label>
                                                     @Html.TextBoxFor(now => now.goods_price, new { @class = "form-control input-md", @placeholder = "价格", @id = "price_input" })
                                                 </div>
                                                 <span id="help-block2" class="help-block">

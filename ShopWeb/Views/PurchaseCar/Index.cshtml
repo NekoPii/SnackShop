@@ -11,7 +11,11 @@
             <div class="col-lg-12">
                 <div class="user-dt">
                     <div class="user-img">
-                        <img src="~/Content/image/avatar/img-5.jpg" alt="头像">
+                        @{
+                            var str = (Convert.ToInt64(Session["mem_phone"]) % 6).ToString();
+                            str = "/content/image/avatar/img-" + str + ".jpg";
+                        }
+                        <img src=@str alt="头像">
                     </div>
                     <h4>@Session["mem_name"].ToString()</h4>
                     <p>@Session["mem_phone"].ToString()</p>
@@ -87,7 +91,7 @@
                                                     @Html.TextBoxFor(now => now.select_list[i].seller_phone, new { @type = "hidden", Value = Model.pcar_list[i].seller_phone })
                                                     <div class="cart-product-img">
                                                         <a href="@Url.Content("~/BuyGoods/Index/"+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
-                                                            <img src="@Model.pcar_list[i].goods_img_path" alt="">
+                                                            <div class="zoomImage11" style="background-image:url(@Model.pcar_list[i].goods_img_path)"></div>
                                                         </a>
                                                     </div>
 

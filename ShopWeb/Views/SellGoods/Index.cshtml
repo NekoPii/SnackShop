@@ -55,12 +55,12 @@
             text-decoration: none
         }
 
-        .a-upload:focus{
-            border:none;
+        .a-upload:focus {
+            border: none;
         }
 
-        .a-upload:checked{
-            border:none;
+        .a-upload:checked {
+            border: none;
         }
 </style>
 
@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group" style="margin:0">
-                                                    <label class="control-label">商品价格:</label>
+                                                    <label class="control-label">商品价格:￥</label>
                                                     @Html.TextBoxFor(now => now.goods_price, new { @class = "form-control input-md", @placeholder = Model.goods_price, @id = "price_input" })
                                                 </div>
                                                 <span id="help-block2" class="help-block">
@@ -179,7 +179,7 @@
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group" style="margin:0">
                                                     <label class="control-label" style="font-size:16px;width:100%;"><i class="uil uil-image-upload"></i>上传图片:<span style="color:#00C9FF;font-size:12px;margin-left:40%">上传图片大小不能超过4MB</span></label>
-                                                    <input type="file" name="image" class="a-upload" style="border:none;outline:none;width:100%"/>                          
+                                                    <input type="file" name="image" class="a-upload" style="border:none;outline:none;width:100%" />
                                                 </div>
                                             </div>
                                             <input value=@Model.goods_id type="hidden" name="img_goods_id" id="img_goods_id" />
@@ -263,7 +263,7 @@
                                 @for (var i = 0; i < Model.img_list.Count; ++i)
                                 {
                                     <div class="item">
-                                        <img src="@Model.img_list[i].img_path" alt="暂时无法显示" style="height:25vw;width:100%;">
+                                        <div class="zoomImage11" style="background-image:url(@Model.img_list[i].img_path)"></div>
                                     </div>
                                 }
                             </div>
@@ -332,24 +332,56 @@
             <div class="col-lg-12 col-md-12">
                 <div class="pdpt-bg">
                     <div class="pdpt-title">
-                        <h4>商品简介</h4>
+                        <h4>商品销售情况</h4>
                     </div>
-                    <div class="pdpt-body scrollstyle_4">
-                        <div class="pdct-dts-1">
-                            <div class="pdct-dt-step">
-                                <h4>产品介绍</h4>
-                                <p>@Model.goods_detail</p>
-                            </div>
+                    <div class="active-offers-body">
+                        <div class="table-responsive">
+                            @if (Model.perGoodsSellList.Count == 0)
+                            {
+                                <div class="cart-item dashboard-group" style="background-color:white">
+                                    <div class="cart-text">
+                                        <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <table class="table ucp-table earning__table">
+                                    <thead class="thead-s">
+                                        <tr>
+                                            <th scope="col">订单号</th>
+                                            <th scope="col">售出用户</th>
+                                            <th scope="col">售出单价</th>
+                                            <th scope="col">售出数量</th>
+                                            <th scope="col">售出总价</th>
+                                            <th scope="col">售出时间</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var now in Model.perGoodsSellList)
+                                        {
+                                            <tr>
+                                                <td>@now.plist_id</td>
+                                                <td>@now.mem_name</td>
+                                                <td>￥@now.unit_price</td>
+                                                <td>×@now.goods_num</td>
+                                                <td>￥@now.total_price</td>
+                                                <td>@now.date</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<script>
+
+    <script>
     function update_select() {
         $("#now_select_tag").val($("#tag_select_list").val());
     }
@@ -404,4 +436,4 @@
         $(".modal-backdrop").remove();*/
     }
 
-</script>
+    </script>

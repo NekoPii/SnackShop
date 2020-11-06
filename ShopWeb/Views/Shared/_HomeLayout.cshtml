@@ -24,6 +24,37 @@
         {
             color:gray;
         }
+        .zoomImage11 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+        .zoomImage53 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+        .zoomImage11:hover,.zoomImage53:hover {
+            transition:all 0.6s;
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+        
     </style>
 </head>
 <!-- Header Start -->
@@ -86,9 +117,6 @@
             *@
             <div class="header_right">
                 <ul>
-                    <li>
-                        <a href="@Url.Content("~/WishList")" class="option_links" title="Wishlist"><i class='uil uil-heart icon_wishlist'></i></a>
-                    </li>
                     @if (Session["has_login"] == null)
                     {
                         @Html.ActionLink("登入", "Index", "Login", new { }, new { @style = "color:#f55d2c;margin:0 5px;" })
@@ -96,16 +124,25 @@
                     }
                     @if (Session["has_login"] != null)
                     {
+                        <li>
+                            <a href="@Url.Content("~/PurchaseCar")" class="option_links" title="购物车"><i class='uil uil-shopping-cart-alt icon_wishlist'></i></a>
+                            <a href="@Url.Content("~/WishList")" class="option_links" title="收藏夹"><i class='uil uil-heart icon_wishlist'></i></a>
+                        </li>
                         <li height="60px" class="ui dropdown " id="user_li">
                             <a href=@Url.Content("~/MemberInfo")>
                                 <div class="opts_account" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                    <img src="~/Content/image/avatar/img-5.jpg" alt="">
+                                    @{
+                                        var str = (Convert.ToInt64(Session["mem_phone"]) % 6).ToString();
+                                        str = "/content/image/avatar/img-" + str + ".jpg";
+                                    }
+                                    <img src=@str alt="头像">
                                     <span class="user__name" style="width:80px;overflow:hidden;text-overflow :ellipsis;white-space:nowrap;"> @Session["mem_name"].ToString()</span>
                                     <i class="uil uil-angle-down"></i>
                                 </div>
                             </a>
                             <div class="menu dropdown_account user_div" id="user_btn">
                                 <div class="item channel_item"><i class="uil uil-apps icon__1"></i>@Html.ActionLink("我的信息", "Index", "MemberInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-shopping-cart-alt icon__1"></i>@Html.ActionLink("我的购物车", "Index", "PurchaseCar", new { }, new { @style = "color:black" })</div>
                                 <div class="item channel_item"><i class="uil uil-box icon__1"></i>@Html.ActionLink("我的订单", "Index", "PurchaseList", new { }, new { @style = "color:black" })</div>
                                 <div class="item channel_item"><i class="uil uil-heart icon__1"></i>@Html.ActionLink("我的心愿单", "Index", "WishList", new { }, new { @style = "color:black" })</div>
                                 <div class="item channel_item"><i class="uil uil-lock-alt icon__1"></i>@Html.ActionLink("注销", "LoginOut", "Login", new { }, new { @style = "color:black" })</div>

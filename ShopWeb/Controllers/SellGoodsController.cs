@@ -21,6 +21,7 @@ namespace ShopWeb.Controllers
             string phone = Session["mem_phone"].ToString();
             string now_goods_id = ControllerContext.RouteData.GetRequiredString("id");
             int now_goods_id_int = Convert.ToInt32(now_goods_id);
+            ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
             ShopBusinessLogic.MemberPurchase purchase = new ShopBusinessLogic.MemberPurchase();
             var now_goods = sellerSell.getSellGoods(phone, now_goods_id_int);
@@ -31,6 +32,17 @@ namespace ShopWeb.Controllers
             var tag_list = purchase.getAllTags().Select(tag => new GoodsTag()
             {
                 goods_tag = tag.tag,
+            }).ToList();
+            var sell_list = sellerSell.getPerGoodsSellList(phone, now_goods_id_int).Select(p_list => new MemberPurchaseListViewModel()
+            {
+                plist_id=p_list.plist_id,
+                goods_num=p_list.goods_num,
+                mem_phone=p_list.mem_phone,
+                mem_name=loginMember.GetMemberByPhone(p_list.mem_phone).mem_name,
+                unit_price=p_list.unit_price,
+                total_price=p_list.total_price,
+                date=p_list.date,
+                goods_name=p_list.goods_name,
             }).ToList();
             var resView = new SellGoodsViewModel()
             {
@@ -44,6 +56,7 @@ namespace ShopWeb.Controllers
                 sell_volume = now_goods.goods_volume,
                 img_list = now_img_list,
                 total_goods_tags = tag_list,
+                perGoodsSellList=sell_list,
             };
             return View(resView);
         }

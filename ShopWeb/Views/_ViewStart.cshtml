@@ -3,6 +3,7 @@
     var action = ViewContext.RouteData.Values["action"].ToString().ToLower();
 
     string[] lController = new string[] { "login", "signup" };
+    string[] sellerController = new string[] { "sellgoods", "sellhome","sellinfo" };
     string[] lAccount = new string[] { "account" };
     string[] aAccount = new string[] { "pay2048" };
 
@@ -13,6 +14,7 @@
     else if(lAccount.Contains(controller)&&aAccount.Contains(action)) { Layout = "~/Views/Shared/_pay2048Layout.cshtml"; }
     else if(lAccount.Contains(controller))
     { Layout = "~/Views/Shared/_Layout.cshtml"; }
+    else if (sellerController.Contains(controller)) { Layout = "~/Views/Shared/_SellerHomeLayout.cshtml"; }
     else
     {
         Layout = "~/Views/Shared/_HomeLayout.cshtml";
