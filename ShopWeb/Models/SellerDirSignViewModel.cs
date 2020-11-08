@@ -23,9 +23,9 @@ namespace ShopWeb.Models
         public string mem_name { set; get; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "发货地址不能为空")]
-        public string sell_address { set; get; }
+        public string seller_address { set; get; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "绑定账户不能为空")]
-        public string sell_count { set; get; }
+        public string seller_account { set; get; }
     }
 }

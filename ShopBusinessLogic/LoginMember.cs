@@ -26,14 +26,14 @@ namespace ShopBusinessLogic
             return rp.SignUp_Member(phone, pwd, name);
         }
 
-        public bool SignUpSellerDir(string phone,string pwd,string name,string sell_address,string sell_count)
+        public bool SignUpSellerDir(string phone,string pwd,string name,string seller_address,string seller_account)
         {
-            return rp.SignUp_Seller_Direct(phone, pwd, name, sell_address, sell_count);
+            return rp.SignUp_Seller_Direct(phone, pwd, name, seller_address, seller_account);
         }
 
-        public bool SignUpSeller(string phone,string sell_address,string sell_count)
+        public bool SignUpSeller(string phone,string seller_address,string seller_account)
         {
-            return rp.SignUp_Seller(phone, sell_address, sell_count);
+            return rp.SignUp_Seller(phone, seller_address, seller_account);
         }
 
         public List<Address> ShowMemberAddress(string phone)
@@ -72,9 +72,9 @@ namespace ShopBusinessLogic
             rp.Modify_SellerAddress(phone, address);
         }
 
-        public void ModifySellerCount(string phone,string count)
+        public void ModifySellerAccount(string phone,string count)
         {
-            rp.Modify_SellerCount(phone, count);
+            rp.Modify_SellerAccount(phone, count);
         }
     }
 }

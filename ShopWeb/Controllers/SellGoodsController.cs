@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using PagedList;
 using ShopWeb.Models;
 
 namespace ShopWeb.Controllers

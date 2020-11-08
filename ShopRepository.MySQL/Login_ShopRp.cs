@@ -63,7 +63,7 @@ namespace ShopRepository.MySQL
                         result = new Seller()
                         {
                             seller_address=reader.GetString("seller_address"),
-                            seller_count=reader.GetString("seller_count"),
+                            seller_account=reader.GetString("seller_account"),
                         };
                     }
                     reader.Close();
@@ -106,12 +106,12 @@ namespace ShopRepository.MySQL
         }
 
         //在注册成为用户的同时也直接注册成为卖家
-        public bool SignUp_Seller_Direct(string phone, string pwd, string name,string seller_address,string seller_count)
+        public bool SignUp_Seller_Direct(string phone, string pwd, string name,string seller_address,string seller_account)
         {
             int mem_type = 2;
             bool flag = true;
             string queryString1 = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name ,mem_type=@mem_type ";
-            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_count=@seller_count";
+            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_account=@seller_account";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
@@ -122,7 +122,7 @@ namespace ShopRepository.MySQL
                 cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
                 cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
                 cmd2.Parameters.Add(new MySqlParameter("@seller_address", seller_address));
-                cmd2.Parameters.Add(new MySqlParameter("@seller_count", seller_count));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_account", seller_account));
                 try
                 {
                     conn.Open();
@@ -142,12 +142,12 @@ namespace ShopRepository.MySQL
         }
 
         //注册成为用户后再注册为卖家
-        public bool SignUp_Seller(string phone,string seller_address, string seller_count)
+        public bool SignUp_Seller(string phone,string seller_address, string seller_account)
         {
             int mem_type = 2;
             bool flag = true;
             string queryString1 = "update members set mem_type=@type where mem_phone=@phone";
-            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_count=@seller_count";
+            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_account=@seller_account";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
@@ -156,7 +156,7 @@ namespace ShopRepository.MySQL
                 cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
                 cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
                 cmd2.Parameters.Add(new MySqlParameter("@seller_address", seller_address));
-                cmd2.Parameters.Add(new MySqlParameter("@seller_count", seller_count));
+                cmd2.Parameters.Add(new MySqlParameter("@seller_account", seller_account));
                 try
                 {
                     conn.Open();
@@ -325,14 +325,14 @@ namespace ShopRepository.MySQL
             }
         }
 
-        public void Modify_SellerCount(string phone, string new_count)
+        public void Modify_SellerAccount(string phone, string new_account)
         {
-            string queryString = "update seller set seller_count=@new_count where seller_phone=@phone ";
+            string queryString = "update seller set seller_account=@new_count where seller_phone=@phone ";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd = new MySqlCommand(queryString, conn);
                 cmd.Parameters.Add(new MySqlParameter("@phone", phone));
-                cmd.Parameters.Add(new MySqlParameter("@new_count", new_count));
+                cmd.Parameters.Add(new MySqlParameter("@new_count", new_account));
                 try
                 {
                     conn.Open();

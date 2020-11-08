@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "x";
+﻿@using ShopWeb.Models
+@model SellerInfoViewModel
+@{
+    ViewBag.Title = "修改信息";
 }
 
 <div class="dashboard-group">
@@ -14,8 +16,10 @@
                         }
                         <img src=@str alt="头像">
                     </div>
-                    <h4>@Session["mem_name"].ToString()</h4>
-                    <p>@Session["mem_phone"].ToString()<i class="uil uil-shop"></i></p>
+                    <h4>@Session["mem_name"]</h4>
+                    <p>@Session["mem_phone"]<i class="uil uil-shop" style="color: #00C9FF;"></i></p>
+                    <p>收款账号: @Session["seller_account"]</p>
+                    <p>发货地址: @Session["seller_address"]</p>
                 </div>
             </div>
         </div>
@@ -27,9 +31,9 @@
             <div class="col-lg-3 col-md-4">
                 <div class="left-side-tabs">
                     <div class="dashboard-left-links">
-                        <a href="@Url.Content("~/SellInfo")" class="user-item "><i class="uil uil-box"></i>卖家信息</a>
-                        <a href="@Url.Content("~/SellInfo/SellList")" class="user-item"><i class="uil uil-shopping-cart-alt"></i>售出记录</a>
-                        <a href="@Url.Content("~/SellInfo/Modify")" class="user-item active"><i class="uil uil-user"></i>修改信息</a>
+                        <a href="@Url.Content("~/SellInfo")" class="user-item"><i class="uil uil-user-exclamation"></i>卖家信息</a>
+                        <a href="@Url.Content("~/SellInfo/SellList")" class="user-item"><i class="uil uil-money-bill"></i>售出记录</a>
+                        <a href="@Url.Content("~/SellInfo/Modify")" class="user-item active"><i class="uil uil-edit-alt"></i>修改信息</a>
                         <a href="@Url.Content("~/Login/LoginOut")" class="user-item"><i class="uil uil-exit"></i>注销</a>
                     </div>
                 </div>
@@ -55,28 +59,28 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion0" style="">
                                         <div class="panel-body">
-                                            @using (Html.BeginForm("Index", "MemberInfo", FormMethod.Post))
+                                            @using (Html.BeginForm("Modify", "SellInfo", FormMethod.Post))
                                             {
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_1 => now_1.old_sell_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                         <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_1 => now_1.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                     </div>
                                                     <span id="help-block1" class="help-block">
-                                                        @Html.ValidationMessageFor(now_1 => now_1.old_mem_pwd, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(now_1 => now_1.old_sell_pwd, "", new { @class = "text-danger" })
                                                     </span>
                                                 </div>
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_1 => now_1.new_sell_name, new { @class = "form-control lgn_input ", @placeholder = "请输入新的用户名" })
                                                         <i class="uil uil-user-square lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_1 => now_1.new_mem_name, new { @class = "form-control lgn_input ", @placeholder = "请输入新的用户名" })
                                                     </div>
                                                     <span id="help-block2" class="help-block">
-                                                        @Html.ValidationMessageFor(now_1 => now_1.new_mem_name, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(now_1 => now_1.new_sell_name, "", new { @class = "text-danger" })
                                                     </span>
                                                 </div>
-                                                <input class="login-btn hover-btn" type="submit" value="确认修改" />
+                                                <input class="sell-btn seller_hover_btn" type="submit" value="确认修改"/>
                                             }
 
                                         </div>
@@ -93,83 +97,117 @@
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion0" style="">
                                         <div class="panel-body">
-                                            @using (Html.BeginForm("Index", "MemberInfo", FormMethod.Post))
+                                            @using (Html.BeginForm("Modify", "SellInfo", FormMethod.Post))
                                             {
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_2 => now_2.old_sell_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                         <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_2 => now_2.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                     </div>
                                                     <span id="help-block1" class="help-block text-danger">
-                                                        @Html.ValidationMessageFor(now_2 => now_2.old_mem_pwd, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(now_2 => now_2.old_sell_pwd, "", new { @class = "text-danger" })
                                                     </span>
                                                 </div>
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_2 => now_2.new_mem_pwd, new { @class = "form-control lgn_input ", @placeholder = "请输入新的密码", @type = "password" })
+                                                        @Html.TextBoxFor(now_2 => now_2.new_sell_pwd, new { @class = "form-control lgn_input ", @placeholder = "请输入新的密码", @type = "password" })
+                                                        <i class="uil  uil-key-skeleton lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block2" class="help-block">
-                                                        @Html.ValidationMessageFor(now_2 => now_2.new_mem_pwd, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(now_2 => now_2.new_sell_pwd, "", new { @class = "text-danger" })
                                                     </span>
                                                 </div>
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_2 => now_2.new_mem_re_pwd, new { @class = "form-control lgn_input ", @placeholder = "请再次输入新的密码", @type = "password" })
+                                                        @Html.TextBoxFor(now_2 => now_2.new_sell_re_pwd, new { @class = "form-control lgn_input ", @placeholder = "请再次输入新的密码", @type = "password" })
+                                                        <i class="uil  uil-key-skeleton lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block3" class="help-block">
-                                                        @Html.ValidationMessageFor(now_2 => now_2.new_mem_re_pwd, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(now_2 => now_2.new_sell_re_pwd, "", new { @class = "text-danger" })
                                                     </span>
                                                 </div>
-                                                <input class="login-btn hover-btn" type="submit" value="确认修改" />
+                                                <input class="sell-btn seller_hover_btn" type="submit" value="确认修改" />
                                             }
                                         </div>
                                     </div>
                                 </div>
-                                @*
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" id="headingThree" style="background-color:white;">
-                                            <div class="panel-title">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingThree" style="background-color:white;">
+                                        <div class="panel-title">
 
-                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" href="#" aria-expanded="false" aria-controls="collapseThree">
-                                                    <i class="uil uil-home-alt" style="margin-right:50px"></i>修改地址
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion0" style="">
-                                            <div class="panel-body">
-                                                @using (Html.BeginForm("Index", "MemberInfo", FormMethod.Post))
-                                                {
-                                                    <div style="height:80px">
-                                                        <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                            <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                            @Html.TextBoxFor(now_3 => now_3.old_true_pwd, new { @type = "hidden", Value = Session["mem_pwd"] })
-                                                            @Html.TextBoxFor(now_3 => now_3.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
-                                                        </div>
-                                                        <span id="help-block1" class="help-block">
-                                                            @Html.ValidationMessageFor(now_3 => now_3.old_mem_pwd, "", new { @class = "text-danger" })
-                                                        </span>
-                                                    </div>
-
-                                                    <div style="height:80px">
-                                                        <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                            <i class="uil uil-home-alt lgn_icon" style="top:15%;left:1%;"></i>
-                                                            @Html.TextBoxFor(now_3 => now_3.new_mem_address, new { @class = "form-control lgn_input ", @placeholder = "请输入新的地址" })
-                                                        </div>
-                                                        <span id="help-block3" class="help-block">
-                                                            @Html.ValidationMessageFor(now_3 => now_3.new_mem_address, "", new { @class = "text-danger" })
-                                                        </span>
-                                                    </div>
-                                                    <input class="login-btn hover-btn" type="submit" value="确认修改" />
-                                                }
-
-                                            </div>
+                                            <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" href="#" aria-expanded="false" aria-controls="collapseThree">
+                                                <i class="uil uil-map-marker-shield" style="margin-right:50px"></i>修改发货地址
+                                            </a>
                                         </div>
                                     </div>
-                                *@
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion0" style="">
+                                        <div class="panel-body">
+                                            @using (Html.BeginForm("Modify", "SellInfo", FormMethod.Post))
+                                            {
+                                                <div style="height:80px">
+                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_3 => now_3.old_sell_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
+                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
+                                                    </div>
+                                                    <span id="help-block1" class="help-block">
+                                                        @Html.ValidationMessageFor(now_3 => now_3.old_sell_pwd, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+
+                                                <div style="height:80px">
+                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_3 => now_3.new_sell_address, new { @class = "form-control lgn_input ", @placeholder = "请输入新的发货地址" })
+                                                        <i class="uil uil-map-marker-shield lgn_icon" style="top:15%;left:1%;"></i>
+                                                    </div>
+                                                    <span id="help-block3" class="help-block">
+                                                        @Html.ValidationMessageFor(now_3 => now_3.new_sell_address, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+                                                <input class="sell-btn seller_hover_btn" type="submit" value="确认修改" />
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingFour" style="background-color:white;">
+                                        <div class="panel-title">
+
+                                            <a class="collapsed" data-toggle="collapse" data-target="#collapseFour" href="#" aria-expanded="false" aria-controls="collapseFour">
+                                                <i class="uil uil-money-withdraw" style="margin-right:50px"></i>修改收款账号
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion0" style="">
+                                        <div class="panel-body">
+                                            @using (Html.BeginForm("Modify", "SellInfo", FormMethod.Post))
+                                            {
+                                                <div style="height:80px">
+                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_4 => now_4.old_sell_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
+                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
+                                                    </div>
+                                                    <span id="help-block1" class="help-block">
+                                                        @Html.ValidationMessageFor(now_4 => now_4.old_sell_pwd, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+
+                                                <div style="height:80px">
+                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_4 => now_4.new_sell_account, new { @class = "form-control lgn_input ", @placeholder = "请输入新的收款账号" })
+                                                        <i class="uil uil-money-withdraw lgn_icon" style="top:15%;left:1%;"></i>
+                                                    </div>
+                                                    <span id="help-block3" class="help-block">
+                                                        @Html.ValidationMessageFor(now_4 => now_4.new_sell_account, "", new { @class = "text-danger" })
+                                                    </span>
+                                                </div>
+                                                <input class="sell-btn seller_hover_btn" type="submit" value="确认修改" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

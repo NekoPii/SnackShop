@@ -185,3 +185,7 @@ E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\obj\Debug\ShopBusinessLogic.cs
 E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\obj\Debug\ShopBusinessLogic.csproj.CopyComplete
 E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\obj\Debug\ShopBusinessLogic.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\obj\Debug\ShopBusinessLogic.pdb
+E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\bin\Debug\PagedList.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\bin\Debug\PagedList.Mvc.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\bin\Debug\PagedList.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopBusinessLogic\bin\Debug\PagedList.Mvc.xml

@@ -40,6 +40,11 @@ namespace ShopWeb.Controllers
                     string mem_phone = loginMember.GetMemberByPhone(userPhone).mem_phone;
                     string mem_pwd = loginMember.GetMemberByPhone(userPhone).mem_pwd;
                     int mem_type = loginMember.GetMemberByPhone(userPhone).mem_type;
+                    if(mem_type==2)
+                    {
+                        Session["seller_account"] = loginMember.getSeller(userPhone).seller_account;
+                        Session["seller_address"] = loginMember.getSeller(userPhone).seller_address;
+                    }
                     Session["mem_name"] = mem_name;
                     Session["mem_phone"] = mem_phone;
                     Session["mem_pwd"] = mem_pwd;
@@ -64,44 +69,6 @@ namespace ShopWeb.Controllers
         public ActionResult Login()
         {
             return View();
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Login(MemberLoginViewModel memberViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
-                //string userPhone = Request.Params["phone"];
-                //ShopWeb.Models.MemberViewModel memberViewModel = new MemberViewModel();
-                string userPhone = memberViewModel.mem_phone;
-                //string userPwd = Request.Params["password"];
-                string userPwd = memberViewModel.mem_pwd;
-                string truePwd = loginMember.GetMemberByPhone(userPhone).mem_pwd;
-                //var memView = new MemberViewModel();
-                if (truePwd == userPwd)
-                {
-                    //memView.mem_name = loginMember.GetMemberByPhone(userPhone).mem_name;
-                    //memView.mem_phone = loginMember.GetMemberByPhone(userPhone).mem_phone;
-                    //memView.mem_pwd = loginMember.GetMemberByPhone(userPhone).mem_pwd;
-                    string mem_name = loginMember.GetMemberByPhone(userPhone).mem_name;
-                    string mem_phone = loginMember.GetMemberByPhone(userPhone).mem_phone;
-                    string mem_pwd = loginMember.GetMemberByPhone(userPhone).mem_pwd;
-                    Session["mem_name"] = mem_name;
-                    Session["mem_phone"] = mem_phone;
-                    Session["mem_pwd"] = mem_pwd;
-                    Session["has_login"] = "true";
-                    Session.Timeout = 30;
-                    return Redirect("/Home");
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "用户名或密码错误";
-                    return View();
-                }
-            }
-            else return Redirect("/Login");
         }
 
         /*[HttpPost]

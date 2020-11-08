@@ -43,7 +43,7 @@ namespace ShopWeb.Controllers
                 loginMember.ModifyMemberName(mem_phone, new_name);
                 Session["mem_name"] = new_name;
             }
-            return Redirect("MemberInfo");
+            return Redirect("/MemberInfo");
         }
 
         [HttpGet]
@@ -53,7 +53,6 @@ namespace ShopWeb.Controllers
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             string true_pwd = loginMember.GetMemberByPhone(phone).mem_pwd;
             return Json(old_mem_pwd == true_pwd, JsonRequestBehavior.AllowGet);
-
         }
     }
 }

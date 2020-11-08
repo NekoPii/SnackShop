@@ -73,8 +73,8 @@ namespace ShopWeb.Controllers
             string userName = sellerDirSignViewModel.mem_name;
             string userPwd = sellerDirSignViewModel.mem_pwd;
             string userRePwd = sellerDirSignViewModel.mem_re_pwd;
-            string sellCount = sellerDirSignViewModel.sell_count;
-            string sellAddress = sellerDirSignViewModel.sell_address;
+            string sellCount = sellerDirSignViewModel.seller_account;
+            string sellAddress = sellerDirSignViewModel.seller_address;
             if (ModelState.IsValid)
             {
                 if (loginMember.SignUpSellerDir(userPhone, userPwd, userName,sellAddress,sellCount))
@@ -82,8 +82,8 @@ namespace ShopWeb.Controllers
                     Session["mem_name"] = userName;
                     Session["mem_phone"] = userPhone;
                     Session["mem_pwd"] = userPwd;
-                    Session["sell_count"] = sellCount;
-                    Session["sell_address"] = sellAddress;
+                    Session["seller_account"] = sellCount;
+                    Session["seller_address"] = sellAddress;
                     Session["mem_type"] = 2;
                     Session["has_login"] = "true";
                     Session.Timeout = 30;
@@ -107,8 +107,8 @@ namespace ShopWeb.Controllers
             //string userPwd = Request.Params["password"];
             if (Session["mem_phone"] == null) return Redirect("/Home");
             string phone = Session["mem_phone"].ToString();
-            string sellCount = sellerSignViewModel.sell_count;
-            string sellAddress = sellerSignViewModel.sell_address;
+            string sellCount = sellerSignViewModel.seller_account;
+            string sellAddress = sellerSignViewModel.seller_address;
             if (ModelState.IsValid)
             {
                 if (loginMember.SignUpSeller(phone, sellAddress, sellCount))
@@ -117,8 +117,8 @@ namespace ShopWeb.Controllers
                     Session["mem_phone"] = phone;
                     Session["mem_name"] = loginMember.GetMemberByPhone(phone).mem_name;
                     Session["mem_pwd"] = loginMember.GetMemberByPhone(phone).mem_pwd;
-                    Session["sell_count"] = sellCount;
-                    Session["sell_address"] = sellAddress;
+                    Session["seller_account"] = sellCount;
+                    Session["seller_address"] = sellAddress;
                     Session["mem_type"] = loginMember.GetMemberByPhone(phone).mem_type;
                     Session["has_login"] = "true";
                     Session.Timeout = 30;

@@ -17,7 +17,7 @@
                         <img src=@str alt="头像">
                     </div>
                     <h4>@Session["mem_name"].ToString()</h4>
-                    <p>@Session["mem_phone"].ToString()</p>
+                    <p>@Session["mem_phone"].ToString()<i class="uil uil-yen-circle" style="color: #f55d2c;"></i></p>
                 </div>
             </div>
         </div>
@@ -63,8 +63,8 @@
                                             {
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
+                                                        @Html.TextBoxFor(now_1 => now_1.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
                                                         <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_1 => now_1.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password"})
                                                     </div>
                                                     <span id="help-block1" class="help-block">
                                                         @Html.ValidationMessageFor(now_1 => now_1.old_mem_pwd, "", new { @class = "text-danger" })
@@ -73,8 +73,8 @@
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-user-square lgn_icon" style="top:15%;left:1%;"></i>
                                                         @Html.TextBoxFor(now_1 => now_1.new_mem_name, new { @class = "form-control lgn_input ", @placeholder = "请输入新的用户名" })
+                                                        <i class="uil uil-user-square lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block2" class="help-block">
                                                         @Html.ValidationMessageFor(now_1 => now_1.new_mem_name, "", new { @class = "text-danger" })
@@ -101,8 +101,8 @@
                                             {
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>                                                   
                                                         @Html.TextBoxFor(now_2 => now_2.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
+                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block1" class="help-block text-danger">
                                                         @Html.ValidationMessageFor(now_2 => now_2.old_mem_pwd, "", new { @class = "text-danger" })
@@ -111,8 +111,8 @@
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
                                                         @Html.TextBoxFor(now_2 => now_2.new_mem_pwd, new { @class = "form-control lgn_input ", @placeholder = "请输入新的密码", @type = "password" })
+                                                        <i class="uil  uil-key-skeleton lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block2" class="help-block">
                                                         @Html.ValidationMessageFor(now_2 => now_2.new_mem_pwd, "", new { @class = "text-danger" })
@@ -121,8 +121,8 @@
 
                                                 <div style="height:80px">
                                                     <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
                                                         @Html.TextBoxFor(now_2 => now_2.new_mem_re_pwd, new { @class = "form-control lgn_input ", @placeholder = "请再次输入新的密码", @type = "password" })
+                                                        <i class="uil  uil-key-skeleton lgn_icon" style="top:15%;left:1%;"></i>
                                                     </div>
                                                     <span id="help-block3" class="help-block">
                                                         @Html.ValidationMessageFor(now_2 => now_2.new_mem_re_pwd, "", new { @class = "text-danger" })
@@ -133,47 +133,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @*
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" id="headingThree" style="background-color:white;">
-                                        <div class="panel-title">
-
-                                            <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" href="#" aria-expanded="false" aria-controls="collapseThree">
-                                                <i class="uil uil-home-alt" style="margin-right:50px"></i>修改地址
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion0" style="">
-                                        <div class="panel-body">
-                                            @using (Html.BeginForm("Index", "MemberInfo", FormMethod.Post))
-                                            {
-                                                <div style="height:80px">
-                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-padlock lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_3 => now_3.old_true_pwd, new { @type = "hidden", Value = Session["mem_pwd"] })
-                                                        @Html.TextBoxFor(now_3 => now_3.old_mem_pwd, new { @class = "form-control lgn_input", @placeholder = "请输入密码以再次确认身份", @type = "password" })
-                                                    </div>
-                                                    <span id="help-block1" class="help-block">
-                                                        @Html.ValidationMessageFor(now_3 => now_3.old_mem_pwd, "", new { @class = "text-danger" })
-                                                    </span>
-                                                </div>
-
-                                                <div style="height:80px">
-                                                    <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                                                        <i class="uil uil-home-alt lgn_icon" style="top:15%;left:1%;"></i>
-                                                        @Html.TextBoxFor(now_3 => now_3.new_mem_address, new { @class = "form-control lgn_input ", @placeholder = "请输入新的地址" })
-                                                    </div>
-                                                    <span id="help-block3" class="help-block">
-                                                        @Html.ValidationMessageFor(now_3 => now_3.new_mem_address, "", new { @class = "text-danger" })
-                                                    </span>
-                                                </div>
-                                                <input class="login-btn hover-btn" type="submit" value="确认修改" />
-                                            }
-
-                                        </div>
-                                    </div>
-                                </div>
-                                    *@
                             </div>
                         </div>
                     </div>

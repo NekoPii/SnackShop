@@ -3,67 +3,6 @@
 @{
     ViewBag.Title = "我的店铺";
 }
-
-<style>
-    .a-upload {
-        padding: 4px 10px;
-        line-height: 25px;
-        position: relative;
-        cursor: pointer;
-        color: #888;
-        background: #fafafa;
-        border: none;
-        border-radius: 4px;
-        overflow: hidden;
-        display: inline-block;
-        *display: inline;
-        *zoom: 1
-    }
-
-        .a-upload input {
-            position: absolute;
-            font-size: 100px;
-            right: 0;
-            top: 0;
-            opacity: 0;
-            filter: alpha(opacity=0);
-            cursor: pointer
-        }
-
-        .a-upload:hover {
-            color: #444;
-            background: #eee;
-            text-decoration: none
-        }
-
-        .a-upload:focus {
-            border: none;
-        }
-
-        .a-upload:checked {
-            border: none;
-        }
-
-    .form-control:focus {
-        outline: none !important;
-        box-shadow: none !important;
-        border: 1px solid #00C9FF !important;
-    }
-
-        .form-control:focus + .lgn_icon {
-            color: #00C9FF;
-        }
-
-    ul.code-alrt-inputs input:focus {
-        box-shadow: none;
-        border: 1px solid #00C9FF;
-    }
-
-    .ui.input > input:focus {
-        border: 1px solid #00C9FF !important;
-    }  
-</style>
-
 <div id="add_goods_modal" class="header-cate-model main-gambo-model modal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="background-image:none;">
     <div class="modal-dialog category-area" role="document">
         <div class="category-area-inner" style="margin-top:20px;">

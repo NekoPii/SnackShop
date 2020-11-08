@@ -9,6 +9,6 @@ namespace ShopModel
     public class Seller
     {
         public string seller_address { set; get; }
-        public string seller_count { set; get; }
+        public string seller_account { set; get; }
     }
 }

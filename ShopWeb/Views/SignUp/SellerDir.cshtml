@@ -57,21 +57,21 @@
 
             <div style="height:66px">
                 <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                    @Html.TextBoxFor(now => now.sell_count, new { @class = "form-control lgn_input", @placeholder = "请绑定您的收款账户", @name = "count", @type = "text", @id = "count" })
+                    @Html.TextBoxFor(now => now.seller_account, new { @class = "form-control lgn_input", @placeholder = "请绑定您的收款账户", @name = "count", @type = "text", @id = "count" })
                     <i class="uil uil-padlock lgn_icon"></i>
                 </div>
                 <span id="help-block4" class="help-block">
-                    @Html.ValidationMessageFor(now => now.sell_count, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(now => now.seller_account, "", new { @class = "text-danger" })
                 </span>
             </div>
 
             <div style="height:66px">
                 <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
-                    @Html.TextBoxFor(now => now.sell_address, new { @class = "form-control lgn_input", @placeholder = "请输入您的发货地址", @name = "sell_address", @type = "text", @id = "sell_address" })
+                    @Html.TextBoxFor(now => now.seller_address, new { @class = "form-control lgn_input", @placeholder = "请输入您的发货地址", @name = "seller_address", @type = "text", @id = "seller_address" })
                     <i class="uil uil-padlock lgn_icon"></i>
                 </div>
                 <span id="help-block4" class="help-block">
-                    @Html.ValidationMessageFor(now => now.sell_address, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(now => now.seller_address, "", new { @class = "text-danger" })
                 </span>
             </div>
             <input class="login-btn hover-btn" type="submit" value="注册" />

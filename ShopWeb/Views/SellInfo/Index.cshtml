@@ -16,8 +16,10 @@
                         }
                         <img src=@str alt="头像">
                     </div>
-                    <h4>@Session["mem_name"].ToString()</h4>
-                    <p>@Session["mem_phone"].ToString()<i class="uil uil-shop"></i></p>
+                    <h4>@Session["mem_name"]<a href="/SellInfo/Modify"><i class="uil uil-edit" style="color:#00C9FF;"></i></a></h4>
+                    <p>@Session["mem_phone"]<i class="uil uil-shop" style="color: #00C9FF;"></i></p>
+                    <p>收款账号: @Session["seller_account"]</p>
+                    <p>发货地址: @Session["seller_address"]</p>
                 </div>
             </div>
         </div>
@@ -29,9 +31,9 @@
             <div class="col-lg-3 col-md-4">
                 <div class="left-side-tabs">
                     <div class="dashboard-left-links">
-                        <a href="@Url.Content("~/SellInfo")" class="user-item active"><i class="uil uil-box"></i>卖家信息</a>
-                        <a href="@Url.Content("~/SellInfo/SellList")" class="user-item"><i class="uil uil-shopping-cart-alt"></i>售出记录</a>
-                        <a href="@Url.Content("~/SellInfo/Modify")" class="user-item"><i class="uil uil-user"></i>修改信息</a>
+                        <a href="@Url.Content("~/SellInfo")" class="user-item active"><i class="uil uil-user-exclamation"></i>卖家信息</a>
+                        <a href="@Url.Content("~/SellInfo/SellList")" class="user-item"><i class="uil uil-money-bill"></i>售出记录</a>
+                        <a href="@Url.Content("~/SellInfo/Modify")" class="user-item"><i class="uil uil-edit-alt"></i>修改信息</a>
                         <a href="@Url.Content("~/Login/LoginOut")" class="user-item"><i class="uil uil-exit"></i>注销</a>
                     </div>
                 </div>
@@ -47,8 +49,10 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="pdpt-bg">
                                 <div class="reward-body-dtt">
+                                    <a href="/SellInfo/SellList">
                                         <img src="/content/image/Money.svg" alt="" width="150" height="150">
-                                    <span class="rewrd-title">总收入</span>
+                                    </a>
+                                    <span class="rewrd-title" style="font-weight:bold;color:#00C9FF;">总收入</span>
                                     <h4 class="cashbk-price">￥ @Model.all_income</h4>
                                     <span class="date-reward">截止 @DateTime.Now</span>
                                 </div>
@@ -57,10 +61,12 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="pdpt-bg">
                                 <div class="gambo-body-cash">
+                                    <a href="/SellInfo/SellList">
                                         <img src="/content/image/MoneyGrowth.svg" alt="" width="150" height="150">
-                                    <span class="rewrd-title">本月收入</span>
-                                    <h4 class="cashbk-price">￥ @Model.now_month_income</h4>
-                                    <span class="date-reward">@DateTime.Now.Year 年 @DateTime.Now.Month 月</span>
+                                        </a>
+                                        <span class="rewrd-title" style="font-weight: bold; color: #00C9FF;">本月收入</span>
+                                        <h4 class="cashbk-price">￥ @Model.now_month_income</h4>
+                                        <span class="date-reward">@DateTime.Now.Year 年 @DateTime.Now.Month 月</span>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +88,7 @@
                                                         <span>@Model.sell_list[i].date</span>
                                                     </div>
                                                     <div class="purchase-history-right">
-                                                        <span>+ ￥@Model.sell_list[i].total_price</span>
+                                                        <span style="color:#00C9FF;font-size:20px;font-weight:bold;">+ ￥@Model.sell_list[i].total_price</span>
                                                         <a href="/SellGoods/Index/@Model.sell_list[i].goods_id.ToString()">>>></a>
                                                     </div>
                                                 </div>

@@ -14,26 +14,258 @@
     @Scripts.Render("~/Content/js/js")
     @Scripts.Render("~/Content/vender/js")
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
-
     <link href="~/Content/PagedList.css" rel="stylesheet" />
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
-    <!-- Latest compiled and minified Locales -->
-    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
-
 
     <link rel="icon" type="image/png" href="~/content/fav.png">
 
     <style>
+        .a-upload {
+            padding: 4px 10px;
+            line-height: 25px;
+            position: relative;
+            cursor: pointer;
+            color: #888;
+            background: #fafafa;
+            border: none;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1
+        }
+
+            .a-upload input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                cursor: pointer
+            }
+
+            .a-upload:hover {
+                color: #444;
+                background: #eee;
+                text-decoration: none
+            }
+
+            .a-upload:focus {
+                border: none;
+            }
+
+            .a-upload:checked {
+                border: none;
+            }
+
+        .pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+            .pagination > li {
+                display: inline;
+            }
+
+                .pagination > li > a,
+                .pagination > li > span {
+                    color: black;
+                    position: relative;
+                    float: left;
+                    padding: 6px 12px;
+                    margin-left: -1px;
+                    line-height: 1.428571429;
+                    text-decoration: none;
+                    background-color: #ffffff;
+                    border: 1px solid #dddddd;
+                }
+
+                .pagination > li:first-child > a,
+                .pagination > li:first-child > span {
+                    margin-left: 0;
+                    border-bottom-left-radius: 4px;
+                    border-top-left-radius: 4px;
+                }
+
+                .pagination > li:last-child > a,
+                .pagination > li:last-child > span {
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                }
+
+                .pagination > li > a:hover,
+                .pagination > li > span:hover,
+                .pagination > li > a:focus,
+                .pagination > li > span:focus {
+                    background-color: #eeeeee;
+                }
+
+            .pagination > .active > a,
+            .pagination > .active > span,
+            .pagination > .active > a:hover,
+            .pagination > .active > span:hover,
+            .pagination > .active > a:focus,
+            .pagination > .active > span:focus {
+                z-index: 2;
+                color: #ffffff;
+                cursor: default;
+                background-color: #00C9FF;
+                border-color: #00C9FF;
+            }
+
+            .pagination > .disabled > span,
+            .pagination > .disabled > a,
+            .pagination > .disabled > a:hover,
+            .pagination > .disabled > a:focus {
+                color: black;
+                cursor: not-allowed;
+                background-color: #ffffff;
+                border-color: #dddddd;
+            }
+
+        .pagination-lg > li > a,
+        .pagination-lg > li > span {
+            padding: 10px 16px;
+            font-size: 18px;
+        }
+
+        .pagination-lg > li:first-child > a,
+        .pagination-lg > li:first-child > span {
+            border-bottom-left-radius: 6px;
+            border-top-left-radius: 6px;
+        }
+
+        .pagination-lg > li:last-child > a,
+        .pagination-lg > li:last-child > span {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .pagination-sm > li > a,
+        .pagination-sm > li > span {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .pagination-sm > li:first-child > a,
+        .pagination-sm > li:first-child > span {
+            border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .pagination-sm > li:last-child > a,
+        .pagination-sm > li:last-child > span {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .pager {
+            padding-left: 0;
+            margin: 20px 0;
+            text-align: center;
+            list-style: none;
+        }
+
+            .pager:before,
+            .pager:after {
+                display: table;
+                content: " ";
+            }
+
+            .pager:after {
+                clear: both;
+            }
+
+            .pager:before,
+            .pager:after {
+                display: table;
+                content: " ";
+            }
+
+            .pager:after {
+                clear: both;
+            }
+
+            .pager li {
+                display: inline;
+            }
+
+                .pager li > a,
+                .pager li > span {
+                    display: inline-block;
+                    padding: 5px 14px;
+                    background-color: #ffffff;
+                    border: 1px solid #dddddd;
+                    border-radius: 15px;
+                }
+
+                    .pager li > a:hover,
+                    .pager li > a:focus {
+                        text-decoration: none;
+                        background-color: #eeeeee;
+                    }
+
+            .pager .next > a,
+            .pager .next > span {
+                float: right;
+            }
+
+            .pager .previous > a,
+            .pager .previous > span {
+                float: left;
+            }
+
+            .pager .disabled > a,
+            .pager .disabled > a:hover,
+            .pager .disabled > a:focus,
+            .pager .disabled > span {
+                color: #999999;
+                cursor: not-allowed;
+                background-color: #ffffff;
+            }
+
+        .option_links .icon_wishlist {
+            background: rgba(176, 238, 255,0.2);
+            color: #00C9FF;
+            height: 35px;
+            width: 35px;
+            display: inline-block;
+            padding: 8px 5px;
+            border-radius: 100%;
+        }
+
+        .opts_account:hover {
+            color: #00C9FF !important;
+        }
+
+        .ucp-table thead tr th {
+            color: #2b2f4c;
+            font-size: 16px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 500;
+            background-color: rgba(176, 238, 255,0.3);
+        }
+
+        .ucp-table tbody tr td {
+            font-size: 14px;
+            text-align:center;
+            vertical-align: middle;
+            font-weight: 400;
+            color: #3e3f5e;
+        }
+
+        .purchase-history-right a:hover {
+            color: #00C9FF !important;
+        }
+
         .form-control:focus {
             outline: none !important;
             box-shadow: none !important;
             border: 1px solid #00C9FF !important;
         }
-
             .form-control:focus + .lgn_icon {
                 color: #00C9FF;
             }
@@ -58,6 +290,39 @@
 
         .scrollstyle_4::-webkit-scrollbar-track {
             background-color: #F5F5F5;
+        }
+
+        .dashboard-group {
+            background: rgba(176, 238, 255,0.7);
+            position: relative;
+            padding: 50px 0;
+        }
+
+        .ui.dropdown .menu > .channel_item:hover {
+            color: #2b2f4c !important;
+            background: rgba(176, 238, 255,0.4) !important;
+        }
+
+        .user-item:hover {
+            color: #2b2f4c;
+            background: rgba(176, 238, 255,0.4);
+        }
+
+            .user-item:hover i {
+                color: rgba(0, 163, 206, 0.9) !important;
+            }
+
+        .user-item.active {
+            background: #92E8FF;
+            color: #fff !important;
+            transition: all .2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            -ms-transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            background-image: -webkit-linear-gradient(left, rgba(0, 163, 206, 0.9), rgba(0, 201, 255, 0.9));
+            background-image: linear-gradient(to right, rgba(0, 163, 206, 0.9), rgba(0, 201, 255, 0.9));
+            pointer-events: none;
         }
 
         .zoomImage11 {
@@ -117,9 +382,8 @@
                     }
                     @if (Session["has_login"] != null && Convert.ToInt32(Session["mem_type"]) == 2)
                     {
-                        <li>
-                            <a href="@Url.Content("~/SellInfo")" class="option_links" title="我的收入"><i class='uil uil-wallet icon_wishlist'></i></a>
-                        </li>
+                        <li><a href="@Url.Content("~/SellInfo/Index")" class="option_links" title="我的收入"><i class='uil uil-wallet icon_wishlist'></i></a></li>
+                        <li><a href="@Url.Content("~/SellInfo/SellList")" class="option_links" title="订单记录"><i class='uil uil-bill icon_wishlist'></i></a></li>
                         <li height="60px" class="ui dropdown " id="user_li">
                             <a href=@Url.Content("~/SellInfo")>
                                 <div class="opts_account" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -133,10 +397,10 @@
                                 </div>
                             </a>
                             <div class="menu dropdown_account user_div" id="user_btn">
-                                <div class="item channel_item"><i class="uil uil-apps icon__1"></i>@Html.ActionLink("我的店铺信息", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
-                                <div class="item channel_item"><i class="uil uil-copyright icon__1"></i>@Html.ActionLink("修改信息", "Modify", "SellInfo", new { }, new { @style = "color:black" })</div>
-                                <div class="item channel_item"><i class="uil uil-heart icon__1"></i>@Html.ActionLink("订单列表", "SellList", "SellInfo", new { }, new { @style = "color:black" })</div>
-                                <div class="item channel_item"><i class="uil uil-lock-alt icon__1"></i>@Html.ActionLink("注销", "LoginOut", "Login", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-user-exclamation icon__1"></i>@Html.ActionLink("我的店铺信息", "Index", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-money-bill icon__1"></i>@Html.ActionLink("订单列表", "SellList", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-edit-alt icon__1"></i>@Html.ActionLink("修改信息", "Modify", "SellInfo", new { }, new { @style = "color:black" })</div>
+                                <div class="item channel_item"><i class="uil uil-exit icon__1"></i>@Html.ActionLink("注销", "LoginOut", "Login", new { }, new { @style = "color:black" })</div>
                             </div>
                         </li>
                     }
