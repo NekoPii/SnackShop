@@ -103,7 +103,7 @@ namespace ShopWeb.Controllers
                 total_price = p_info.total_price,
             }).ToList();
             int pageNumber = page ?? 1;
-            int pageSize = 10;
+            int pageSize = 1;
             return View(sell_list.ToPagedList(pageNumber,pageSize));
         }
 
