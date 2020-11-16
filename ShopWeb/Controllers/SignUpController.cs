@@ -22,6 +22,7 @@ namespace ShopWeb.Controllers
 
         public ActionResult Seller()
         {
+            if(Session["mem_phone"]==null) return Redirect("/Error");
             return View();
         }
 

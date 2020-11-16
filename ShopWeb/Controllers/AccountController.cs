@@ -67,6 +67,7 @@ namespace ShopWeb.Controllers
         [HttpPost]
         public ActionResult Index(MemberPurchaseCarViewModel memberPurchaseCarViewModels, string[] selected)
         {
+            if(memberPurchaseCarViewModels==null) return Redirect("/Error");
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             var submit_list = memberPurchaseCarViewModels.select_list;

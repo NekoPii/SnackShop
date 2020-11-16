@@ -47,6 +47,7 @@ namespace ShopWeb.Controllers
         [HttpPost]
         public ActionResult Search(MemberPurchaseListViewModel memberPurchaseListViewModel)
         {
+            if(memberPurchaseListViewModel==null) return Redirect("/Error");
             string search_id = memberPurchaseListViewModel.search_id;
             string mem_phone = Session["mem_phone"].ToString();
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();

@@ -15,7 +15,7 @@
     {
         <div class="cart-item">
             <div class="cart-product-img">
-                <a href="@Url.Content("~/BuyGoods/Index/"+i.goods_id.ToString())" class="product-img">
+                <a href="@Url.Content("~/BuyGoods/?goods_id="+i.goods_id.ToString())" class="product-img">
                     <div class="zoomImage11" style="background-image:url(@i.goods_img_path)"></div>
                 </a>
             </div>

@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\BuyGoodsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManagerAllInfoController.cs" />
@@ -268,6 +269,8 @@
     <Content Include="Views\SellInfo\Index.cshtml" />
     <Content Include="Views\SellInfo\SellList.cshtml" />
     <Content Include="Views\SellInfo\Modify.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

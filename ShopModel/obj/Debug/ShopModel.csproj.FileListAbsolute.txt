@@ -166,3 +166,4 @@ E:\MJX\Language\C#\ShopWeb(Web)\ShopModel\bin\Debug\PagedList.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopModel\bin\Debug\PagedList.Mvc.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopModel\bin\Debug\PagedList.xml
 E:\MJX\Language\C#\ShopWeb(Web)\ShopModel\bin\Debug\PagedList.Mvc.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopModel\obj\Debug\ShopModel.csprojAssemblyReference.cache

@@ -134,8 +134,11 @@
                                     </a>
                                 </div>
                                 <div class="no-stock">
-                                    <p class="pd-no">产品编号<span>@Model.now_goods_id</span></p>
-
+                                    <p class="pd-no">
+                                        产品编号
+                                        <span>@Model.now_goods_id</span>
+                                        <span style="background-color:#f55d2c;color:white;border-radius:3px;font-size:16px;padding:0 10px;float:right;">@Model.now_goods_tag</span>
+                                    </p>
                                 </div>
                                 <div style="padding-left:95%;">
                                     @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))
@@ -266,7 +269,7 @@
                             <div class="product-item" style="padding-top:5px;">
                                 <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
                                 </div>
-                                <a href="@Url.Content("~/BuyGoods/Index/"+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
+                                <a href="@Url.Content("~/BuyGoods/?goods_id="+Model.total_goods_list[i].goods_id.ToString())" class="product-img">
                                     <div class="zoomImage11" style="background-image:url(@Model.total_goods_list[i].goods_img_path)"></div>
                                 </a>
                                     @using (Ajax.BeginForm("AddWish", "WishList", new AjaxOptions { HttpMethod = "Post" }))

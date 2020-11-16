@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,16 +23,19 @@
 </head>
 
 <body>
-    <div class="wrapper" style="padding-top:60px;">
-        <div class="cart-item dashboard-group" style="background-color:white">
+    <div class="wrapper" style="height:100%;padding:0;">
+        <div class="cart-item dashboard-group" style="background-color:white;padding:0;height:100%;">
             <div class="cart-text">
-                <h1 style="height:300px;text-align:center;padding-top:150px;">网页跑丢了哦~</h1>
+                <h1 style="height:300px;text-align:center;padding-top:300px;">网页跑丢了哦~</h1>
+                <div style="text-align:center;">
+                    <a href="@Url.Content("~/Home")" class="add-address hover-btn" style="border:none;color:white;font-size:20px;margin-top:10%">返回主页</a>
+                </div>
+                <div class="copyright-text text-center mt-3">
+                    <i class="uil uil-copyright"></i>Copyright 2020 <b>MJX</b> . All rights <a href="" title="">researved</a>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="copyright-text text-center mt-3">
-        <i class="uil uil-copyright"></i>Copyright 2020 <b>MJX</b> . All rights <a href="" title="">researved</a>
+        </div>
     </div>
 
 
@@ -38,3 +46,4 @@
 </body>
 
 </html>
+

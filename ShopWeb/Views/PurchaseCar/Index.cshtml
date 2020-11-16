@@ -90,7 +90,7 @@
                                                     @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
                                                     @Html.TextBoxFor(now => now.select_list[i].seller_phone, new { @type = "hidden", Value = Model.pcar_list[i].seller_phone })
                                                     <div class="cart-product-img">
-                                                        <a href="@Url.Content("~/BuyGoods/Index/"+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
+                                                        <a href="@Url.Content("~/BuyGoods/?goods_id="+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
                                                             <div class="zoomImage11" style="background-image:url(@Model.pcar_list[i].goods_img_path)"></div>
                                                         </a>
                                                     </div>

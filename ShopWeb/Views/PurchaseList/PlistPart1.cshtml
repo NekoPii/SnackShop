@@ -26,7 +26,7 @@
                     <img src="" alt="未上架或已下架">
                 }
                 else
-                {<a href="@Url.Content("~/BuyGoods/Index/" + i.goods_id)" class="product-img">
+                {<a href="@Url.Content("~/BuyGoods/?goods_id=" + i.goods_id)" class="product-img">
                         <div class="zoomImage11" style="background-image:url(@i.goods_img_path)"></div>
                     </a>
                 }

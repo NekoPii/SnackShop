@@ -10,15 +10,16 @@ namespace ShopWeb.Controllers
     public class BuyGoodsController : Controller
     {
         // GET: BuyGoods
+        [HttpGet]
         public ActionResult Index()
         {
+            string now_goods_id = Request.QueryString["goods_id"];
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
-            if (ControllerContext.RouteData.GetRequiredString("id")==null) return Redirect("/Home");
-            if (!sellerSell.isInGoodsList(Convert.ToInt32(ControllerContext.RouteData.GetRequiredString("id")))) return HttpNotFound();
+            if (now_goods_id== null) return Redirect("/Error");
+            if (!sellerSell.isInGoodsList(Convert.ToInt32(now_goods_id))) return Redirect("/Error");
             else
             {
-                string now_goods_id = ControllerContext.RouteData.GetRequiredString("id");
                 int now_goods_id_int = Convert.ToInt32(now_goods_id);
                 ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
                 var goods_list = memberPurchase.getGoodsList().Select(goods_info => new MemberPurchaseCarViewModel()
@@ -46,6 +47,7 @@ namespace ShopWeb.Controllers
                     now_volume=now_goods.goods_volume,
                     now_seller_phone=now_goods.seller_phone,
                     now_seller_name=loginMember.GetMemberByPhone(now_goods.seller_phone).mem_name,
+                    now_goods_tag=now_goods.goods_tag,
                     total_goods_list = goods_list,
                     now_img_lists = now_img_list,
                 };

@@ -276,6 +276,49 @@ namespace ShopRepository.MySQL
             return result;
         }
 
+        public List<Goods> GetGoodsList(string input_name)
+        {
+            var result = new List<Goods>();
+            char[] chs = { ' ' };
+            string[] input_names = input_name.Split(chs, options: StringSplitOptions.RemoveEmptyEntries);
+            foreach(var now in input_names)
+            {
+                string sql = "select * from goods join sell_goods where goods_id=sell_goods_id and (goods_name like concat('%',@now,'%') or goods_tag like concat('%',@now,'%') )";
+                using (MySqlConnection conn = new MySqlConnection(connectionstring))
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.Add(new MySqlParameter("@now", now));
+                    try
+                    {
+                        conn.Open();
+                        MySqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            result.Add(new Goods()
+                            {
+                                goods_id = reader.GetInt32("goods_id"),
+                                goods_name = reader.GetString("goods_name"),
+                                goods_price = reader.GetFloat("goods_price"),
+                                goods_details = reader.GetString("goods_detail"),
+                                goods_img_path = reader.GetString("goods_img_path"),
+                                goods_stock = reader.GetInt32("sell_stock"),
+                                goods_volume = reader.GetInt32("sell_volume"),
+                                seller_phone = reader.GetString("seller_phone"),
+                                goods_tag = reader.GetString("goods_tag"),
+                            });
+                        }
+                        reader.Close();
+                    }
+                    catch { }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+            return result;
+        }
+
         public Goods GetGoods (int goods_id)
         {
             string sql = "select * from goods join sell_goods where goods_id=@goods_id and goods_id=sell_goods_id";
