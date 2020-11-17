@@ -40,6 +40,25 @@ namespace ShopWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult Pay(AccountModels accountModels)
+        {
+
+            if (Session["has_pay"] != null && accountModels.address_text != null)
+            {
+                Session.Remove("has_pay");
+                accountModels.score = 0;
+                for (int i = 0; i < accountModels.accountModeList.Count; ++i)
+                {
+                    accountModels.all_price += accountModels.accountModeList[i].total_price;
+                }
+                accountModels.all_price = accountModels.all_price / 100 + accountModels.all_price;
+                return View(accountModels);
+            }
+            if (accountModels.address_text == null) return RedirectToAction("order_fail");
+            else return Redirect("/PurchaseList");
+        }
+
+        [HttpPost]
         public ActionResult order_success(AccountModels accountModels)
         {
             if (accountModels.score >= accountModels.all_price)

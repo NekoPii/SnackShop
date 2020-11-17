@@ -1,10 +1,89 @@
-﻿@using PagedList.Mvc;
-@using ShopWeb.Models
+﻿@using ShopWeb.Models
 @model PurchaseHomeTotalInfo
 @{
     ViewBag.Title = "云龙县特色农产品";
 }
 
+<div class="bs-canvas bs-canvas-right position-fixed bg-cart h-100">
+    <div class="bs-canvas-header side-cart-header p-3 ">
+        <div class="d-inline-block  main-cart-title">挑选商品</div>
+        <button type="button" class="bs-canvas-close close" aria-label="Close"><i class="uil uil-multiply"></i></button>
+    </div>
+    <div class="bs-canvas-body filter-body">
+        <div class="filter-items">
+            <div class="filtr-cate-title">
+                <h4>分类</h4>
+            </div>
+            <div class="filter-item-body scrollstyle_4">
+                <div class="cart-radio">
+                    <ul class="cte-select">
+                        <li>
+                            <input type="radio" id="tag0" name="tagList" onclick="update_tag('all')">
+                            <label for="tag0">全部</label>
+                        </li>
+                        @for (var i = 1; i <= Model.goods_tags.Count; ++i)
+                        {
+                            <li>
+                                @{
+                                    var now_id = "tag" + i;
+                                }
+                                <input type="radio" id=@now_id name="tagList" onclick="update_tag('@Model.goods_tags[i-1].goods_tag')">
+                                <label for=@now_id>@Model.goods_tags[i - 1].goods_tag</label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="filter-items">
+            <div class="filtr-cate-title">
+                <h4>价格</h4>
+            </div>
+            <div class="price-pack-item-body scrollstyle_4" style="height:170px;">
+                <div class="cart-radio">
+                    <ul class="cte-select">
+                        <li>
+                            <input type="radio" id="price0" name="priceList" onclick="update_price('all')">
+                            <label for="price0">全部</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price1" name="priceList" onclick="update_price('0_10')">
+                            <label for="price1">￥0 —— ￥10</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price2" name="priceList" onclick="update_price('11_20')">
+                            <label for="price2">￥11 —— ￥20</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price3" name="priceList" onclick="update_price('21_50')">
+                            <label for="price3">￥21 —— ￥50</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price4" name="priceList" onclick="update_price('51_100')">
+                            <label for="price4">￥51 —— ￥100</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price5" name="priceList" onclick="update_price('101_200')">
+                            <label for="price5">￥101 —— ￥200</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="price6" name="priceList" onclick="update_price('201')">
+                            <label for="price6">￥200 —— </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="filter-items">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <input type="hidden" id="search_tag" name="search_tag" value="all" />
+                <input type="hidden" id="search_price" name="search_price" value="all" />
+                <button type="submit" class="add-address hover-btn" style="border:none;font-size:15px;margin:0;">确认</button>
+            }
+        </div>
+    </div>
+</div>
 
 <div class="main-banner-slider">
     <div class="container">
@@ -46,60 +125,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="main-title-tt">
+                <div class="main-title-tt product-top-dt">
                     <div class="main-title-left">
-                        <span>为你挑选 </span>
-                        <h2>全部商品:</h2>
+                        <span>为你挑选</span>
+                        <h2>商品一览: @Model.select_tag  @Model.select_price_interval</h2>
                     </div>
+                    <a class="filter-btn pull-bs-canvas-right" style="color:#f55d2c;font-weight:bold;">挑选</a>
                 </div>
             </div>
-            <div class="col-md-12">
-                @for (var i = 0; i < (Model.page_goods_list.Count / 4) + 1; ++i)
-                {
-                    <div class="col-md-12 col-lg-12">
-
-                        @for (var j = i * 4; j < (i + 1) * 4 && j < Model.page_goods_list.Count; ++j)
-                        {
-                            <div class="item col-md-5 col-sm-5 col-lg-3" style="margin-bottom:20px;">
-                                <div class="product-item" style="padding-top:5px;">
-                                    <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
-                                    </div>
-
-                                    <a href="@Url.Content("~/BuyGoods/?goods_id=" + Model.page_goods_list[j].goods_id.ToString())" class="product-img">
-                                        <div class="zoomImage11" style="background-image:url(@Model.page_goods_list[j].goods_img_path)"></div>
-                                    </a>
-                                    <div class="product-text-dt">
-                                        <h4>@Model.page_goods_list[j].goods_name</h4>
-                                        <div class="product-price">￥@Model.page_goods_list[j].unit_price</div>
-                                        <div style="margin:10px 0;">
-                                            <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
-                                                <span style="color:#f55d2c">销量:</span>
-                                                <span style="color:#f55d2c">@Model.page_goods_list[j].sell_volume</span>
-                                            </div>
-                                            <div style="font-weight:bold;font-size:13px;padding-left:30px;display:inline-block;">
-                                                <span style="color:#00C9FF">库存:</span>
-                                                <span style="color:#00C9FF">@Model.page_goods_list[j].sell_stock</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-                <div class="col-md-12 col-lg-12 text-center">
-                    @Html.PagedListPager(Model.page_goods_list, page => Url.Action("Index", "Home", new { page }), new PagedListRenderOptions()
-    {
-    LinkToFirstPageFormat = "首页",
-    LinkToPreviousPageFormat = "上一页",
-    LinkToNextPageFormat = "下一页",
-    LinkToLastPageFormat = "末页",
-    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
-    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
-    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
-    MaximumPageNumbersToDisplay = 4
-    })
-                </div>
+            <div class="col-md-12" id="home_part_1">
+                @Html.Partial("HomePart1", Model)
             </div>
         </div>
     </div>
@@ -238,3 +273,20 @@
     </div>
     <!-- Featured Products End -->
 *@
+
+<script>
+    function update_tag(now) {
+        $("#search_tag").val(now);
+    }
+
+    function update_price(now) {
+        $("#search_price").val(now);
+    }
+
+    window.onload = function () {
+        $("#tag0").click();
+        $("#price0").click();
+        $("#search_tag").val('all');
+        $("#search_price").val('all');
+    }
+</script>

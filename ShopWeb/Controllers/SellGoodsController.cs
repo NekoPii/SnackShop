@@ -15,16 +15,18 @@ namespace ShopWeb.Controllers
         public static string savepath = @"E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\Content\image\";
 
         // GET: SellGoods
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(int? page)
         {
-            if (Session["mem_phone"] == null) return Redirect("/Login");
-            if (Session["mem_phone"] != null && Convert.ToInt32(Session["mem_type"]) == 1) return Redirect("/SignUp/Seller");
-            string phone = Session["mem_phone"].ToString();
-            string now_goods_id = ControllerContext.RouteData.GetRequiredString("id");
-            int now_goods_id_int = Convert.ToInt32(now_goods_id);
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
             ShopBusinessLogic.MemberPurchase purchase = new ShopBusinessLogic.MemberPurchase();
+            if (Session["mem_phone"] == null) return Redirect("/Login");
+            if (Session["mem_phone"] != null && Convert.ToInt32(Session["mem_type"]) == 1) return Redirect("/SignUp/Seller");
+            string now_goods_id = this.Request.QueryString["goods_id"];
+            int now_goods_id_int = Convert.ToInt32(now_goods_id);
+            if (now_goods_id == null||!sellerSell.isInGoodsList(now_goods_id_int)) return Redirect("/Error");
+            string phone = Session["mem_phone"].ToString();
             var now_goods = sellerSell.getSellGoods(phone, now_goods_id_int);
             var now_img_list = purchase.getGoodsImgs(now_goods_id_int).Select(img_info => new GoodsImgView()
             {
@@ -45,6 +47,8 @@ namespace ShopWeb.Controllers
                 date=p_list.date,
                 goods_name=p_list.goods_name,
             }).ToList();
+            int pageNumber = page ?? 1;
+            int pageSize = 1;
             var resView = new SellGoodsViewModel()
             {
                 goods_id = now_goods_id_int,
@@ -57,9 +61,9 @@ namespace ShopWeb.Controllers
                 sell_volume = now_goods.goods_volume,
                 img_list = now_img_list,
                 total_goods_tags = tag_list,
-                perGoodsSellList=sell_list,
+                goods_page_sell_list= (PagedList<MemberPurchaseListViewModel>)sell_list.ToPagedList(pageNumber,pageSize),
             };
-            return View(resView);
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("SellGoodsPart1", resView) : View(resView);
         }
 
         //修改信息
@@ -102,9 +106,9 @@ namespace ShopWeb.Controllers
                     img_list = now_img_list,
                     total_goods_tags = tag_list,
                 };
-                return Redirect("/SellGoods/Index/" +goods_id.ToString());
+                return Redirect("/SellGoods/?goods_id=" +goods_id.ToString());
             }
-            else return Redirect("/SellGoods/Index/" + goods_id.ToString());
+            else return Redirect("/SellGoods/?goods_id=" + goods_id.ToString());
         }
 
         //下架商品
@@ -140,7 +144,7 @@ namespace ShopWeb.Controllers
                 img_path = "/content/image/" + phone + "/" + img_goods_id.ToString() + "/" + file_name + ".jpg";
                 if (sellerSell.addImg(img_goods_id, img_path)) return Redirect("/SellGoods/Index/" + img_goods_id.ToString());
             }
-            return Redirect("/SellGoods/Index/" + img_goods_id.ToString());
+            return Redirect("/SellGoods/?goods_id=" + img_goods_id.ToString());
         }
     }
 }

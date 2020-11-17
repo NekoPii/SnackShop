@@ -18,7 +18,7 @@
                 {
                     <div class="item col-sm-6 col-md-5 col-lg-4" style="margin:10px 0;">
                         <div class="product-item" style="padding-top:20px;">
-                            <a href="@Url.Content("~/SellGoods/Index/" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
+                            <a href="@Url.Content("~/SellGoods/?goods_id=" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
                                 <div class="zoomImage11" style="background-image:url(@Model.total_sell_goods[j].goods_img_path)"></div>
                             </a>
 

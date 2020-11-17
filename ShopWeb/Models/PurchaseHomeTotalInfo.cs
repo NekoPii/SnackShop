@@ -25,11 +25,15 @@ namespace ShopWeb.Models
 
         public string search_content { set; get; }
 
+        public string select_price_interval { set; get; }
+        public string select_tag { set; get; }
+
         public List<MemberWishListViewModel> wish_lists { set; get; }
         public List<MemberPurchaseCarViewModel> pcar_list { set; get; }
         public List<MemberPurchaseCarViewModel> selected_goods_list { set; get; }
         public List<MemberPurchaseCarViewModel> total_goods_list { set; get; }
         public List<GoodsImgView> now_img_lists { set; get; }
+        public List<GoodsTag> goods_tags { set; get; }
         public PagedList.PagedList<MemberPurchaseCarViewModel> page_goods_list;
     }
 }

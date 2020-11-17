@@ -46,6 +46,11 @@ namespace ShopBusinessLogic
             return rp.GetGoodsList(input_name);
         }
 
+        public List<Goods> getGoodsList(string tag,string price_interval)
+        {
+            return rp.GetGoodsList(tag, price_interval);
+        }
+
         public List<GoodsTag> getAllTags()
         {
             return rp.GetAllTags();

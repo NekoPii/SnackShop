@@ -31,7 +31,7 @@ namespace ShopWeb.Models
 
         public int sell_volume { set; get; }
 
-        public List<MemberPurchaseListViewModel> perGoodsSellList { set; get; }
+        public PagedList.PagedList<MemberPurchaseListViewModel> goods_page_sell_list;
 
         public List<SellGoodsViewModel> total_sell_goods { set; get; }
 

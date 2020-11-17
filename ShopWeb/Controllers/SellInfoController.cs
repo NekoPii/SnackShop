@@ -103,8 +103,8 @@ namespace ShopWeb.Controllers
                 total_price = p_info.total_price,
             }).ToList();
             int pageNumber = page ?? 1;
-            int pageSize = 10;
-            return View(sell_list.ToPagedList(pageNumber,pageSize));
+            int pageSize = 2;
+            return Request.IsAjaxRequest()?(ActionResult)PartialView("SellInfoPart1", sell_list.ToPagedList(pageNumber, pageSize)):View(sell_list.ToPagedList(pageNumber,pageSize));
         }
 
         [HttpGet]

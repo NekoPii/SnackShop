@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc;
+@using ShopWeb.Models
+@model PurchaseHomeTotalInfo
+
+@if (Model.page_goods_list == null||Model.page_goods_list.Count == 0)
+{
+    <div class="cart-item dashboard-group" style="background-color:white">
+        <div class="cart-text">
+            <h1 style="height:440px;text-align:center;padding-top:220px;">这里空空如也什么也没有~</h1>
+        </div>
+    </div>
+}
+@if (Model.page_goods_list.Count > 0)
+{
+    for (var i = 0; i < (Model.page_goods_list.Count / 4) + 1; ++i)
+    {
+        <div class="col-md-12 col-lg-12">
+
+            @for (var j = i * 4; j < (i + 1) * 4 && j < Model.page_goods_list.Count; ++j)
+            {
+                <div class="item col-md-5 col-sm-5 col-lg-3" style="margin-bottom:20px;">
+                    <div class="product-item" style="padding-top:5px;">
+                        <div class="product-absolute-options" style="margin-bottom:5px;padding-left:325px;padding-top:10px;">
+                        </div>
+
+                        <a href="@Url.Content("~/BuyGoods/?goods_id=" + Model.page_goods_list[j].goods_id.ToString())" class="product-img">
+                            <div class="zoomImage11" style="background-image:url(@Model.page_goods_list[j].goods_img_path)"></div>
+                        </a>
+                        <div class="product-text-dt">
+                            <h4>@Model.page_goods_list[j].goods_name</h4>
+                            <div class="product-price">￥@Model.page_goods_list[j].unit_price</div>
+                            <div style="margin:10px 0;">
+                                <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
+                                    <span style="color:#f55d2c">销量:</span>
+                                    <span style="color:#f55d2c">@Model.page_goods_list[j].sell_volume</span>
+                                </div>
+                                <div style="font-weight:bold;font-size:13px;padding-left:30px;display:inline-block;">
+                                    <span style="color:#00C9FF">库存:</span>
+                                    <span style="color:#00C9FF">@Model.page_goods_list[j].sell_stock</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    <div class="col-md-12 col-lg-12 text-center">
+        @Html.PagedListPager(Model.page_goods_list, page => Url.Action("Index", "Home", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "首页",
+        LinkToPreviousPageFormat = "上一页",
+        LinkToNextPageFormat = "下一页",
+        LinkToLastPageFormat = "末页",
+        DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+        MaximumPageNumbersToDisplay = 4
+    }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "home_part_1" }))
+    </div>
+}

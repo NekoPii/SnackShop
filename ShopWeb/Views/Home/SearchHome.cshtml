@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "搜索主页";
+}
+
+<div class="request-grid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="default-title">
+                    <h2><i class="uil uil-credit-card-search"></i>搜索商品</h2>
+                    <img src="/content/image/line.svg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="request-products">
+                    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                    {
+                        <div class="form-group">
+                            <input type="text" value="" name="search_content" data-role="tagsinput" placeholder="输入你想要搜索的内容...">
+                        </div>
+                        <button class="next-btn16 hover-btn mt-3 rqst-btn" type="submit">搜索</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="life-gambo pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="default-title">
+                    <h2>我该如何搜索？</h2>
+                    <p>帮助你更精确地搜索</p>
+                    <img src="images/line.svg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="how-order-steps">
+                    <div class="how-order-icon">
+                        <i class="uil uil-text"></i>
+                    </div>
+                    <h4>按类型搜索</h4>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="how-order-steps">
+                    <div class="how-order-icon">
+                        <i class="uil uil-location-arrow-alt"></i>
+                    </div>
+                    <h4>按商品名称搜索</h4>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="how-order-steps">
+                    <div class="how-order-icon">
+                        <i class="uil uil-space-key"></i>
+                    </div>
+                    <h4>可用空格或逗号隔开多项搜索</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
