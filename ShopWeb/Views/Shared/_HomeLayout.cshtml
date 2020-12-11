@@ -16,6 +16,26 @@
 
     <link rel="icon" type="image/png" href="~/content/fav.png">
     <style>
+        .payBackground {
+            background: none;
+            position: relative;
+            padding: 0;
+        }
+
+        .payBackground:before {
+            margin: 0;
+            content: "";
+            background: url(/content/image/banner.svg) no-repeat;
+            background-attachment: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: fixed;
+            pointer-events: none;
+            background-size: cover;
+            opacity: 0.02;
+        }
         .uil-heart.has_liked {
             color: orangered;
         }
@@ -40,6 +60,42 @@
             width: 100%;
             height: 0;
             padding-bottom: 60%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+        .zoomImage52 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 40%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+        .zoomImage21 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 50%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+        }
+
+        .zoomImage31 {
+            width: 100%;
+            height: 0;
+            padding-bottom: 33%;
             overflow: hidden;
             background-position: center center;
             background-repeat: no-repeat;
@@ -335,7 +391,7 @@
             </div>
 </header>
 <!-- Header End -->
-<body>
+<body class="payBackground">
     <div class="wrapper" style="padding-top:60px;">
         @RenderBody()
     </div>

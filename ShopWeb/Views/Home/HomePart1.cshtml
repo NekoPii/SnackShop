@@ -24,10 +24,10 @@
                         </div>
 
                         <a href="@Url.Content("~/BuyGoods/?goods_id=" + Model.page_goods_list[j].goods_id.ToString())" class="product-img">
-                            <div class="zoomImage11" style="background-image:url(@Model.page_goods_list[j].goods_img_path)"></div>
+                            <div class="zoomImage11" style="background-image:url(@Model.page_goods_list[j].goods_img_path);border-radius:5px;"></div>
                         </a>
                         <div class="product-text-dt">
-                            <h4>@Model.page_goods_list[j].goods_name</h4>
+                            <h4 style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">@Model.page_goods_list[j].goods_name</h4>
                             <div class="product-price">￥@Model.page_goods_list[j].unit_price</div>
                             <div style="margin:10px 0;">
                                 <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
@@ -46,7 +46,7 @@
         </div>
     }
     <div class="col-md-12 col-lg-12 text-center">
-        @Html.PagedListPager(Model.page_goods_list, page => Url.Action("Index", "Home", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+        @Html.PagedListPager(Model.page_goods_list, page => Url.Action("Index", "Home", new { page,search_tag=Model.search_tag,search_price=Model.search_price }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
     {
         LinkToFirstPageFormat = "首页",
         LinkToPreviousPageFormat = "上一页",

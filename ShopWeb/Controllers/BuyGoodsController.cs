@@ -37,6 +37,23 @@ namespace ShopWeb.Controllers
                     img_path = img_info.img_path,
                 }).ToList();
                 var now_goods = memberPurchase.getGoods(now_goods_id_int);
+                var tag_goods_list = memberPurchase.getGoodsList(now_goods.goods_tag,9).Select(goods_info => new MemberPurchaseCarViewModel()
+                {
+                    goods_id = goods_info.goods_id,
+                    goods_name = goods_info.goods_name,
+                    goods_img_path = goods_info.goods_img_path,
+                    unit_price = goods_info.goods_price,
+                    sell_stock = goods_info.goods_stock,
+                    sell_volume = goods_info.goods_volume,
+                    seller_phone = goods_info.seller_phone,
+                }).ToList();
+                for(int i=0; i< tag_goods_list.Count;++i)
+                {
+                    if(tag_goods_list[i].goods_id==now_goods_id_int)
+                    {
+                        tag_goods_list.RemoveAt(i);
+                    }
+                }
                 var resView = new PurchaseHomeTotalInfo()
                 {
                     now_goods_id = now_goods_id_int,
@@ -49,6 +66,7 @@ namespace ShopWeb.Controllers
                     now_seller_name=loginMember.GetMemberByPhone(now_goods.seller_phone).mem_name,
                     now_goods_tag=now_goods.goods_tag,
                     total_goods_list = goods_list,
+                    tag_goods_list=tag_goods_list,
                     now_img_lists = now_img_list,
                 };
                 return View(resView);

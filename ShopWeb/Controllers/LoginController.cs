@@ -59,7 +59,7 @@ namespace ShopWeb.Controllers
                 }
                 else
                 {
-                    ViewBag.LoginErrorMessage = "用户名或密码错误";
+                    ViewBag.LoginErrorMessage = "用户名或密码错误！";
                     return View();
                 }
             }

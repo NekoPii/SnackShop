@@ -896,11 +896,25 @@ i.icon1 {
     text-align: center;
 }
 
+.weixin_btn {
+    color: #04BE02 !important;
+    font-size: 14px;
+    font-weight: 500;
+    height: 60px;
+    background: #fff;
+    padding: 10px 15px;
+    text-align: center;
+}
+
 .cart__btn span {
     margin: 0 2px;
 }
 
 .seller_btn span {
+    margin: 0 2px;
+}
+
+.weixin_btn span {
     margin: 0 2px;
 }
 
@@ -926,6 +940,18 @@ i.icon1 {
     -webkit-transition: all 0.2s ease-in-out;
     background-image: -webkit-linear-gradient(left, rgba(0, 163, 206, 0.9), rgba(0, 201, 255, 0.9));
     background-image: linear-gradient(to right, rgba(0, 163, 206, 0.9), rgba(0, 201, 255, 0.9));
+}
+
+.weixin_hover_btn:hover {
+    background: #04BE02;
+    color: #fff !important;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    background-image: -webkit-linear-gradient(left, rgba(52, 202, 50, 0.9), rgba(4, 190, 2, 0.9));
+    background-image: linear-gradient(to right, rgba(52, 202, 50, 0.9), rgba(4, 190, 2, 0.9));
 }
 
 .cart__btn ins {
@@ -2566,6 +2592,32 @@ img.download-btn {
     background-image: linear-gradient(to right, rgba(230, 92, 91, 0.9), rgba(245, 93, 44, 0.9));
 }
 
+.re-filter-btn {
+    font-size: 14px;
+    font-weight: 500;
+    float: right;
+    display: block;
+    height: 40px;
+    width: 110px;
+    padding: 10px 0;
+    text-align: center;
+    color: #2b2f4c;
+    background: #f55d2c;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    text-transform: uppercase;
+}
+
+.re-filter-btn:hover {
+    background: #fff;
+    color: #f55d2c !important;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+}
+
 .product-sort {
     float: right;
     margin-right: 10px;
@@ -3200,6 +3252,17 @@ label.control-label {
     font-weight: 500;
 }
 
+.weixin_btn14 {
+    height: 40px;
+    padding: 0 20px;
+    border: 1px solid;
+    background: transparent;
+    color: #04BE02;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
 .next-btn16 {
     height: 40px;
     padding: 9px 20px;
@@ -3663,7 +3726,7 @@ label.control-label {
     position: absolute;
     pointer-events: none;
     background-size: cover;
-    opacity: 0.02;
+    opacity: 0.04;
 }
 
 .user-dt {

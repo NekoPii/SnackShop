@@ -10,7 +10,7 @@ namespace ShopModel
     {
         public int goods_id { set; get; }
         public string goods_name { set; get; }
-        public float goods_price { set; get; }
+        public decimal goods_price { set; get; }
         public string goods_tag { set; get; }
         public string goods_details { set; get; }
         public string goods_img_path { set; get; }

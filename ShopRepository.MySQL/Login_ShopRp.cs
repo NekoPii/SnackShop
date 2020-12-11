@@ -110,22 +110,25 @@ namespace ShopRepository.MySQL
         {
             int mem_type = 2;
             bool flag = true;
-            string queryString1 = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name ,mem_type=@mem_type ";
-            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@seller_address , seller_account=@seller_account";
+            string queryString1 = "insert into members set mem_phone=@phone , mem_pwd=@pwd , mem_name=@name , mem_type=@type";
+            string queryString2 = "insert into seller set seller_phone=@phone , seller_address=@address , seller_account=@account";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
+                
                 MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
                 MySqlCommand cmd2 = new MySqlCommand(queryString2, conn);
+
+                conn.Open();
+
                 cmd1.Parameters.Add(new MySqlParameter("@phone", phone));
                 cmd1.Parameters.Add(new MySqlParameter("@pwd", pwd));
                 cmd1.Parameters.Add(new MySqlParameter("@name", name));
                 cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
                 cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
-                cmd2.Parameters.Add(new MySqlParameter("@seller_address", seller_address));
-                cmd2.Parameters.Add(new MySqlParameter("@seller_account", seller_account));
+                cmd2.Parameters.Add(new MySqlParameter("@address", seller_address));
+                cmd2.Parameters.Add(new MySqlParameter("@account", seller_account));
                 try
                 {
-                    conn.Open();
                     cmd1.ExecuteNonQuery();
                     cmd2.ExecuteNonQuery();
                 }
@@ -152,6 +155,9 @@ namespace ShopRepository.MySQL
             {
                 MySqlCommand cmd1 = new MySqlCommand(queryString1, conn);
                 MySqlCommand cmd2 = new MySqlCommand(queryString2, conn);
+
+                conn.Open();
+
                 cmd1.Parameters.Add(new MySqlParameter("@phone", phone));
                 cmd1.Parameters.Add(new MySqlParameter("@type", mem_type));
                 cmd2.Parameters.Add(new MySqlParameter("@phone", phone));
@@ -159,7 +165,7 @@ namespace ShopRepository.MySQL
                 cmd2.Parameters.Add(new MySqlParameter("@seller_account", seller_account));
                 try
                 {
-                    conn.Open();
+                    
                     cmd1.ExecuteNonQuery();
                     cmd2.ExecuteNonQuery();
                 }

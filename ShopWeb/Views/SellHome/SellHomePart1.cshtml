@@ -6,7 +6,7 @@
     {
         <div class="cart-item dashboard-group" style="background-color:white">
             <div class="cart-text">
-                <h1 style="height:440px;text-align:center;padding-top:220px;">这里空空如也什么也没有~</h1>
+                <h1 style="height:440px;text-align:center;padding-top:220px;">店铺没有任何商品在售~</h1>
             </div>
         </div>
     }
@@ -18,12 +18,14 @@
                 {
                     <div class="item col-sm-6 col-md-5 col-lg-4" style="margin:10px 0;">
                         <div class="product-item" style="padding-top:20px;">
-                            <a href="@Url.Content("~/SellGoods/?goods_id=" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
-                                <div class="zoomImage11" style="background-image:url(@Model.total_sell_goods[j].goods_img_path)"></div>
+                            <a title="@Model.total_sell_goods[j].goods_name" href="@Url.Content("~/SellGoods/?goods_id=" + Model.total_sell_goods[j].goods_id.ToString())" class="product-img">
+                                <div class="zoomImage11" style="background-image:url(@Model.total_sell_goods[j].goods_img_path);border-radius:5px;"></div>
                             </a>
 
                             <div class="product-text-dt col-md-12" style="margin-top:20px;padding:0;">
-                                <h4 class="col-md-12" style="padding:0;">@Model.total_sell_goods[j].goods_name</h4>
+                                <a title="@Model.total_sell_goods[j].goods_name" href="@Url.Content("~/SellGoods/?goods_id=" + Model.total_sell_goods[j].goods_id.ToString())">
+                                    <h4 class="col-md-12" style="padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">@Model.total_sell_goods[j].goods_name</h4>
+                                </a>
                                 <input type="hidden" value=@Model.total_sell_goods[j].goods_id name="goods_id_to_cart" />
                                 <div class="product-price col-md-12" style="color:red;padding:0;">￥@Model.total_sell_goods[j].goods_price</div>
                             </div>

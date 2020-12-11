@@ -37,8 +37,8 @@ namespace ShopWeb.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "新账户不能为空")]
         public string new_sell_account { set; get; }
 
-        public float all_income { set; get; }
-        public float now_month_income { set; get; }
+        public decimal all_income { set; get; }
+        public decimal now_month_income { set; get; }
         public List<MemberPurchaseListViewModel> sell_list { set; get; }
     }
 }

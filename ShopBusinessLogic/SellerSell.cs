@@ -36,7 +36,7 @@ namespace ShopBusinessLogic
             return rp.GetAddGoodsId();
         }
 
-        public bool addGoods(string phone,string name,string tag,float price,string details,int stock,string img_path)
+        public bool addGoods(string phone,string name,string tag,decimal price,string details,int stock,string img_path)
         {
             return rp.Add_Goods(phone, name,tag, price, details, stock,img_path);
         }
@@ -46,7 +46,7 @@ namespace ShopBusinessLogic
             return rp.Add_Img(goods_id, img_path);
         }
 
-        public bool modifyGoods(string phone,int goods_id, string name,string tag, float price, string details, int stock)
+        public bool modifyGoods(string phone,int goods_id, string name,string tag, Decimal price, string details, int stock)
         {
             return rp.Modify_Goods(phone,goods_id, name,tag, price, details, stock);
         }
@@ -56,9 +56,9 @@ namespace ShopBusinessLogic
             return rp.IsInGoodsList(goods_id);
         }
 
-        public void deleteGoods(int goods_id)
+        public void deleteGoods(string seller_phone,int goods_id)
         {
-            rp.Delete_Goods(goods_id);
+            rp.Delete_Goods(seller_phone,goods_id);
         }
 
         public void reduceStock(int goods_id,int num)
@@ -71,12 +71,12 @@ namespace ShopBusinessLogic
             rp.Add_Volume(goods_id, num);
         }
 
-        public float getAllIncome(string phone)
+        public decimal getAllIncome(string phone)
         {
             return rp.GetAllIncome(phone);
         }
 
-        public float getIncomeByMonth(string phone,DateTime now)
+        public decimal getIncomeByMonth(string phone,DateTime now)
         {
             return rp.GetIncomeByMonth(phone, now);
         }

@@ -187,7 +187,7 @@
                             <div class="bill-descp">
                                 @foreach (var info in Model.accountModeList)
                                 {
-                                    <div class="cart-total-dil" style="margin-top:5px;margin-bottom:5px;">
+                                    <div class="cart-total-dil" style="margin:10px 0;">
                                         <span class="col-md-5">@info.goods_name</span>
                                         <span class="col-md-2 text-center">￥@info.unit_price</span>
                                         <span class="col-md-2 text-center">@info.goods_num</span>
@@ -207,7 +207,15 @@
                             </div>
                             <div style="margin-left:59%">
                                 <button class="add-address hover-btn" data-backdrop="static" onclick="open_add_modal()" style="border:none;margin-bottom:0;">添加新地址</button>
-                                <button class="add-address hover-btn" data-backdrop="static" onclick="account_update_old_ad()" style="border: none;margin-bottom:0;">修改当前地址</button>
+                                @if (Model.addresses.Count == 0)
+                                {
+                                    <button class="add-address" disabled="disabled" style="background-color:gainsboro;color:white;border: none;margin-bottom:0;cursor:not-allowed;">修改当前地址</button>
+                                }
+                                @if (Model.addresses.Count > 0)
+                                {
+                                    <button class="add-address hover-btn" data-backdrop="static" onclick="account_update_old_ad()" style="border: none;margin-bottom:0;">修改当前地址</button>
+                                }
+
                             </div>
                         </div>
 
@@ -223,12 +231,12 @@
                                     </div>
                                     <div class="cart-total-dil pt-3">
                                         <h4>配送费用</h4>
-                                        <span style="color:#f55d2c">￥@(Model.all_price/100)</span>
+                                        <span style="color:#f55d2c">￥@((Model.all_price/100).ToString("f1"))</span>
                                     </div>
                                 </div>
                                 <div class="main-total-cart pl-0 pr-0 pb-0 border-bottom-0">
                                     <h2>总计</h2>
-                                    <span style="font-size:24px;">￥@(Model.all_price*1.01)</span>
+                                    <span style="font-size:24px;">￥@((Model.all_price*1.01m).ToString("f1"))</span>
                                 </div>
                             </div>
                         </div>
@@ -272,11 +280,18 @@
         modify_label_address_tag_list = $(".modify_label_address_tag"),
         modify_address_tag_text = $("#modify_address_tag_input");
 
+    function update_select() {
+        $("#now_select_ad_text").val($("#ad_select_list").val());
+    }
+
     function add_success() {
         $("#add_address_modal").modal("hide");
         if ($("#add_address_modal").hasClass("show")) {
             $("#add_address_modal").removeClass("show");
-        }/*
+        }
+        update_select();
+       
+        /*
         $(".modal-backdrop").remove();*/
     }
 
@@ -294,8 +309,8 @@
         $("#modify_address_modal").modal("hide");
         if ($("#modify_address_modal").hasClass("show")) {
             $("#modify_address_modal").removeClass("show");
-        }/*
-        $(".modal-backdrop").remove();*/
+        }
+        update_select();
     }
 
     function add_select_tag() {
@@ -316,38 +331,40 @@
         }
     }
 
-    function update_select() {
-        $("#now_select_ad_text").val($("#ad_select_list").val());
-    }
-
     function open_add_modal() {
         $("#add_address_input").val("");
         $("#add_address_modal").addClass("show");
         $("#add_address_modal").modal({ backdrop: "static", keyboard: false });
         $("#add_address_modal").modal("show");
+        $("#add_address_modal").addClass("in");
 
     }
 
     function account_update_old_ad() {
+        var now_ad = $("#ad_select_list").val(),
+            now_ad_text = "",
+            now_ad_tag_text = "";
+
         $("#modify_address_input").val("");
         $("#modify_address_modal").addClass("show");
         $("#modify_address_modal").modal({ backdrop: "static", keyboard: false });
         $("#modify_address_modal").modal("show");
-
-        var now_ad = $("#ad_select_list").val(),
-            now_ad_text = "",
-            now_ad_tag_text = "",
-            i;
-        for (i = 0; i < now_ad.length; ++i) {
-            if (now_ad[i] == '】') {
-                i++;
-                break;
+        $("#modify_address_modal").addClass("in");
+        
+        if (now_ad == null) return;
+        if (now_ad.length > 0) {
+            var i = 0;
+            for (; i < now_ad.length; ++i) {
+                if (now_ad[i] == '】') {
+                    i++;
+                    break;
+                }
+                if (now_ad[i] == '【') continue;
+                now_ad_tag_text += now_ad[i];
             }
-            if (now_ad[i] == '【') continue;
-            now_ad_tag_text += now_ad[i];
-        }
-        for (; i < now_ad.length; ++i) {
-            now_ad_text += now_ad[i];
+            for (; i < now_ad.length; ++i) {
+                now_ad_text += now_ad[i];
+            }
         }
 
         $("#old_ad").val(now_ad_text);

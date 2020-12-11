@@ -202,16 +202,16 @@
                             <div id="sync1" class="owl-carousel owl-theme">
                                 @for (var i = 0; i < Model.img_list.Count; ++i)
                                 {
-                                    <div class="item">
-                                        <div class="zoomImage11" style="background-image:url(@Model.img_list[i].img_path)"></div>
+                                    <div class="item" style="border-radius: 5px;">
+                                        <div class="zoomImage11" style="background-image:url(@Model.img_list[i].img_path);border-radius:5px;"></div>
                                     </div>
                                 }
                             </div>
-                            <div id="sync2" class="owl-carousel owl-theme">
+                            <div id="sync2" class="owl-carousel owl-theme" style="margin-top:20px;">
                                 @for (var i = 0; i < Model.img_list.Count; ++i)
                                 {
                                     <div class="item">
-                                        <img src="@Model.img_list[i].img_path" alt="暂时无法显示">
+                                        <div class="zoomImage11" style="background-image:url(@Model.img_list[i].img_path);border-radius:5px;"></div>
                                     </div>
                                 }
                             </div>

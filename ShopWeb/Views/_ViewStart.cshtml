@@ -5,13 +5,13 @@
     string[] lController = new string[] { "login", "signup" };
     string[] sellerController = new string[] { "sellgoods", "sellhome","sellinfo" };
     string[] lAccount = new string[] { "account" };
-    string[] aAccount = new string[] { "pay2048" };
+    string[] aAccount = new string[] { "pay","index","order_fail","order_success" };
 
     if (lController.Contains(controller))
     {
         Layout = "~/Views/Shared/_SignLayout.cshtml";
     }
-    else if(lAccount.Contains(controller)&&aAccount.Contains(action)) { Layout = "~/Views/Shared/_pay2048Layout.cshtml"; }
+    else if(lAccount.Contains(controller)&&aAccount.Contains(action)) { Layout = "~/Views/Shared/_PayLayout.cshtml"; }
     else if(lAccount.Contains(controller))
     { Layout = "~/Views/Shared/_Layout.cshtml"; }
     else if (sellerController.Contains(controller)) { Layout = "~/Views/Shared/_SellerHomeLayout.cshtml"; }

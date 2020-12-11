@@ -48,7 +48,7 @@ namespace ShopWeb.Controllers
                 goods_name=p_list.goods_name,
             }).ToList();
             int pageNumber = page ?? 1;
-            int pageSize = 1;
+            int pageSize = 10;
             var resView = new SellGoodsViewModel()
             {
                 goods_id = now_goods_id_int,
@@ -73,7 +73,7 @@ namespace ShopWeb.Controllers
             string phone = Session["mem_phone"].ToString();
             int goods_id = sellGoodsViewModel.goods_id;
             string goods_name = sellGoodsViewModel.goods_name;
-            float goods_price = sellGoodsViewModel.goods_price;
+            decimal goods_price = sellGoodsViewModel.goods_price;
             string goods_detail = sellGoodsViewModel.goods_detail;
             string goods_tag = sellGoodsViewModel.goods_tag;
             int sell_stock = sellGoodsViewModel.sell_stock;
@@ -118,7 +118,7 @@ namespace ShopWeb.Controllers
             string phone = Session["mem_phone"].ToString();
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
 
-            sellerSell.deleteGoods(deleteGoodsId);
+            sellerSell.deleteGoods(phone,deleteGoodsId);
 
             string nowpath = savepath + phone + @"\" + deleteGoodsId.ToString();
             if (Directory.Exists(nowpath)) Directory.Delete(nowpath, true);
@@ -137,12 +137,12 @@ namespace ShopWeb.Controllers
             string img_path = "";
             if (fileBase.ContentType == "image/jpeg" || fileBase.ContentType == "image/png")
             {
-                if (int.Parse(fileBase.ContentLength.ToString()) > (4 * 1024 * 1024)) return Redirect("/SellGoods/Index/"+img_goods_id.ToString());
+                if (int.Parse(fileBase.ContentLength.ToString()) > (4 * 1024 * 1024)) return Redirect("/SellGoods/?goods_id="+img_goods_id.ToString());
                 //图片存储路径
                 if (!Directory.Exists(nowpath)) Directory.CreateDirectory(nowpath);
                 fileBase.SaveAs(nowpath + file_name + ".jpg");
                 img_path = "/content/image/" + phone + "/" + img_goods_id.ToString() + "/" + file_name + ".jpg";
-                if (sellerSell.addImg(img_goods_id, img_path)) return Redirect("/SellGoods/Index/" + img_goods_id.ToString());
+                if (sellerSell.addImg(img_goods_id, img_path)) return Redirect("/SellGoods/?goods_id=" + img_goods_id.ToString());
             }
             return Redirect("/SellGoods/?goods_id=" + img_goods_id.ToString());
         }

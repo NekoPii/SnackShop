@@ -3,16 +3,16 @@
     ViewBag.Title = "注册";
 }
 
-<div class="form-dt" style="margin-top:100px;">
-    <div class="form-inpts checout-address-step">
-        <div class="form-title"><h6>欢迎加入我们！</h6></div>
-        <div class="col-md-6" style="margin:10px 0;padding-left:0px;">
-            <a href="@Url.Content("~/SignUp/Member")" class="Sign_mem_btn hover-btn">注册会员</a>
+<div class="col-md-12 col-sm-12 col-lg-12 form-dt" style="margin-top:100px;">
+    <div class="col-md-12 col-sm-12 col-lg-12 form-inpts checout-address-step">
+        <div class="col-md-12 col-lg-12 col-sm-12 form-title"><h6>欢迎加入我们！</h6></div>
+        <div class="col-lg-6 col-md-6 col-sm-12" style="margin:10px 0;text-align:center;">
+            <a href="@Url.Content("~/SignUp/Member")" class="Sign_mem_btn hover-btn" style="width:90%;">注册会员</a>
         </div>
-        <div class="col-md-6" style="margin:10px 0;padding-right:0px;">
-            <a href="@Url.Content("~/SignUp/SellerDir")" class="Sign_sell_btn seller_hover_btn">我要开店</a>
+        <div class="col-lg-6 col-md-6 col-sm-12" style="margin:10px 0;text-align:center;">
+            <a href="@Url.Content("~/SignUp/SellerDir")" class="Sign_sell_btn seller_hover_btn" style="width:90%;">我要开店</a>
         </div>
-        <div class="signup-link" style="margin-top:150px;">
+        <div class="col-lg-12 col-md-12 col-sm-12 signup-link">
             <p>已有账户？ - @Html.ActionLink("登录", "Index", "Login")</p>
         </div>
     </div>

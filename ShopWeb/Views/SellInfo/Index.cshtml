@@ -75,6 +75,16 @@
                                 <div class="pdpt-title">
                                     <h4>最新10条售出记录</h4>
                                 </div>
+                                @if (Model.sell_list.Count == 0)
+                                {
+                                    <div class="cart-item dashboard-group" style="background-color:white">
+                                        <div class="cart-text">
+                                            <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.sell_list.Count > 0)
+                                {
                                 <div class="history-body scrollstyle_4" style="height:500px;">
                                     <ul class="history-list">
                                         @for (var i = 0; i < Model.sell_list.Count && i < 10; ++i)
@@ -89,13 +99,14 @@
                                                     </div>
                                                     <div class="purchase-history-right">
                                                         <span style="color:#00C9FF;font-size:20px;font-weight:bold;">+ ￥@Model.sell_list[i].total_price</span>
-                                                        <a href="/SellGoods/Index/@Model.sell_list[i].goods_id.ToString()">>>></a>
+                                                        <a href="/SellGoods/?goods_id=@Model.sell_list[i].goods_id.ToString()">>>></a>
                                                     </div>
                                                 </div>
                                             </li>
                                         }
                                     </ul>
                                 </div>
+                                }
                             </div>
                         </div>
                     </div>

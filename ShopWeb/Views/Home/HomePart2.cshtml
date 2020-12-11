@@ -25,8 +25,10 @@
                         <div class="zoomImage11" style="background-image:url(@Model.page_goods_list[j].goods_img_path)"></div>
                     </a>
                     <div class="product-text-dt">
-                        <h4>@Model.page_goods_list[j].goods_name</h4>
-                        <div class="product-price">￥@Model.page_goods_list[j].unit_price</div>
+                        <a style="color:black;" title="@Model.page_goods_list[j].goods_name" href="@Url.Content("~/BuyGoods/?goods_id=" + Model.page_goods_list[j].goods_id.ToString())">
+                            <h4 style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">@Model.page_goods_list[j].goods_name</h4>
+                        </a>
+                            <div class="product-price">￥@Model.page_goods_list[j].unit_price</div>
                         <div style="margin:10px 0;">
                             <div style="font-weight:bold;font-size:13px;padding-right:30px;display:inline-block;">
                                 <span style="color:#f55d2c">销量:</span>

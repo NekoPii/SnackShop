@@ -187,8 +187,39 @@ namespace ShopRepository.MySQL
                             goods_name = reader.GetString("plist_goods_name"),
                             goods_num = reader.GetInt32("plist_goods_num"),
                             date = reader.GetDateTime("plist_date"),
-                            unit_price = reader.GetFloat("plist_goods_unit_price"),
-                            total_price = reader.GetFloat("plist_goods_total_price"),
+                            unit_price = reader.GetDecimal("plist_goods_unit_price"),
+                            total_price = reader.GetDecimal("plist_goods_total_price"),
+                        });
+                    }
+                    reader.Close();
+                }
+                catch { }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return result;
+        }
+
+        public List<GoodsTag> GetPurchaseListsTag_ai(string mem_phone)
+        {
+            string sql = "select plist_goods_id,goods_tag from purchaselists join goods where plist_mem_phone=@mem_phone and plist_goods_id=goods_id order by plist_date desc";
+            var result = new List<GoodsTag>();
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.Add(new MySqlParameter("@mem_phone", mem_phone));
+                try
+                {
+                    conn.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (result.Count >= 6) break;//得到最新的6类tag
+                        result.Add(new GoodsTag()
+                        {
+                            tag=reader.GetString("goods_tag"),
                         });
                     }
                     reader.Close();
@@ -224,8 +255,8 @@ namespace ShopRepository.MySQL
                             goods_name = reader.GetString("plist_goods_name"),
                             goods_num = reader.GetInt32("plist_goods_num"),
                             date = reader.GetDateTime("plist_date"),
-                            unit_price = reader.GetFloat("plist_goods_unit_price"),
-                            total_price = reader.GetFloat("plist_goods_total_price"),
+                            unit_price = reader.GetDecimal("plist_goods_unit_price"),
+                            total_price = reader.GetDecimal("plist_goods_total_price"),
                         });
                     }
                     reader.Close();
@@ -256,7 +287,7 @@ namespace ShopRepository.MySQL
                         {
                             goods_id = reader.GetInt32("goods_id"),
                             goods_name = reader.GetString("goods_name"),
-                            goods_price = reader.GetFloat("goods_price"),
+                            goods_price = reader.GetDecimal("goods_price"),
                             goods_details = reader.GetString("goods_detail"),
                             goods_img_path = reader.GetString("goods_img_path"),
                             goods_stock = reader.GetInt32("sell_stock"),
@@ -308,7 +339,7 @@ namespace ShopRepository.MySQL
                         {
                             goods_id = reader.GetInt32("goods_id"),
                             goods_name = reader.GetString("goods_name"),
-                            goods_price = reader.GetFloat("goods_price"),
+                            goods_price = reader.GetDecimal("goods_price"),
                             goods_details = reader.GetString("goods_detail"),
                             goods_img_path = reader.GetString("goods_img_path"),
                             goods_stock = reader.GetInt32("sell_stock"),
@@ -398,7 +429,51 @@ namespace ShopRepository.MySQL
                         {
                             goods_id = reader.GetInt32("goods_id"),
                             goods_name = reader.GetString("goods_name"),
-                            goods_price = reader.GetFloat("goods_price"),
+                            goods_price = reader.GetDecimal("goods_price"),
+                            goods_details = reader.GetString("goods_detail"),
+                            goods_img_path = reader.GetString("goods_img_path"),
+                            goods_stock = reader.GetInt32("sell_stock"),
+                            goods_volume = reader.GetInt32("sell_volume"),
+                            seller_phone = reader.GetString("seller_phone"),
+                            goods_tag = reader.GetString("goods_tag"),
+                        };
+                        result.Add(now_goods);
+                    }
+                    reader.Close();
+                }
+                catch { }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return result;
+        }
+
+        public List<Goods> GetGoodsList(string tag,int num)
+        {
+            var result = new List<Goods>();
+            string sql;
+            if(tag=="all") sql = "select * from goods join sell_goods where goods_id=sell_goods_id order by rand() limit @num";
+            else sql = "select * from goods join sell_goods where goods_id=sell_goods_id and goods_tag=@tag order by rand() limit @num";
+            using (MySqlConnection conn = new MySqlConnection(connectionstring))
+            {
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                if(tag!="all") cmd.Parameters.Add(new MySqlParameter("@tag", tag));
+                cmd.Parameters.Add(new MySqlParameter("@num", num));
+                try
+                {
+                    conn.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+
+                        var now_goods = new Goods()
+                        {
+                            goods_id = reader.GetInt32("goods_id"),
+                            goods_name = reader.GetString("goods_name"),
+                            goods_price = reader.GetDecimal("goods_price"),
                             goods_details = reader.GetString("goods_detail"),
                             goods_img_path = reader.GetString("goods_img_path"),
                             goods_stock = reader.GetInt32("sell_stock"),
@@ -437,7 +512,7 @@ namespace ShopRepository.MySQL
                         {
                             goods_id = goods_id,
                             goods_name = reader.GetString("goods_name"),
-                            goods_price = reader.GetFloat("goods_price"),
+                            goods_price = reader.GetDecimal("goods_price"),
                             goods_details = reader.GetString("goods_detail"),
                             goods_img_path = reader.GetString("goods_img_path"),
                             goods_stock = reader.GetInt32("sell_stock"),

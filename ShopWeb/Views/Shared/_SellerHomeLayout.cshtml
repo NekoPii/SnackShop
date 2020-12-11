@@ -19,6 +19,27 @@
     <link rel="icon" type="image/png" href="~/content/fav.png">
 
     <style>
+        .payBackground {
+            background: none;
+            position: relative;
+            padding: 0;
+        }
+
+            .payBackground:before {
+                margin: 0;
+                content: "";
+                background: url(/content/image/banner.svg) no-repeat;
+                background-attachment: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                position: fixed;
+                pointer-events: none;
+                background-size: cover;
+                opacity: 0.02;
+            }
+
         .a-upload {
             padding: 4px 10px;
             line-height: 25px;
@@ -418,7 +439,7 @@
     </div>
 </header>
 <!-- Header End -->
-<body>
+<body class="payBackground">
     <div class="wrapper" style="padding-top:60px;">
         @RenderBody()
     </div>

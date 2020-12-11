@@ -30,11 +30,12 @@ namespace ShopWeb.Models
 
         public string new_address_tag { set; get; }
 
-        public float unit_price { set; get; }
+        public string pay_type { set; get; }
+
+        public decimal unit_price { set; get; }
         public int goods_num { set; get; }
-        public float total_price { set; get; }
-        public float all_price { set; get; }
-        public float score { set; get; }
+        public decimal  total_price { set; get; }
+        public decimal  all_price { set; get; }
         public List<MemberAddress> addresses { set; get; }
         public List<AccountModels> accountModeList { set; get; }
     }

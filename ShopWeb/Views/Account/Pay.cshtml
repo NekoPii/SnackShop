@@ -4,5 +4,146 @@
     ViewBag.Title = "支付界面";
 }
 
-<h2>Pay</h2>
+<style>
+    .main-gambo-model {
+        background: none;
+    }
+</style>
 
+@{ var path1 = "/content/image/" + Session["mem_phone"].ToString() + "/alipay_coder.jpg";
+    var path2 = "/content/image/" + Session["mem_phone"].ToString() + "/weixin_coder.jpg";
+}
+
+<div id="alipay_modal" class="header-cate-model main-gambo-model modal fade" tabindex="-1" role="dialog" aria-modal="false">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner">
+            <div class="modal-header">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="uil uil-multiply"></i>
+                </button>
+            </div>
+            <div class="category-model-content modal-content">
+                <div class="cate-header" style="background:#00C9FF;">
+                    <h4>支付宝支付</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div style="text-align:center;margin:20px 0 30px 0;">
+                                    <h2 style="color:#00C9FF;margin-bottom:20px;">请扫码以完成支付！</h2>
+                                    <img src=@path1 width="100" height="100" />
+                                    <h3 style="color:#00C9FF;">￥@Model.all_price</h3>
+                                </div>
+                                @using (Html.BeginForm("order_success", "Account", FormMethod.Post))
+                                {
+                                    for (var i = 0; i < Model.accountModeList.Count; ++i)
+                                    {
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_id, new { @type = "hidden", Value = Model.accountModeList[i].goods_id })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].seller_phone, new { @type = "hidden", Value = Model.accountModeList[i].seller_phone })
+                                    }
+                                    @Html.TextBoxFor(now => now.pay_type, new { @type = "hidden", Value = "alipay" })
+                                    @Html.TextBoxFor(now => now.all_price, new { @type = "hidden", Value = Model.all_price })
+                                    @Html.TextBoxFor(now => now.address_text, new { @type = "hidden", Value = Model.address_text })
+                                    <button type="submit" class="sell-save-btn14 seller_hover_btn" style="display:block;margin:0 auto;border: #00C9FF 2px solid; width: 120px; height: 40px; font-size: 15px;">完成支付</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="weixin_modal" class="header-cate-model main-gambo-model modal fade" tabindex="-1" role="dialog" aria-modal="false">
+    <div class="modal-dialog category-area" role="document">
+        <div class="category-area-inner">
+            <div class="modal-header">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="uil uil-multiply"></i>
+                </button>
+            </div>
+            <div class="category-model-content modal-content">
+                <div class="cate-header" style="background:#04BE02;">
+                    <h4>微信支付</h4>
+                </div>
+                <div class="add-address-form">
+                    <div class="checout-address-step">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @using (Html.BeginForm("order_success", "Account", FormMethod.Post))
+                                {
+                                    <div style="text-align:center;margin:20px 0 30px 0;">
+                                        <h2 style="color:#04BE02;margin-bottom:20px;">请扫码以完成支付！</h2>
+                                        <img src=@path2 width="100" height="100"/>
+                                        <h3 style="color:#04BE02;">￥@Model.all_price</h3>
+                                    </div>
+                                    for (var i = 0; i < Model.accountModeList.Count; ++i)
+                                    {
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_id, new { @type = "hidden", Value = Model.accountModeList[i].goods_id })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].goods_num, new { @type = "hidden", Value = Model.accountModeList[i].goods_num })
+                                        @Html.TextBoxFor(now => now.accountModeList[i].seller_phone, new { @type = "hidden", Value = Model.accountModeList[i].seller_phone })
+                                    }
+                                    @Html.TextBoxFor(now => now.pay_type, new { @type = "hidden", Value = "weixin" })
+                                    @Html.TextBoxFor(now => now.all_price, new { @type = "hidden", Value = Model.all_price })
+                                    @Html.TextBoxFor(now => now.address_text, new { @type = "hidden", Value = Model.address_text })
+                                    <button type="submit" class="weixin_btn14 weixin_hover_btn" style="display: block; margin: 0 auto;border: #04BE02 2px solid; width: 120px; height: 40px; font-size: 15px;">完成支付</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jobs-gambo" style="padding-top:100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="default-title">
+                    <h1 style="color:#f55d2c;">支付金额:&nbsp;&nbsp;￥@Model.all_price</h1>
+                    <h2>【选择支付方式】</h2>
+                    <p style="font-size:16px;font-weight:bold;">我们支持<span style="color:#00A0E9">支付宝</span><img src="/content/image/alipay3.svg" height="40" width="40" />与<span style="color:#04BE02;">微信</span><img src="/content/image/weixin.svg" height="40" width="40" />支付</p>
+                </div>
+            </div>
+            <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-sm-12 col-lg-6 " style="align-content:center;text-align:center;">
+                <a href="#" class="job-bg1" onclick="open_alipay_modal()">
+                    <div class="job-item">
+                        <h3 style="color:#00A0E9;">支付宝支付&nbsp;&nbsp;&nbsp;&nbsp;<img src="/content/image/alipay1.svg" height="50" width="80" /></h3>
+                    </div>
+                    <i class="uil uil-angle-right-b arrow-icon" style="color:#00A0E9;"></i>
+                </a>
+                <a href="#" class="job-bg1" onclick="open_weixin_modal()">
+                    <div class="job-item">
+                        <h3 style="color:#04BE02;">微信支付&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/content/image/weixinpay2.svg" height="50" width="50" /></h3>
+                    </div>
+                    <i class="uil uil-angle-right-b arrow-icon" style="color:#04BE02;"></i>
+                </a>
+                <a href="~/PurchaseCar" class="job-bg1">
+                    <div class="job-item">
+                        <h4>取消支付</h4>
+                    </div>
+                    <i class="uil uil-angle-right-b arrow-icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function open_alipay_modal() {
+        $("#alipay_modal").addClass("show");
+        $("#alipay_modal").addClass("in");
+        $("#alipay_modal").modal("show");
+    }
+
+    function open_weixin_modal() {
+        $("#weixin_modal").addClass("show");
+        $("#weixin_modal").addClass("in");
+        $("#weixin_modal").modal("show");
+    }
+</script>

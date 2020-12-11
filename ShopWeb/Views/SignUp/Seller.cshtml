@@ -20,7 +20,7 @@
             <div style="height:80px">
                 <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
                     @Html.TextBoxFor(now => now.seller_account, new { @class = "form-control lgn_input ", @placeholder = "请绑定您的收款账户", @name = "count", @type = "text", @id = "count" })
-                    <i class="uil uil-user-square lgn_icon"></i>
+                    <i class="uil uil-chat-bubble-user lgn_icon"></i>
                 </div>
                 <span id="help-block2" class="help-block">
                     @Html.ValidationMessageFor(now => now.seller_account, "", new { @class = "text-danger" })
@@ -30,7 +30,7 @@
             <div style="height:80px">
                 <div class="form-group form-group-md pos_rel" style="margin-bottom:0px">
                     @Html.TextBoxFor(now => now.seller_address, new { @class = "form-control lgn_input", @placeholder = "请输入您的发货地址", @name = "address", @type = "text", @id = "address" })
-                    <i class="uil uil-padlock lgn_icon"></i>
+                    <i class="uil uil-home lgn_icon"></i>
                 </div>
                 <span id="help-block3" class="help-block">
                     @Html.ValidationMessageFor(now => now.seller_address, "", new { @class = "text-danger" })

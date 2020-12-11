@@ -67,14 +67,14 @@ namespace ShopWeb.Controllers
 
 
             string goods_name = sellGoodsViewModel.goods_name;
-            float goods_price = sellGoodsViewModel.goods_price;
+            decimal goods_price = sellGoodsViewModel.goods_price;
             string goods_detail = sellGoodsViewModel.goods_detail;
             string goods_tag = sellGoodsViewModel.goods_tag;
             string goods_img_path = img_path==""?"暂无": img_path;
             int sell_stock = sellGoodsViewModel.sell_stock;
 
             if (goods_detail == null) goods_detail = "暂无";
-            if (sellerSell.addGoods(phone, goods_name, goods_tag, goods_price, goods_detail, sell_stock,goods_img_path))
+            if (sellerSell.addGoods(phone, goods_name, goods_tag, Convert.ToDecimal(goods_price), goods_detail, sell_stock,goods_img_path))
             {
 
                 var sell_goods_list = sellerSell.getAllSellGoods(phone).Select(goods_info => new SellGoodsViewModel()
@@ -108,7 +108,7 @@ namespace ShopWeb.Controllers
             ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
             ShopBusinessLogic.MemberPurchase purchase = new ShopBusinessLogic.MemberPurchase();
 
-            sellerSell.deleteGoods(deleteGoodsId);
+            sellerSell.deleteGoods(phone,deleteGoodsId);
 
             string nowpath = savepath + phone + @"\" + deleteGoodsId.ToString();
             if (Directory.Exists(nowpath)) Directory.Delete(nowpath,true);

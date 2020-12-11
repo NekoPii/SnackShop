@@ -10,9 +10,19 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="order-placed-dt">
-                    <i class="uil uil-check-circle icon-circle"></i>
-                    <h2>支付成功</h2>
-                    <p>感谢您的支持!</p>
+
+                    @if (Model.pay_type == "alipay")
+                    {
+                        <i class="uil uil-check-circle icon-circle" style="color:#00C9FF;"></i>
+                        <h2 style="color:#00C9FF;"><img src="/content/image/alipay3.svg" height="40" width="40" />&nbsp;&nbsp;支付宝支付成功！</h2>
+                    }
+                    @if (Model.pay_type == "weixin")
+                    {
+                        <i class="uil uil-check-circle icon-circle" style="color:#04BE02;"></i>
+                        <h2 style="color:#04BE02;"><img src="/content/image/weixin.svg" height="40" width="40" />&nbsp;&nbsp; 微信支付成功！</h2>
+                    }
+
+                    <p style="font-weight:bold;">感谢您的支持!</p>
                     <div class="delivery-address-bg">
                         <div class="title585">
                             <div class="pln-icon"><i class="uil uil-telegram-alt"></i></div>
@@ -34,7 +44,3 @@
         </div>
     </div>
 </div>
-
-
-
-

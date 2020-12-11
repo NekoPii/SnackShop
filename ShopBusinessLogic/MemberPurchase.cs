@@ -26,6 +26,11 @@ namespace ShopBusinessLogic
             return rp.GetWishLists(mem_phone);
         }
 
+        public List<GoodsTag> getPurchaseTag_ai(string mem_phone)
+        {
+            return rp.GetPurchaseListsTag_ai(mem_phone);
+        }
+
         public List<PurchaseList> getPurchaseLists(string mem_phone)
         {
             return rp.GetPurchaseLists(mem_phone);
@@ -49,6 +54,11 @@ namespace ShopBusinessLogic
         public List<Goods> getGoodsList(string tag,string price_interval)
         {
             return rp.GetGoodsList(tag, price_interval);
+        }
+
+        public List<Goods> getGoodsList(string tag,int num)
+        {
+            return rp.GetGoodsList(tag, num);
         }
 
         public List<GoodsTag> getAllTags()
