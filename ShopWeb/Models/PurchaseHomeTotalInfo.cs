@@ -14,7 +14,7 @@ namespace ShopWeb.Models
 
         public int now_goods_id { set; get; }
         public string now_goods_name { set; get; }
-        public float now_goods_unit_price { set; get; }
+        public decimal now_goods_unit_price { set; get; }
         public string now_goods_detail { set; get; }
         public string now_goods_tag { set; get; }
 
@@ -25,6 +25,9 @@ namespace ShopWeb.Models
 
         public string search_content { set; get; }
 
+        public string search_tag { set; get; }
+        public string search_price { set; get; }
+
         public string select_price_interval { set; get; }
         public string select_tag { set; get; }
 
@@ -32,6 +35,9 @@ namespace ShopWeb.Models
         public List<MemberPurchaseCarViewModel> pcar_list { set; get; }
         public List<MemberPurchaseCarViewModel> selected_goods_list { set; get; }
         public List<MemberPurchaseCarViewModel> total_goods_list { set; get; }
+        public List<MemberPurchaseCarViewModel> rand_display_goods_list { set; get; }
+        public List<MemberPurchaseCarViewModel> ai_display_goods_list { set; get; }
+        public List<MemberPurchaseCarViewModel> tag_goods_list { set; get; }
         public List<GoodsImgView> now_img_lists { set; get; }
         public List<GoodsTag> goods_tags { set; get; }
         public PagedList.PagedList<MemberPurchaseCarViewModel> page_goods_list;

@@ -7,7 +7,7 @@
 {
     <div class="cart-item dashboard-group" style="background-color:white">
         <div class="cart-text">
-            <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+            <h1 style="height:300px;text-align:center;padding-top:150px;">没有订单记录~</h1>
         </div>
     </div>
 }
@@ -33,7 +33,9 @@
 
             </div>
             <div class="cart-text">
-                <h2 style="margin-bottom:20px;">@i.goods_name</h2>
+                <a title="@i.goods_name" href="@Url.Content("~/BuyGoods/?goods_id=" + i.goods_id)" style="color:black;">
+                    <h2 style="margin-bottom:20px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">@i.goods_name</h2>
+                </a>
                 <h3 style="margin-bottom:20px;">订单号:&nbsp;@i.plist_id</h3>
                 <div class="col-md-12" style="margin:10px 0;padding:0">
                     <div class="col-md-4" style="padding: 0">

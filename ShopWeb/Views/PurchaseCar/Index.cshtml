@@ -51,21 +51,21 @@
                         <div class="col-md-offset-1 col-md-2">
                             @if (Model == null || Model.pcar_list.Count == 0)
                             {
-                                    <button class="add-address" style="border:none;margin:0;background-color:gainsboro;cursor:not-allowed">一键全选</button>
+                                <button class="add-address" style="border:none;margin:0;background-color:gainsboro;cursor:not-allowed">一键全选</button>
                             }
                             @if (Model != null && Model.pcar_list.Count > 0)
                             {
-                                    <button class="add-address hover-btn" style="border:none;margin:0;" onclick="all_click()">一键全选</button>
+                                <button class="add-address hover-btn" style="border:none;margin:0;" onclick="all_click()">一键全选</button>
                             }
                         </div>
-                        <div class="col-lg-12 col-md-12">
-                            <div class="pdpt-bg">
-                                <div class="wishlist-body-dtt">
+                        <div class="col-lg-12 col-md-12" style="padding:0;">
+                            <div class="pdpt-bg col-md-12 col-lg-12 col-sm-12" style="padding:0;">
+                                <div class="wishlist-body-dtt col-md-12 col-lg-12 col-sm-12" style="padding:0;">
                                     @if (Model == null || Model.pcar_list.Count == 0)
                                     {
                                         <div class="cart-item dashboard-group" style="background-color:white">
                                             <div class="cart-text">
-                                                <h1 style="height:300px;text-align:center;padding-top:150px;">这里空空如也什么也没有~</h1>
+                                                <h1 style="height:300px;text-align:center;padding-top:150px;">购物车里什么也没有~</h1>
                                             </div>
                                         </div>
                                     }
@@ -74,7 +74,7 @@
                                     {
                                         using (Html.BeginForm("Index", "Account", FormMethod.Post))
                                         {
-                                            <div id="pcar_form" style="border:none;border-bottom:1px solid;border-bottom-color:gainsboro;">
+                                            <div class="col-md-12 col-lg-12 col-sm-12" id="pcar_form" style="border:none;border-bottom:1px solid;border-bottom-color:gainsboro;padding:0;">
 
                                                 @for (var i = 0; i < Model.pcar_list.Count(); ++i)
                                                 {
@@ -83,46 +83,54 @@
                                                         Model.pcar_list[i].goods_num = Model.pcar_list[i].sell_stock;
                                                         Model.pcar_list[i].total_price = Model.pcar_list[i].goods_num * Model.pcar_list[i].unit_price;
                                                     }
-                                                <div class="cart-item">
+                                                    <div class="cart-item col-md-12 col-lg-12 col-sm-12" style="padding:5px;margin:10px 0;">
 
-                                                    <input type="checkbox" class="checkbox" name="selected" onclick="check_select(@i)" style="margin-right:20px;" />
-
-                                                    @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
-                                                    @Html.TextBoxFor(now => now.select_list[i].seller_phone, new { @type = "hidden", Value = Model.pcar_list[i].seller_phone })
-                                                    <div class="cart-product-img">
-                                                        <a href="@Url.Content("~/BuyGoods/?goods_id="+Model.pcar_list[i].goods_id)" class="product-img" style="padding:0px;margin-top:10px;">
-                                                            <div class="zoomImage11" style="background-image:url(@Model.pcar_list[i].goods_img_path)"></div>
-                                                        </a>
+                                                        <div class="col-md-1 col-lg-1 col-sm-1 text-center" style="padding:0;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                            <input type="checkbox" class="checkbox" name="selected" onclick="check_select(@i)" style="zoom:150%;left:0;top:0;right:0;bottom:0;margin:auto;" />
+                                                        </div>
+                                                        @Html.TextBoxFor(now => now.select_list[i].goods_id, new { @type = "hidden", Value = Model.pcar_list[i].goods_id })
+                                                        @Html.TextBoxFor(now => now.select_list[i].seller_phone, new { @type = "hidden", Value = Model.pcar_list[i].seller_phone })
+                                                        <div class="cart-product-img col-md-2 col-lg-2 col-sm-2" style="border-radius:5px;padding:0;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                            <a href="@Url.Content("~/BuyGoods/?goods_id="+Model.pcar_list[i].goods_id)" class="product-img" style="padding:10px;">
+                                                                <div class="zoomImage11" style="background-image:url(@Model.pcar_list[i].goods_img_path);border-radius:5px;"></div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-9 col-lg-9 col-sm-9" style="padding:0;margin:0;">
+                                                            <div class="col-md-12 col-lg-12 col-sm-12" style="height:50%;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                                <a title="@Model.pcar_list[i].goods_name" style="color:black;" href="@Url.Content("~/BuyGoods/?goods_id="+Model.pcar_list[i].goods_id)">
+                                                                    <h3 style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">@Model.pcar_list[i].goods_name</h3>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-12 col-lg-12 col-sm-12" style="height:50%;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                                <div class="col-md-2 col-lg-2 col-sm-2" style="padding:0;text-align:center;font-weight:bold;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                                    <span>单价：￥</span><span class="u_p">@Model.pcar_list[i].unit_price</span>
+                                                                </div>
+                                                                <div class="quantity buttons_added col-md-4 col-lg-4 col-sm-4" style="padding:0;text-align:center;">
+                                                                    <span style="font-weight:bold;">数量&nbsp;:&nbsp;</span>
+                                                                    <button type="button" onclick="sub_num(@i)" style="height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">-</button>
+                                                                    <input style="width:25%;font-size:14px;" class="input-text qty text q_t" value="@Model.pcar_list[i].goods_num" onchange="change_num(@i)" onfocus="save_oldnum(@i)" />
+                                                                    @Html.TextBoxFor(now => now.select_list[i].goods_num, new { @type = "hidden", Value = Model.pcar_list[i].goods_num })
+                                                                    <input type="hidden" class="oldnum" value="@Model.pcar_list[i].goods_num" />
+                                                                    <button type="button" onclick="add_num(@i)" style="height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">+</button>
+                                                                </div>
+                                                                <div class="col-md-3 col-lg-3 col-sm-3" style="font-weight:bold;font-size:16px;text-align:center;padding:0;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                                    <span style="color:#00C9FF">(库存:</span>
+                                                                    <span class="s_t" style="color:#00C9FF">@Model.pcar_list[i].sell_stock</span>
+                                                                    <span style="color:#00C9FF">)</span>
+                                                                </div>
+                                                                <div class=" col-md-3 col-lg-3 col-sm-3" style="padding:0;text-align:center;left:0;top:0;right:0;bottom:0;margin:auto;">
+                                                                    <h4 class="col-md-12 col-lg-12 col-sm-12" style="padding:0;margin:0;"><span>总价：￥<span class="t_p">@Model.pcar_list[i].total_price</span></span></h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                  
                                                     </div>
-
-                                                    <div class="cart-text">
-                                                        <h4>@Model.pcar_list[i].goods_name</h4>
-                                                        <div class="cart-item-price" style="margin-top:10px;"></div>
-                                                        <span>单价：￥</span><span class="u_p">@Model.pcar_list[i].unit_price</span>
-                                                    </div>
-
-                                                    <div class="quantity buttons_added" style="padding-top:10px;">
-                                                        <span>数量：</span>
-                                                        <button type="button" onclick="sub_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">-</button>
-                                                        <input class="input-text qty text q_t" value="@Model.pcar_list[i].goods_num" onchange="change_num(@i)" onfocus="save_oldnum(@i)" />
-                                                        @Html.TextBoxFor(now => now.select_list[i].goods_num, new { @type = "hidden", Value = Model.pcar_list[i].goods_num })
-                                                        <input type="hidden" class="oldnum" value="@Model.pcar_list[i].goods_num" />
-                                                        <button type="button" onclick="add_num(@i)" style="padding: 6px 10px 5px; height: 30px; background-color: #2b2f4c; border: 0; border-right-color: currentcolor; border-right-style: none; border-right-width: 0px; color: #fff; cursor: pointer; border-radius: 3px; border-top-left-radius: 3px; width: 30px;">+</button>
-                                                    </div>
-                                                    <div class="cart-text" style="font-weight:bold;font-size:16px;padding:15px 0;display:inline-block;width:60%;">
-                                                        <span style="color:#00C9FF">(库存:</span>
-                                                        <span class="s_t" style="color:#00C9FF">@Model.pcar_list[i].sell_stock</span>
-                                                        <span style="color:#00C9FF">)</span>
-                                                    </div>
-                                                    <div class="cart-text" style="padding-top:10px;width:50%;">
-                                                        <h4><span>总价：￥</span><span class="t_p">@Model.pcar_list[i].total_price</span></h4>
-                                                    </div>
-                                                </div>
                                                 }
                                             </div>
-                                            <p style="font-size:22px;margin-left:30px;margin-top:15px;">总价</p>
-                                            <div style="margin-left:50px;"><span style="font-size:22px;margin-left:30px;">￥<span id="select_total_price">0</span></span></div>
-                                            <button onclick="all_select()" class="add-address hover-btn" style="border:none;font-size:15px;margin:0 10px 15px 85%">去结算</button>
+                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                <p style="font-size:22px;margin-left:30px;margin-top:15px;">总价</p>
+                                                <div style="margin-left:50px;"><span style="font-size:22px;margin-left:30px;">￥<span id="select_total_price">0</span></span></div>
+                                                <button onclick="all_select()" class="add-address hover-btn" style="border:none;font-size:15px;margin:0 10px 15px 85%">去结算</button>
+                                            </div>
                                         }
                                     }
                                 </div>
@@ -136,6 +144,9 @@
 </div>
 
 <script type="text/javascript">
+
+    //保留两位数
+    //(Math.round(100*num)/100)
     function all_select() {
         var t1 = document.getElementsByName("selected");
         for (i = 0; i < t1.length; i++) {
@@ -170,7 +181,7 @@
         var pcar_form = document.getElementById("pcar_form"),
             cart_item = pcar_form.getElementsByClassName("cart-item")[i],
             now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
-            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            goods_unit_price = (Math.round(100 * parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML)) / 100),
             goods_num = cart_item.getElementsByClassName("q_t")[0],
             goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
             goods_sum_price = document.getElementsByClassName("t_p")[i],
@@ -179,8 +190,8 @@
         if (parseInt(goods_stock.innerHTML) > parseInt(goods_num.value)) {
             goods_num.value++;
             goods_num_hidden.value++;
-            goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
-            if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price;
+            goods_sum_price.innerHTML = (Math.round(100 * (goods_unit_price * goods_num.value)) / 100);
+            if (now_checkbox.checked) all_total_price.innerHTML = (Math.round(100 * (parseFloat(all_total_price.innerHTML) + goods_unit_price)) / 100);
         }
     }
 
@@ -188,7 +199,7 @@
         var pcar_form = document.getElementById("pcar_form"),
             cart_item = pcar_form.getElementsByClassName("cart-item")[i],
             now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
-            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            goods_unit_price = (Math.round(100 * parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML)) / 100),
             goods_num = cart_item.getElementsByClassName("q_t")[0],
             goods_num_hidden = document.getElementsByName("select_list[" + String(i) + "].goods_num")[0],
             goods_sum_price = document.getElementsByClassName("t_p")[i],
@@ -196,8 +207,8 @@
         if (goods_num.value > 0) {
             goods_num.value--;
             goods_num_hidden.value--;
-            goods_sum_price.innerHTML = goods_unit_price * goods_num.value;
-            if (now_checkbox.checked) all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) - goods_unit_price;
+            goods_sum_price.innerHTML = (Math.round(100 * (goods_unit_price * goods_num.value)) / 100);
+            if (now_checkbox.checked) all_total_price.innerHTML = (Math.round(100 * (parseFloat(all_total_price.innerHTML) - goods_unit_price)) / 100);
         }
     }
 
@@ -209,10 +220,10 @@
             now_goods_unit_price = cart_item.getElementsByClassName("u_p")[0],
             all_total_price = document.getElementById("select_total_price");
         if (now_checkbox.checked) {
-            all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML);
+            all_total_price.innerHTML = (Math.round(100 * (parseFloat(all_total_price.innerHTML) + now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML))) / 100);
         }
         else {
-            all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) - now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML);
+            all_total_price.innerHTML = (Math.round(100 * (parseFloat(all_total_price.innerHTML) - now_goods_num.value * parseFloat(now_goods_unit_price.innerHTML))) / 100);
         }
     }
 
@@ -230,7 +241,7 @@
             old_num = cart_item.getElementsByClassName("oldnum")[0],
             now_num = cart_item.getElementsByClassName("q_t")[0],
             now_checkbox = cart_item.getElementsByClassName("checkbox")[0],
-            goods_unit_price = parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML),
+            goods_unit_price = (Math.round(100 * parseFloat(cart_item.getElementsByClassName("u_p")[0].innerHTML)) / 100),
             all_total_price = document.getElementById("select_total_price"),
             goods_sum_price = document.getElementsByClassName("t_p")[i],
             goods_stock = document.getElementsByClassName("s_t")[i],
@@ -240,10 +251,10 @@
         if (parseInt(now_num.value) < 0) now_num.value = "0";
         if (now_num.value >= 0) {
             goods_num_hidden.value = now_num.value;
-            goods_sum_price.innerHTML = now_num.value * goods_unit_price;
+            goods_sum_price.innerHTML = (Math.round(100 * now_num.value * goods_unit_price) / 100);
             if (now_checkbox.checked) {
                 goods_num_hidden.value = now_num.value;
-                all_total_price.innerHTML = parseFloat(all_total_price.innerHTML) + goods_unit_price * (now_num.value - old_num.value);
+                all_total_price.innerHTML = (Math.round(100 * (parseFloat(all_total_price.innerHTML) + goods_unit_price * (now_num.value - old_num.value))) / 100);
             }
         }
     }

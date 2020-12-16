@@ -15,9 +15,31 @@
     @Scripts.Render("~/Content/vender/js")
 
     <link rel="icon" type="image/png" href="~/content/fav.png">
+    <style>
+        .payBackground {
+            background: none;
+            position: relative;
+            padding: 0;
+        }
+
+            .payBackground:before {
+                margin: 0;
+                content: "";
+                background: url(/content/image/banner.svg) no-repeat;
+                background-attachment: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                position: fixed;
+                pointer-events: none;
+                background-size: cover;
+                opacity: 0.02;
+            }
+    </style>
 </head>
 
-<body>
+<body class="payBackground">
     <div class="wrapper" style="padding-top:60px;">
         <div class="cart-item dashboard-group" style="background-color:white">
             <div class="cart-text">

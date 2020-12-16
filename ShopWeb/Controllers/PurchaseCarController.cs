@@ -9,6 +9,8 @@ namespace ShopWeb.Controllers
 {
     public class PurchaseCarController : Controller
     {
+        public static string savepath = @"E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\Content\image\";
+
         // GET: PurchaseCar
         public ActionResult Index()
         {
@@ -21,8 +23,14 @@ namespace ShopWeb.Controllers
             else
             {
                 Session.Remove("ReturnToPurchaseCar");
+                string phone = Session["mem_phone"].ToString();
+                string nowdir = savepath + phone + @"\";
+                string nowpath1 = nowdir + @"alipay_coder.jpg";
+                string nowpath2 = nowdir + @"weixin_coder.jpg";
+                if (System.IO.File.Exists(nowpath1)) System.IO.File.Delete(nowpath1);
+                if (System.IO.File.Exists(nowpath2)) System.IO.File.Delete(nowpath2);
                 ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
-                var pcar_list = memberPurchase.getPurchaseCarList(Session["mem_phone"].ToString()).Select(pcar_info => new MemberPurchaseCarViewModel()
+                var pcar_list = memberPurchase.getPurchaseCarList(phone).Select(pcar_info => new MemberPurchaseCarViewModel()
                 {
                     goods_id = pcar_info.goods_id,
                     goods_num = pcar_info.goods_num,
@@ -34,7 +42,7 @@ namespace ShopWeb.Controllers
                 }).ToList();
                 var resView = new MemberPurchaseCarViewModel()
                 {
-                    mem_phone = Session["mem_phone"].ToString(),
+                    mem_phone = phone,
                     pcar_list = pcar_list,
                 };
                 return View(resView);

@@ -12,8 +12,8 @@ namespace ShopWeb.Models
         public int goods_id { set; get; }
         public string goods_name { set; get; }
         public string goods_img_path { set; get; }
-        public float unit_price { set; get; }
-        public float total_price { set; get; }
+        public decimal unit_price { set; get; }
+        public decimal total_price { set; get; }
         public int goods_num { set; get; }
         public int sell_stock { set; get; }
         public int sell_volume { set; get; }

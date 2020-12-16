@@ -21,8 +21,8 @@ namespace ShopWeb.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "商品价格不能为空")]
         [Display(Name ="商品价格")]
-        [Range(0,float.MaxValue,ErrorMessage ="商品价格不正确")]
-        public float goods_price { set; get; }
+        [Range(0,double.MaxValue,ErrorMessage ="商品价格不正确")]
+        public decimal goods_price { set; get; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "商品库存不能为空")]
         [Display(Name ="商品库存")]

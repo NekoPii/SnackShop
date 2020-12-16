@@ -11,7 +11,7 @@ namespace ShopWeb.Models
         public int goods_id { set; get; }
         public string goods_name { set; get; }
         public string goods_img_path { set; get; }
-        public float goods_unit_price { set; get; }
+        public decimal goods_unit_price { set; get; }
         public List<MemberWishListViewModel> wish_lists { set; get; }
     }
 }

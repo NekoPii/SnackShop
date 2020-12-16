@@ -16,8 +16,8 @@ namespace ShopWeb.Models
         public string goods_img_path { set; get; }
         public DateTime date { set; get; }
         public int goods_num { set; get; }
-        public float unit_price { set; get; }
-        public float total_price { set; get; }
+        public decimal unit_price { set; get; }
+        public decimal total_price { set; get; }
         public List<MemberPurchaseListViewModel> purchase_lists { set; get; }
     }
 }

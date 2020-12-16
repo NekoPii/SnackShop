@@ -4,11 +4,43 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ShopWeb.Models;
+using System.Drawing;
+using System.Text;
+using System.IO;
+using System.Threading.Tasks;
+using QRCoder;
 
 namespace ShopWeb.Controllers
 {
+    public class myQRCoder
+    {
+        public static string path = @"E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\Content\image\";
+        //生成二维码
+        public static Bitmap QRCodeEncoderUtil(string qrCodeContent,string pay_type)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeContent, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrcode = new QRCode(qrCodeData);
+            //中间小图图标
+            Bitmap icon = new Bitmap(path+pay_type+"Square.png");
+            if(pay_type=="alipay")
+            {
+                Bitmap img = qrcode.GetGraphic(30, Color.Black, Color.White, icon, 30, 6, false);
+                return img;
+            }
+            if(pay_type=="weixin")
+            {
+                Bitmap img = qrcode.GetGraphic(30, Color.Black, Color.White, icon, 30, 6, false);
+                return img;
+            }
+            return null;
+        }
+    }
+
     public class AccountController : Controller
     {
+        public static string savepath = @"E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\Content\image\";
+
         // GET: Account
         public ActionResult Index()
         {
@@ -21,37 +53,29 @@ namespace ShopWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult pay2048(AccountModels accountModels)
-        {
-
-            if (Session["has_pay"] != null&&accountModels.address_text!=null)
-            {
-                Session.Remove("has_pay");
-                accountModels.score = 0;
-                for (int i = 0; i < accountModels.accountModeList.Count; ++i)
-                {
-                    accountModels.all_price += accountModels.accountModeList[i].total_price;
-                }
-                accountModels.all_price = accountModels.all_price / 100 + accountModels.all_price;
-                return View(accountModels);
-            }
-            if (accountModels.address_text == null) return RedirectToAction("order_fail");
-            else return Redirect("/PurchaseList");
-        }
-
-        [HttpPost]
         public ActionResult Pay(AccountModels accountModels)
         {
-
+            if (Session["mem_phone"] == null) return Redirect("/Login");
+            string phone = Session["mem_phone"].ToString();
+            string nowdir = savepath + phone + @"\";
+            string nowpath1 = nowdir + @"alipay_coder.jpg";
+            string nowpath2 = nowdir + @"weixin_coder.jpg";
+            if (!Directory.Exists(nowdir)) Directory.CreateDirectory(nowdir);
+            if (System.IO.File.Exists(nowpath1)) System.IO.File.Delete(nowpath1);
+            if (System.IO.File.Exists(nowpath2)) System.IO.File.Delete(nowpath2);
             if (Session["has_pay"] != null && accountModels.address_text != null)
             {
                 Session.Remove("has_pay");
-                accountModels.score = 0;
                 for (int i = 0; i < accountModels.accountModeList.Count; ++i)
                 {
                     accountModels.all_price += accountModels.accountModeList[i].total_price;
                 }
-                accountModels.all_price = accountModels.all_price / 100 + accountModels.all_price;
+                accountModels.all_price = Math.Round(10*(accountModels.all_price / 100 + accountModels.all_price))/10;
+                string qrText = "用户" + Session["mem_name"].ToString() + "已支付" + accountModels.all_price + "元";
+                Bitmap mybitmap1 = myQRCoder.QRCodeEncoderUtil(qrText,"alipay");
+                Bitmap mybitmap2 = myQRCoder.QRCodeEncoderUtil(qrText,"weixin");
+                mybitmap1.Save(nowpath1);
+                mybitmap2.Save(nowpath2);
                 return View(accountModels);
             }
             if (accountModels.address_text == null) return RedirectToAction("order_fail");
@@ -61,32 +85,30 @@ namespace ShopWeb.Controllers
         [HttpPost]
         public ActionResult order_success(AccountModels accountModels)
         {
-            if (accountModels.score >= accountModels.all_price)
+            Session.Remove("has_pay");
+            ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
+            ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
+            var account_list = accountModels.accountModeList;
+            string mem_phone = Session["mem_phone"].ToString();
+            DateTime now_time = DateTime.Now;
+            for (int i = 0; i < account_list.Count; ++i)
             {
-                Session.Remove("has_pay");
-                ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
-                ShopBusinessLogic.SellerSell sellerSell = new ShopBusinessLogic.SellerSell();
-                var account_list = accountModels.accountModeList;
-                string mem_phone = Session["mem_phone"].ToString();
-                DateTime now_time = DateTime.Now;
-                for (int i = 0; i < account_list.Count; ++i)
-                {
-                    var now_plist_id = now_time.ToString("yyyyMMddHHmmssfff") + mem_phone;
-                    //string now_seller_phone = memberPurchase.getGoods(account_list[i].goods_id).seller_phone;
-                    memberPurchase.addPurchaseLists(now_plist_id,mem_phone, account_list[i].goods_id, account_list[i].goods_num, now_time,account_list[i].seller_phone);
-                    memberPurchase.deletePurchaseCar(mem_phone, account_list[i].goods_id);
-                    sellerSell.reduceStock(account_list[i].goods_id, account_list[i].goods_num);
-                    sellerSell.addVolume(account_list[i].goods_id, account_list[i].goods_num);
-                }
-                return View(accountModels);
+                if (account_list[i].goods_num == 0) continue;
+                var now_plist_id = now_time.ToString("yyyyMMddHHmmssfff") + mem_phone;
+                //string now_seller_phone = memberPurchase.getGoods(account_list[i].goods_id).seller_phone;
+                memberPurchase.addPurchaseLists(now_plist_id, mem_phone, account_list[i].goods_id, account_list[i].goods_num, now_time, account_list[i].seller_phone);
+                memberPurchase.deletePurchaseCar(mem_phone, account_list[i].goods_id);
+                sellerSell.reduceStock(account_list[i].goods_id, account_list[i].goods_num);
+                sellerSell.addVolume(account_list[i].goods_id, account_list[i].goods_num);
             }
-            else return Redirect("/PurchaseCar");
+            return View(accountModels);
+            //return Redirect("/PurchaseCar");//支付失败
         }
 
         [HttpPost]
         public ActionResult Index(MemberPurchaseCarViewModel memberPurchaseCarViewModels, string[] selected)
         {
-            if(memberPurchaseCarViewModels==null) return Redirect("/Error");
+            if (memberPurchaseCarViewModels == null) return Redirect("/Error");
             ShopBusinessLogic.MemberPurchase memberPurchase = new ShopBusinessLogic.MemberPurchase();
             ShopBusinessLogic.LoginMember loginMember = new ShopBusinessLogic.LoginMember();
             var submit_list = memberPurchaseCarViewModels.select_list;
@@ -96,7 +118,7 @@ namespace ShopWeb.Controllers
                 address = address_info.address,
                 address_tag = address_info.address_tag,
             }).ToList();
-            float all_price = 0;
+            decimal all_price = 0;
             for (int i = 0; i < submit_list.Count; ++i)
             {
                 if (selected[i] != null && selected[i] == "on")
@@ -109,7 +131,7 @@ namespace ShopWeb.Controllers
                         goods_num = submit_list[i].goods_num,
                         unit_price = now_item.goods_price,
                         total_price = now_item.goods_price * submit_list[i].goods_num,
-                        seller_phone=now_item.seller_phone,
+                        seller_phone = now_item.seller_phone,
                     };
                     if (item.goods_num > 0)
                     {
@@ -121,7 +143,7 @@ namespace ShopWeb.Controllers
             var resView = new AccountModels()
             {
                 mem_phone = Session["mem_phone"].ToString(),
-                addresses=address_list,
+                addresses = address_list,
                 accountModeList = select_list,
                 all_price = all_price,
             };
@@ -178,7 +200,7 @@ namespace ShopWeb.Controllers
                 addresses = address_list,
                 all_price = ad.all_price,
             };
-            return PartialView("AccountPart1",resView);
+            return PartialView("AccountPart1", resView);
         }
 
         [HttpPost]

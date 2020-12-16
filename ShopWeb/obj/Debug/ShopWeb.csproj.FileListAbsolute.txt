@@ -1343,3 +1343,6 @@ E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\PagedList.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\PagedList.Mvc.dll
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\PagedList.xml
 E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\PagedList.Mvc.xml
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\Gma.QrCodeNet.Encoding.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\QRCoder.dll
+E:\MJX\Language\C#\ShopWeb(Web)\ShopWeb\bin\ThoughtWorks.QRCode.dll

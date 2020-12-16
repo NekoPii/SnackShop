@@ -14,13 +14,13 @@ namespace ShopRepository.MySQL
         private string connectionstring = "server=localhost;database=webdb;username=root;pwd=123;Old Guids=true;";
         //Old Guids=true;必须要加
 
-        public bool Add_Goods(string seller_phone, string goods_name, string goods_tag, float goods_price, string goods_detail, int goods_stock,string goods_img_path)
+        public bool Add_Goods(string seller_phone, string goods_name, string goods_tag, decimal goods_price, string goods_detail, int goods_stock,string goods_img_path)
         {
             bool flag = true;
             int volume = 0;
             int goods_id = GetAddGoodsId();
-            string sql1 = "insert into goods set goods_name=@name ,goods_price=@price , goods_detail=@detail ,goods_tag=@tag ,goods_img_path=@img_path ";
-            string sql2 = "insert into sell_goods set seller_phone=@phone ,sell_goods_id=@id , sell_stock=@stock ,sell_volume=@volume ";       
+            string sql1 = "insert into sell_goods set seller_phone=@phone ,sell_goods_id=@id , sell_stock=@stock ,sell_volume=@volume ";
+            string sql2 = "insert into goods set goods_name=@name ,goods_price=@price , goods_detail=@detail ,goods_tag=@tag ,goods_img_path=@img_path ";
             string sql3 = "insert into goods_img set goods_id=@id ,img_path=@img_path";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
@@ -30,17 +30,17 @@ namespace ShopRepository.MySQL
 
                 conn.Open();
 
-                cmd1.Parameters.Add(new MySqlParameter("@name", goods_name));
+                cmd1.Parameters.Add(new MySqlParameter("@phone", seller_phone));
                 cmd1.Parameters.Add(new MySqlParameter("@id", goods_id));
-                cmd1.Parameters.Add(new MySqlParameter("@price", goods_price));
-                cmd1.Parameters.Add(new MySqlParameter("@detail", goods_detail));
-                cmd1.Parameters.Add(new MySqlParameter("@tag", goods_tag));
-                cmd1.Parameters.Add(new MySqlParameter("@img_path", goods_img_path));
+                cmd1.Parameters.Add(new MySqlParameter("@stock", goods_stock));
+                cmd1.Parameters.Add(new MySqlParameter("@volume", volume));
 
-                cmd2.Parameters.Add(new MySqlParameter("@phone", seller_phone));
+                cmd2.Parameters.Add(new MySqlParameter("@name", goods_name));
                 cmd2.Parameters.Add(new MySqlParameter("@id", goods_id));
-                cmd2.Parameters.Add(new MySqlParameter("@stock", goods_stock));
-                cmd2.Parameters.Add(new MySqlParameter("@volume", volume));
+                cmd2.Parameters.Add(new MySqlParameter("@price", goods_price));
+                cmd2.Parameters.Add(new MySqlParameter("@detail", goods_detail));
+                cmd2.Parameters.Add(new MySqlParameter("@tag", goods_tag));
+                cmd2.Parameters.Add(new MySqlParameter("@img_path", goods_img_path));
 
                 cmd3.Parameters.Add(new MySqlParameter("@id", goods_id));
                 cmd3.Parameters.Add(new MySqlParameter("@img_path", goods_img_path));
@@ -86,7 +86,7 @@ namespace ShopRepository.MySQL
             return flag;
         }
 
-        public bool Modify_Goods(string seller_phone, int goods_id, string goods_name, string goods_tag, float goods_price, string goods_detail, int goods_stock)
+        public bool Modify_Goods(string seller_phone, int goods_id, string goods_name, string goods_tag, decimal goods_price, string goods_detail, int goods_stock)
         {
             bool flag = true;
             string sql1 = "update sell_goods set sell_stock=@stock where seller_phone=@phone and sell_goods_id=@id";
@@ -122,9 +122,9 @@ namespace ShopRepository.MySQL
             return flag;
         }
 
-        public void Delete_Goods(int goods_id)
+        public void Delete_Goods(string seller_phone,int goods_id)
         {
-            string sql1 = "delete from goods where goods_id=@id";
+            string sql1 = "delete from sell_goods where sell_goods_id=@id and seller_phone=@phone";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
                 MySqlCommand cmd1 = new MySqlCommand(sql1, conn);
@@ -132,6 +132,7 @@ namespace ShopRepository.MySQL
                 conn.Open();
 
                 cmd1.Parameters.Add(new MySqlParameter("@id", goods_id));
+                cmd1.Parameters.Add(new MySqlParameter("@phone", seller_phone));
 
                 cmd1.ExecuteNonQuery();
 
@@ -228,7 +229,7 @@ namespace ShopRepository.MySQL
                         goods_stock = reader.GetInt32("sell_stock"),
                         goods_volume = reader.GetInt32("sell_volume"),
                         goods_name = reader.GetString("goods_name"),
-                        goods_price = reader.GetFloat("goods_price"),
+                        goods_price = reader.GetDecimal("goods_price"),
                         goods_details = reader.GetString("goods_detail"),
                         goods_img_path = reader.GetString("goods_img_path"),
                         goods_tag = reader.GetString("goods_tag"),
@@ -263,7 +264,7 @@ namespace ShopRepository.MySQL
                         goods_stock = reader.GetInt32("sell_stock"),
                         goods_volume = reader.GetInt32("sell_volume"),
                         goods_name = reader.GetString("goods_name"),
-                        goods_price = reader.GetFloat("goods_price"),
+                        goods_price = reader.GetDecimal("goods_price"),
                         goods_details = reader.GetString("goods_detail"),
                         goods_img_path = reader.GetString("goods_img_path"),
                         goods_tag = reader.GetString("goods_tag"),
@@ -312,8 +313,8 @@ namespace ShopRepository.MySQL
                         goods_name=reader.GetString("plist_goods_name"),
                         goods_num=reader.GetInt32("plist_goods_num"),
                         date=reader.GetDateTime("plist_date"),
-                        unit_price=reader.GetFloat("plist_goods_unit_price"),
-                        total_price=reader.GetFloat("plist_goods_total_price"),
+                        unit_price=reader.GetDecimal("plist_goods_unit_price"),
+                        total_price=reader.GetDecimal("plist_goods_total_price"),
                         seller_phone=seller_phone,
                         plist_id=reader.GetString("plist_id"),
                     });
@@ -347,8 +348,8 @@ namespace ShopRepository.MySQL
                         goods_name = reader.GetString("plist_goods_name"),
                         goods_num = reader.GetInt32("plist_goods_num"),
                         date = reader.GetDateTime("plist_date"),
-                        unit_price = reader.GetFloat("plist_goods_unit_price"),
-                        total_price = reader.GetFloat("plist_goods_total_price"),
+                        unit_price = reader.GetDecimal("plist_goods_unit_price"),
+                        total_price = reader.GetDecimal("plist_goods_total_price"),
                         seller_phone = seller_phone,
                         plist_id = reader.GetString("plist_id"),
                     });
@@ -359,9 +360,9 @@ namespace ShopRepository.MySQL
             return res;
         }
 
-        public float GetAllIncome(string seller_phone)
+        public decimal GetAllIncome(string seller_phone)
         {
-            float res = 0;
+            decimal res = 0;
             string sql1 = "select sum(plist_goods_total_price) as sum from purchaselists where plist_seller_phone=@phone";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
@@ -374,7 +375,7 @@ namespace ShopRepository.MySQL
                 MySqlDataReader reader = cmd1.ExecuteReader();
                 while (reader.Read())
                 {
-                    res = reader.GetFloat("sum");
+                    res = reader["sum"].ToString().Equals("") ? 0 : reader.GetDecimal("sum");
                 }
 
                 conn.Close();
@@ -382,9 +383,9 @@ namespace ShopRepository.MySQL
             return res;
         }
 
-        public float GetIncomeByMonth(string seller_phone,DateTime now)
+        public decimal GetIncomeByMonth(string seller_phone,DateTime now)
         {
-            float res = 0;
+            decimal res = 0;
             string sql1 = "select sum(plist_goods_total_price) as sum from purchaselists where plist_seller_phone=@phone and date_format(plist_date,'%Y%m')=date_format(@now,'%Y%m')";
             using (MySqlConnection conn = new MySqlConnection(connectionstring))
             {
@@ -396,11 +397,10 @@ namespace ShopRepository.MySQL
                 cmd1.Parameters.Add(new MySqlParameter("@now", now));
 
                 MySqlDataReader reader = cmd1.ExecuteReader();
-                while (reader.Read())
+                while(reader.Read())
                 {
-                    res = reader.GetFloat("sum");
-                }
-
+                    res = reader["sum"].ToString().Equals("")?0:reader.GetDecimal("sum");
+                }   
                 conn.Close();
             }
             return res;
